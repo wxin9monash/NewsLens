@@ -58,7 +58,7 @@ const ProfileScreen = ({ navigation }) => {
     function profileSettingOptions() {
         return (
             <>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => navigation.push('MostViewNews')}
                 >
@@ -68,7 +68,7 @@ const ProfileScreen = ({ navigation }) => {
                             option: 'Most View News'
                         }
                     )}
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 {/* <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => navigation.navigate('Bookmark')}

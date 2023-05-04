@@ -64,11 +64,11 @@ const TabNavigator = ({ navigation }) => {
                     component={BookmarksScreen}
                     options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/save.png'), focused }) }}
                 /> */}
-                <Tab.Screen
+                {/* <Tab.Screen
                     name="Profile"
                     component={ProfileScreen}
                     options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/user.png'), focused }) }}
-                />
+                /> */}
             </Tab.Navigator>
             {exitInfo()}
         </>
