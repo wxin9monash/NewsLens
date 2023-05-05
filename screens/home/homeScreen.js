@@ -6,6 +6,77 @@ import Carousel, { Pagination } from 'react-native-snap-carousel-v4';
 
 const { width } = Dimensions.get('window');
 
+const NewsAPI = require('newsapi');
+const newsapi = new NewsAPI('65d1f052cb624a518a8e5c48aeb8e75d'); 
+const keywords = 'australia'; 
+const bannerSliderList_live = [];
+
+async function fetchNews() {
+  try {
+    const response = await newsapi.v2.topHeadlines({
+        country: 'au'
+    });
+
+    const articles = response.articles;
+    console.log('Found', articles.length, 'articles:');
+    let count = 1;
+
+    for (const article of articles) {
+        if (bannerSliderList_live.length <= 5){
+            const news ={
+                id: count,
+                inBookmark: false,
+                newsImage: article.urlToImage,
+                headLine: article.title,
+                date: article.publishedAt,
+                viewsCount: 365,
+                commentsCount: 100,
+                newsDetail: article.content,
+            }
+            console.log(bannerSliderList_live.length)
+            bannerSliderList_live.push(news)
+            count ++
+            console.log('Title:', article.title);
+            console.log('URL:', article.url);
+            console.log('Description:', article.description);
+            console.log('Publish Time:', article.publishedAt)
+            console.log('------');
+        } else {
+            break;
+        }
+    }
+  } catch (error) {
+    console.error('Error fetching news:', error);
+  }
+  
+}
+
+// const GoogleNews = require('google-news-json');
+// const keywords = 'apple iphone'; // Replace these with your desired keywords
+
+// async function fetchNews() {
+//   try {
+//     const response = await GoogleNews.getNews(GoogleNews.SEARCH, {
+//       q: keywords,
+//       language: 'en',
+//       sort: 'relevance',
+//     });
+
+//     const articles = response.entries;
+//     console.log(articles);
+//     console.log('Found', articles.length, 'articles:');
+//     for (const article of articles) {
+//       console.log('Title:', article.title);
+//       console.log('URL:', article.link);
+//       console.log('------');
+//     }
+//   } catch (error) {
+//     console.error('Error fetching news:', error);
+//   }
+// }
+
+fetchNews();
+
 const bannerSliderList = [
     {
         id: '1',
@@ -120,7 +191,7 @@ const latestNewsList = [
 const HomeScreen = ({ navigation }) => {
 
     const [state, setState] = useState({
-        bannerList: bannerSliderList,
+        bannerList: bannerSliderList_live,
         activeSlide: 0,
         topNews: topNewsList,
         latestNews: latestNewsList,

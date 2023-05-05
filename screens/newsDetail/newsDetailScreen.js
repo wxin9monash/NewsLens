@@ -67,6 +67,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
                 </Text>
                 <Text style={{ marginTop: Sizes.fixPadding + 5.0, ...Fonts.grayColor10Medium }}>
                     We’re sorry that some customers may be experiencing issues while shopping.
+
                 </Text>
                 <Text style={{ marginTop: Sizes.fixPadding + 5.0, ...Fonts.grayColor10Medium }}>
                     As of 0400 GMT, some of the domains were back up. <Text style={{ ...Fonts.blueColor11Medium }}>Amazon</Text> did not immediately respond to requests for comment about the extent of the recovery in services.
