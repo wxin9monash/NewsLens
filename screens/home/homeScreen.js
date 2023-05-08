@@ -13,8 +13,8 @@ const bannerSliderList_live = [];
 
 async function fetchNews() {
   try {
-    const response = await newsapi.v2.topHeadlines({
-        country: 'au'
+    const response = await newsapi.v2.everything({
+        q: keywords
     });
 
     const articles = response.articles;
@@ -23,10 +23,11 @@ async function fetchNews() {
 
     for (const article of articles) {
         if (bannerSliderList_live.length <= 5){
+            const image = {uri: article.urlToImage}
             const news ={
                 id: count,
                 inBookmark: false,
-                newsImage: article.urlToImage,
+                newsImage: image,
                 headLine: article.title,
                 date: article.publishedAt,
                 viewsCount: 365,
@@ -39,7 +40,9 @@ async function fetchNews() {
             console.log('Title:', article.title);
             console.log('URL:', article.url);
             console.log('Description:', article.description);
-            console.log('Publish Time:', article.publishedAt)
+            console.log('Publish Time:', article.publishedAt);
+            console.log('Image:', article.urlToImage)
+
             console.log('------');
         } else {
             break;
