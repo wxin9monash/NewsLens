@@ -5,6 +5,7 @@ import { Colors, Fonts, Sizes } from "../../constants/styles";
 import CollapsingToolbar from "../../components/collapsingHeaderScreen";
 import { MaterialIcons, SimpleLineIcons, MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import ColorBar from "../../components/detailComponents/biasBar";
+import BannerSlider from "../../components/detailComponents/BannerSlider";
 
 const { width } = Dimensions.get('window');
 
@@ -125,7 +126,9 @@ const NewsDetailScreen = ({ navigation, route }) => {
                     </View>
                 </FoldableSection>
                 <FoldableSection title="Full Media Coverage">
-
+                    <View style={styles.mediaContainer}>
+                        <BannerSlider />
+                    </View>
                 </FoldableSection>               
                 <FoldableSection title="Political Bias Analysis">
                     <ColorBar
@@ -279,6 +282,11 @@ const styles = StyleSheet.create({
       },
       sectionText: {
         fontSize: 16,
+      },
+      mediaContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
       },
 })
 
