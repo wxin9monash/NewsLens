@@ -204,7 +204,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
         return (
             <View style={styles.technologyButtonStyle}>
                 <Text style={{ ...Fonts.whiteColor12SemiBold }}>
-                    Technology
+                    Australia
                 </Text>
             </View>
         )
