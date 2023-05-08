@@ -6,6 +6,7 @@ import CollapsingToolbar from "../../components/collapsingHeaderScreen";
 import { MaterialIcons, SimpleLineIcons, MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import ColorBar from "../../components/detailComponents/biasBar";
 import BannerSlider from "../../components/detailComponents/BannerSlider";
+import UserReview from "../../components/detailComponents/UserReview";
 
 const { width } = Dimensions.get('window');
 
@@ -94,6 +95,11 @@ const NewsDetailScreen = ({ navigation, route }) => {
             );
         };
 
+        const handleSubmit = (rating) => {
+            console.log('User rating:', rating);
+            // Perform any action after receiving the rating
+          };
+
         return (
             // <View style={{ marginHorizontal: Sizes.fixPadding * 2.0 }}>
             //     <Text style={{ ...Fonts.grayColor10Medium }}>
@@ -141,7 +147,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
 
                 </FoldableSection>   
                 <FoldableSection title="User Review">
-
+                    <UserReview onSubmit={handleSubmit}/>
                 </FoldableSection>                   
             </View>
         )
