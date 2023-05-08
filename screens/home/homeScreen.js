@@ -8,75 +8,87 @@ const { width } = Dimensions.get('window');
 
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI('65d1f052cb624a518a8e5c48aeb8e75d'); 
-const keywords = 'australia'; 
-const bannerSliderList_live = [];
+const keywords = 'top news, australia'; 
+let count = 0;
+let bannerSliderList_live = [];
 
 async function fetchNews() {
-  try {
-    const response = await newsapi.v2.everything({
-        q: keywords
-    });
 
-    const articles = response.articles;
-    console.log('Found', articles.length, 'articles:');
-    let count = 1;
+    function convertTimeToAustralia(dateString) {
 
-    for (const article of articles) {
-        if (bannerSliderList_live.length <= 5){
-            const image = {uri: article.urlToImage}
-            const news ={
-                id: count,
-                inBookmark: false,
-                newsImage: image,
-                headLine: article.title,
-                date: article.publishedAt,
-                viewsCount: 365,
-                commentsCount: 100,
-                newsDetail: article.content,
+        const date = new Date(Date.parse(dateString));
+      
+        // Determine the time zone offset in minutes
+        const timezoneOffset = date.getTimezoneOffset();
+      
+        // Adjust the time by adding the time zone offset to the minutes
+        date.setMinutes(date.getMinutes() + timezoneOffset);
+      
+        // Format the date and time in a way that is appropriate for Australia
+        const options = {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+          timeZone: 'Australia/Sydney'
+        };
+      
+        const localTimeString = date.toLocaleString('en-AU', options);
+      
+        return localTimeString;
+      }
+      
+    try {
+        const response = await newsapi.v2.everything({
+            q: keywords,
+            sortBy: 'publishedAt',
+        });
+
+        const articles = response.articles;
+        bannerSliderList_live = [];
+        console.log('Found', articles.length, 'articles:');
+        console.log(bannerSliderList_live.length);
+
+        for (const article of articles) {
+            if (bannerSliderList_live.length <= 5){
+                const image = {uri: article.urlToImage};
+                const randomInteger = Math.floor(Math.random() * (1000 - 700 + 1)) + 700;
+                const news ={
+                    id: count,
+                    inBookmark: false,
+                    newsImage: image,
+                    headLine: article.title,
+                    date: convertTimeToAustralia(article.publishedAt),
+                    viewsCount: randomInteger,
+                    commentsCount: randomInteger - 729,
+                    newsDetail: article.content,
+                    description: article.description,
+                    newsUrl: article.url,
+                    newsSource: article.source.name,
+                }
+                console.log(bannerSliderList_live.length)
+                console.log('Title:', article.title);
+                console.log('URL:', article.url);
+                console.log('Description:', article.description);
+                console.log('Publish Time:', article.publishedAt);
+                console.log('Source:', article.source);
+                console.log('------');
+                if (news.description && news.newsImage != null){
+                    bannerSliderList_live.push(news)
+                    count++
+                }
+            } else {
+                return;
             }
-            console.log(bannerSliderList_live.length)
-            bannerSliderList_live.push(news)
-            count ++
-            console.log('Title:', article.title);
-            console.log('URL:', article.url);
-            console.log('Description:', article.description);
-            console.log('Publish Time:', article.publishedAt);
-            console.log('Image:', article.urlToImage)
-
-            console.log('------');
-        } else {
-            break;
         }
+    } catch (error) {
+        console.error('Error fetching news:', error);
     }
-  } catch (error) {
-    console.error('Error fetching news:', error);
-  }
   
 }
-
-// const GoogleNews = require('google-news-json');
-// const keywords = 'apple iphone'; // Replace these with your desired keywords
-
-// async function fetchNews() {
-//   try {
-//     const response = await GoogleNews.getNews(GoogleNews.SEARCH, {
-//       q: keywords,
-//       language: 'en',
-//       sort: 'relevance',
-//     });
-
-//     const articles = response.entries;
-//     console.log(articles);
-//     console.log('Found', articles.length, 'articles:');
-//     for (const article of articles) {
-//       console.log('Title:', article.title);
-//       console.log('URL:', article.link);
-//       console.log('------');
-//     }
-//   } catch (error) {
-//     console.error('Error fetching news:', error);
-//   }
-// }
 
 fetchNews();
 
@@ -527,7 +539,7 @@ const HomeScreen = ({ navigation }) => {
                                         {item.viewsCount}
                                     </Text>
                                 </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <MaterialIcons
                                         name="share"
                                         color={Colors.whiteColor}
@@ -536,7 +548,7 @@ const HomeScreen = ({ navigation }) => {
                                     <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor10Light }}>
                                         Share
                                     </Text>
-                                </View>
+                                </View> */}
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <MaterialCommunityIcons
                                         name="comment-text-outline"
@@ -549,7 +561,7 @@ const HomeScreen = ({ navigation }) => {
                                 </View>
                             </View>
                             <Text style={{ ...Fonts.whiteColor9Light }}>
-                                {item.newsDetail}
+                                {item.description}
                             </Text>
                         </View>
                     </View>

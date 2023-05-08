@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { SafeAreaView, Dimensions, View, StatusBar, Text, StyleSheet } from "react-native";
+import { SafeAreaView, Dimensions, View, StatusBar, Text, TouchableOpacity, StyleSheet, Button, Modal, Animated,Easing   } from "react-native";
+import { WebView } from 'react-native-webview';
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import CollapsingToolbar from "../../components/collapsingHeaderScreen";
-import { MaterialIcons, SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons, SimpleLineIcons, MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
+import ColorBar from "../../components/detailComponents/biasBar";
 
 const { width } = Dimensions.get('window');
 
@@ -10,17 +12,10 @@ const NewsDetailScreen = ({ navigation, route }) => {
 
     const item = route.params.item;
 
-    const [state, setState] = useState({
-        isLike: false,
-        inBookMark: true,
-    })
 
-    const updateState = (data) => setState((state) => ({ ...state, ...data }))
-
-    const {
-        isLike,
-        inBookMark,
-    } = state;
+    // const updateState = (data) => setState((state) => ({ ...state, ...data }))
+    const [isLike, setisLike] = useState(false);
+    const [inBookMark, setinBookMark] = useState(false);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
@@ -57,33 +52,94 @@ const NewsDetailScreen = ({ navigation, route }) => {
     )
 
     function newsDetail() {
-        return (
-            <View style={{ marginHorizontal: Sizes.fixPadding * 2.0 }}>
-                <Text style={{ ...Fonts.grayColor10Medium }}>
-                    E-commerce giant <Text style={{ ...Fonts.blueColor11Medium }}>Amazon.com</Text> Inc’s online store was grappling with widespread outages on Sunday night, according to outage monitoring website Downdetector, the second broad disruption to services since late June.
-                </Text>
-                <Text style={{ marginTop: Sizes.fixPadding + 5.0, ...Fonts.grayColor10Medium }}>
-                    Its online store showed error messages on several regional domains. Reuters could not access product listing on its domains including, the United States, India, Canada, the United Kingdom, France and Singapore.
-                </Text>
-                <Text style={{ marginTop: Sizes.fixPadding + 5.0, ...Fonts.grayColor10Medium }}>
-                    We’re sorry that some customers may be experiencing issues while shopping.
+        const newUrl = item.newsUrl
+        const [modalVisible, setModalVisible] = useState(false);
+        const redRatio = 0.3;
+        const greenRatio = 0.4;
+        const blueRatio = 0.3;
+        const FoldableSection = ({ title, children, isfold }) => {
+            const [expanded, setExpanded] = useState(isfold);
+            const [rotation] = useState(new Animated.Value(0));
+          
+            const toggleExpanded = () => {
+              Animated.timing(rotation, {
+                toValue: expanded ? 0 : 1,
+                duration: 200,
+                easing: Easing.linear,
+                useNativeDriver: true,
+              }).start();
+          
+              setExpanded(!expanded);
+            };
+          
+            const arrowRotation = rotation.interpolate({
+              inputRange: [0, 1],
+              outputRange: ['0deg', '90deg'],
+            });
+          
+            return (
+              <View>
+                <TouchableOpacity
+                  style={styles.sectionHeader}
+                  onPress={toggleExpanded}
+                >
+                  <Text style={styles.sectionTitle}>{title}</Text>
+                  <Animated.View style={{ transform: [{ rotate: arrowRotation }] }}>
+                    <Ionicons name="chevron-forward" size={24} color="black" />
+                  </Animated.View>
+                </TouchableOpacity>
+                {expanded && <View style={styles.sectionContent}>{children}</View>}
+              </View>
+            );
+        };
 
-                </Text>
-                <Text style={{ marginTop: Sizes.fixPadding + 5.0, ...Fonts.grayColor10Medium }}>
-                    As of 0400 GMT, some of the domains were back up. <Text style={{ ...Fonts.blueColor11Medium }}>Amazon</Text> did not immediately respond to requests for comment about the extent of the recovery in services.
-                </Text>
-                <Text style={{ marginTop: Sizes.fixPadding + 5.0, ...Fonts.grayColor10Medium }}>
-                    More than 38,000 user reports indicated issues with Amazon’s online store site, while nearly 500 users reported problems with the Amazon Web Services, according to Downdetector.
-                </Text>
-                <Text style={{ marginTop: Sizes.fixPadding + 5.0, ...Fonts.grayColor10Medium }}>
-                    About 80% of the issues reported were with its website, while 15% were with log-ins and 5% with its check-out services, according to Downdetector.
-                </Text>
-                <Text style={{ marginTop: Sizes.fixPadding + 5.0, ...Fonts.grayColor10Medium }}>
-                    E-commerce giant <Text style={{ ...Fonts.blueColor11Medium }}>Amazon.com</Text> Inc’s online store was grappling with widespread outages on Sunday night, according to outage monitoring website Downdetector, the second broad disruption to services since late June.
-                </Text>
-                <Text style={{ marginTop: Sizes.fixPadding + 5.0, ...Fonts.grayColor10Medium }}>
-                    More than 38,000 user reports indicated issues with Amazon’s online store site, while nearly 500 users reported problems with the Amazon Web Services, according to Downdetector.
-                </Text>
+        return (
+            // <View style={{ marginHorizontal: Sizes.fixPadding * 2.0 }}>
+            //     <Text style={{ ...Fonts.grayColor10Medium }}>
+            //         E-commerce giant <Text style={{ ...Fonts.blueColor11Medium }}>Amazon.com</Text> Inc’s online store was grappling with widespread outages on Sunday night, according to outage monitoring website Downdetector, the second broad disruption to services since late June.
+            //     </Text>
+            //     <Text style={{ marginTop: Sizes.fixPadding + 5.0, ...Fonts.grayColor10Medium }}>
+            //         Its online store showed error messages on several regional domains. Reuters could not access product listing on its domains including, the United States, India, Canada, the United Kingdom, France and Singapore.
+            // </View>
+            
+            <View style={styles.container}>
+                <FoldableSection title="Summary" isfold='false'>
+                    <Text style={{marginVertical: Sizes.fixPadding,marginHorizontal: Sizes.fixPadding * 1.0, ...Fonts.blackColor13Bold}}>{item.description}</Text>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Button
+                            color = 'black'
+                            title="Read Full Article"
+                            onPress={() => setModalVisible(true)}
+                        />
+                        <Modal
+                            animationType="slide"
+                            transparent={false}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                            setModalVisible(false);
+                            }}
+                        >
+                            <WebView source={{ uri: newUrl }} />
+                            <Button color = 'black' title="Close" onPress={() => setModalVisible(false)} />
+                        </Modal>
+                    </View>
+                </FoldableSection>
+                <FoldableSection title="Full Media Coverage">
+
+                </FoldableSection>               
+                <FoldableSection title="Political Bias Analysis">
+                    <ColorBar
+                            redRatio={redRatio}
+                            greenRatio={greenRatio}
+                            blueRatio={blueRatio}
+                    />
+                </FoldableSection>   
+                <FoldableSection title="Sentiment Analysis">
+
+                </FoldableSection>   
+                <FoldableSection title="User Review">
+
+                </FoldableSection>                   
             </View>
         )
     }
@@ -111,7 +167,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
                         {item.viewsCount}
                     </Text>
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <MaterialIcons
                         name="share"
                         color={Colors.grayColor}
@@ -120,7 +176,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
                     <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.grayColor11Medium }}>
                         Share
                     </Text>
-                </View>
+                </View> */}
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <MaterialCommunityIcons
                         name="comment-text-outline"
@@ -128,7 +184,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
                         size={13}
                     />
                     <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.grayColor11Medium }}>
-                        {item.commentsCount}comments
+                        {item.commentsCount}
                     </Text>
                 </View>
             </View>
@@ -160,14 +216,14 @@ const NewsDetailScreen = ({ navigation, route }) => {
                         name={isLike ? "thumb-up-alt" : "thumb-up-off-alt"}
                         color={Colors.blackColor}
                         size={18}
-                        onPress={() => updateState({ isLike: !isLike })}
+                        onPress={() => setisLike(!isLike)}
                     />
                     <MaterialIcons
                         name={inBookMark ? "bookmark" : 'bookmark-outline'}
                         color={Colors.blackColor}
                         size={18}
                         style={{ marginLeft: Sizes.fixPadding - 5.0 }}
-                        onPress={() => updateState({ inBookMark: !inBookMark })}
+                        onPress={() => setinBookMark(!inBookMark)}
                     />
                 </View>
             </View>
@@ -199,7 +255,31 @@ const styles = StyleSheet.create({
         marginHorizontal: Sizes.fixPadding * 2.0,
         flexDirection: 'row',
         justifyContent: 'space-between',
-    }
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        paddingHorizontal: 16,
+      },
+      sectionHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#f0f0f0',
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderBottomWidth: 1,
+        borderBottomColor: '#e0e0e0',
+      },
+      sectionTitle: {
+        fontSize: 18,
+      },
+      sectionContent: {
+        padding: 16,
+      },
+      sectionText: {
+        fontSize: 16,
+      },
 })
 
 export default NewsDetailScreen;
