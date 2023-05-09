@@ -8,51 +8,8 @@ const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI('65d1f052cb624a518a8e5c48aeb8e75d'); 
 let count = 0;
 let searchResultsList_live = [];
-
 let recentSearchesList = [];
 
-const searchResultsList = [
-    {
-        id: '1',
-        newsImage: require('../../assets/images/news_image/img12.png'),
-        headLine: 'Coronavirus Live updates: Favipiravir oral suspension to treat Covid-19',
-        newsDetail: 'India on Monday reported 37,154 new Covid-19 cases in last 24 hours, pushing the country\'s caseload to 3,08,74376.',
-        date: '10/07/2021',
-        viewsCount: 365,
-        commentsCount: 10,
-        inBookmark: true,
-    },
-    // {
-    //     id: '2',
-    //     newsImage: require('../../assets/images/news_image/img13.png'),
-    //     headLine: 'Covid-19:Delhi\'s Janpatj market to remain closed until further orders',
-    //     newsDetail: 'Authorities have launched a crackdown and closed several prominent market places in the national capital over the gross violation of Covid appropriate behaviour such as wearing of masks and maintaining social distancing.',
-    //     date: '10/07/2021',
-    //     viewsCount: 365,
-    //     commentsCount: 10,
-    //     inBookmark: false,
-    // },
-    // {
-    //     id: '3',
-    //     newsImage: require('../../assets/images/news_image/img14.png'),
-    //     headLine: 'Zydus Cadila\'s Covid-19 vaccine approval likely in next few days',
-    //     newsDetail: 'Gujarat-based pharmaceutical major Zydus Cadila\'s covid-19 vaccine may not be available soon as emergency approval from the country’s top drug regulator is likely to take a few more days, according to ANI sources.',
-    //     date: '10/07/2021',
-    //     viewsCount: 365,
-    //     commentsCount: 10,
-    //     inBookmark: true,
-    // },
-    // {
-    //     id: '4',
-    //     newsImage: require('../../assets/images/news_image/img15.png'),
-    //     headLine: '42 new coronavirus cases in Gujarat; no fresh death reported',
-    //     newsDetail: 'No fresh death was reported during the day and the toll currently stands at 10,073, it said.',
-    //     date: '10/07/2021',
-    //     viewsCount: 365,
-    //     commentsCount: 10,
-    //     inBookmark: false,
-    // },
-];
 
 const SearchScreen = ({ navigation }) => {
 
@@ -295,7 +252,7 @@ const SearchScreen = ({ navigation }) => {
             const response = await newsapi.v2.everything({
                 q: userInput,
                 language: 'en',
-                sortBy: 'publishedAt',
+                // sortBy: 'publishedAt',
             });
     
             const articles = response.articles;

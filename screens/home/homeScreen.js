@@ -8,11 +8,19 @@ const { width } = Dimensions.get('window');
 
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI('65d1f052cb624a518a8e5c48aeb8e75d'); 
-const keywords = 'top news, australia'; 
+const keywords = 'bbc'; 
 let count = 0;
 let bannerSliderList_live = [];
 
 async function fetchNews() {
+
+    const currentDate = new Date();
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+
+    const startDate = currentYear + "-" + (currentMonth) + "-" + (currentDay);
+    // const sevenDaysAgo = new Date(currentYear, currentMonth, currentDay - 7);
 
     function convertTimeToAustralia(dateString) {
 
@@ -44,7 +52,11 @@ async function fetchNews() {
     try {
         const response = await newsapi.v2.everything({
             q: keywords,
-            sortBy: 'publishedAt',
+            sortBy: 'relevancy',
+            from: startDate,
+            language: 'en',
+            searchIn: 'description',
+            source:'au',
         });
 
         const articles = response.articles;
@@ -74,6 +86,7 @@ async function fetchNews() {
                 console.log('URL:', article.url);
                 console.log('Description:', article.description);
                 console.log('Publish Time:', article.publishedAt);
+                console.log('Image:', image);
                 console.log('Source:', article.source);
                 console.log('------');
                 if (news.description && news.newsImage != null){
