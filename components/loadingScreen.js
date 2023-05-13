@@ -8,11 +8,11 @@ const LoadingScreen = ({ navigation }) => {
     useEffect(() => {
         async function loadFont() {
             await Font.loadAsync({
-                Kodchasan_Light: require("../assets/fonts/Kodchasan-Light.ttf"),
-                Kodchasan_Medium: require("../assets/fonts/Kodchasan-Medium.ttf"),
-                Kodchasan_Regular: require("../assets/fonts/Kodchasan-Regular.ttf"),
-                Kodchasan_SemiBold: require("../assets/fonts/Kodchasan-SemiBold.ttf"),
-                Kodchasan_Bold: require("../assets/fonts/Kodchasan-Bold.ttf"),
+                OpenSans_Light: require("../assets/fonts/OpenSans-Light.ttf"),
+                OpenSans_Medium: require("../assets/fonts/OpenSans-Medium.ttf"),
+                OpenSans_Regular: require("../assets/fonts/OpenSans-Regular.ttf"),
+                OpenSans_SemiBold: require("../assets/fonts/OpenSans-SemiBold.ttf"),
+                OpenSans_Bold: require("../assets/fonts/OpenSans-Bold.ttf"),
             });
             navigation.navigate('Splash');
         }

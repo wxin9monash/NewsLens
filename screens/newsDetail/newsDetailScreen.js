@@ -1,19 +1,21 @@
 import React, { useState } from "react";
-import { SafeAreaView, Dimensions, View, StatusBar, Text, TouchableOpacity, StyleSheet, Button, Modal, Animated,Easing   } from "react-native";
+import { SafeAreaView, Dimensions, View, StatusBar, Text, TouchableOpacity, StyleSheet, Button, Modal, Animated, Easing, } from "react-native";
 import { WebView } from 'react-native-webview';
+import { TextInput} from 'react-native-paper';
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import CollapsingToolbar from "../../components/collapsingHeaderScreen";
 import { MaterialIcons, SimpleLineIcons, MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
 import ColorBar from "../../components/detailComponents/biasBar";
 import BannerSlider from "../../components/detailComponents/BannerSlider";
 import UserReview from "../../components/detailComponents/UserReview";
+import GoogleNewsSearch from "../../components/detailComponents/GoogleNewsSearch";
 
 const { width } = Dimensions.get('window');
 
 const NewsDetailScreen = ({ navigation, route }) => {
 
     const item = route.params.item;
-
+    const newsTitle = route.params.item.headLine
 
     // const updateState = (data) => setState((state) => ({ ...state, ...data }))
     const [isLike, setisLike] = useState(false);
@@ -100,6 +102,40 @@ const NewsDetailScreen = ({ navigation, route }) => {
             // Perform any action after receiving the rating
           };
 
+        // const [query, setQuery] = useState('');
+        // const [newsResults, setNewsResults] = useState([]);
+        
+        // // Replace YOUR_API_KEY with your actual SerpApi key
+        // const apiKey = '58dc965f755f122b3067a0d51f373c147cbfc15af03d7586084c321848730d97';
+        
+        // const searchGoogleNews = async (newsTitle) => {
+        //     const parameters = {
+        //     q: newsTitle,
+        //     tbm: 'nws',
+        //     num: 10,
+        //     };
+        
+        //     const queryString = new URLSearchParams(parameters).toString();
+        //     const apiUrl = `https://serpapi.com/search?${queryString}&api_key=${apiKey}`;
+        
+        //     try {
+        //     const response = await fetch(apiUrl);
+        //     const searchResults = await response.json();
+        
+        //     if (searchResults && searchResults.organic_results) {
+        //         setNewsResults(searchResults.organic_results);
+        //     } else {
+        //         setNewsResults([]);
+        //     }
+        //     } catch (error) {
+        //     console.error(error);
+        //     }
+        // };
+        
+        // const handleSearch = () => {
+        //     searchGoogleNews(query);
+        // };
+
         return (
             // <View style={{ marginHorizontal: Sizes.fixPadding * 2.0 }}>
             //     <Text style={{ ...Fonts.grayColor10Medium }}>
@@ -137,6 +173,9 @@ const NewsDetailScreen = ({ navigation, route }) => {
                     </View>
                 </FoldableSection>               
                 <FoldableSection title="Political Bias Analysis">
+                    <View style={styles.googleNewsContainer}>
+                        <GoogleNewsSearch />
+                    </View>
                     <ColorBar
                             redRatio={redRatio}
                             greenRatio={greenRatio}
@@ -176,16 +215,6 @@ const NewsDetailScreen = ({ navigation, route }) => {
                         {item.viewsCount}
                     </Text>
                 </View>
-                {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <MaterialIcons
-                        name="share"
-                        color={Colors.grayColor}
-                        size={13}
-                    />
-                    <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.grayColor11Medium }}>
-                        Share
-                    </Text>
-                </View> */}
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <MaterialCommunityIcons
                         name="comment-text-outline"
@@ -211,6 +240,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
     }
 
     function newsInfo() {
+        // fetchNewsBias(newsTitle);
         return (
             <View style={styles.newsInfoWrapStyle}>
                 <Text style={{ maxWidth: width - 100.0, ...Fonts.blackColor14Bold }}>
@@ -293,6 +323,34 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+      },
+      serpContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        padding: 20,
+      },
+      serpInput: {
+        marginBottom: 10,
+      },
+      serpResult: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingBottom: 10,
+        marginBottom: 10,
+      },
+      serpTitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      serpLink: {
+        fontSize: 12,
+        color: 'blue',
+      },
+      serpSource: {
+        fontSize: 12,
+      },
+      googleNewsContainer: {
+        flex: 1,
       },
 })
 
