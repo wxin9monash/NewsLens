@@ -41,34 +41,34 @@ const TabNavigator = ({ navigation }) => {
                     headerShown: false,
                     tabBarShowLabel: false,
                     tabBarHideOnKeyboard: true,
-                    tabBarStyle: { backgroundColor: Colors.whiteColor, height: 60.0 }
+                    tabBarStyle: { backgroundColor: Colors.backColor, height: 60.0 }
                 }}
             >
                 <Tab.Screen
                     name="Home"
                     component={HomeScreen}
-                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/home.png'), focused }) }}
+                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/home.png'), focused, text: 'Home' }) }}
                 />
                 <Tab.Screen
                     name="Category"
                     component={CategoryScreen}
-                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/category.png'), focused }) }}
+                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/category.png'), focused, text: 'Category' }) }}
                 />
                 {/* <Tab.Screen
                     name="Video"
                     component={VideosScreen}
-                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/video.png'), focused }) }}
+                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/video.png'), focused, text: 'Category' }) }}
                 /> */}
-                {/* <Tab.Screen
+                <Tab.Screen
                     name="Bookmark"
                     component={BookmarksScreen}
-                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/save.png'), focused }) }}
-                /> */}
-                {/* <Tab.Screen
+                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/save.png'), focused, text: 'Bookmark' }) }}
+                />
+                <Tab.Screen
                     name="Profile"
                     component={ProfileScreen}
-                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/user.png'), focused }) }}
-                /> */}
+                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/user.png'), focused, text: 'Profile' }) }}
+                />
             </Tab.Navigator>
             {exitInfo()}
         </>
@@ -88,12 +88,15 @@ const TabNavigator = ({ navigation }) => {
         )
     }
 
-    function tabBarItem({ icon, focused }) {
+    function tabBarItem({ icon, focused, text }) {
         return (
-            <Image
-                source={icon}
-                style={{ width: 25.0, height: 25.0, resizeMode: 'contain', tintColor: focused ? Colors.blackColor : Colors.grayColor }}
-            />
+            <View style={{ alignItems: 'center' }}>
+                <Image
+                    source={icon}
+                    style={{ width: 25.0, height: 25.0, resizeMode: 'contain', tintColor: focused ? Colors.whiteColor : '#696969' }}
+                />
+                <Text style={{ fontSize: 10, color: focused ? Colors.whiteColor : '#696969' }}>{text}</Text>
+            </View>
         )
     }
 };

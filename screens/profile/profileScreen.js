@@ -81,7 +81,7 @@ const ProfileScreen = ({ navigation }) => {
                     )}
                 </TouchableOpacity> */}
 
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => navigation.push('Notifications')}
                 >
@@ -91,7 +91,7 @@ const ProfileScreen = ({ navigation }) => {
                             option: 'Notifications'
                         }
                     )}
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => navigation.push('Settings')}
@@ -113,7 +113,7 @@ const ProfileScreen = ({ navigation }) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Image
                         source={icon}
-                        style={{ width: 20.0, height: 20.0, }}
+                        style={{ width: 20.0, height: 20.0, tintColor: 'white' }}
                         resizeMode="contain"
                     />
                     <Text
@@ -121,7 +121,7 @@ const ProfileScreen = ({ navigation }) => {
                         style={{
                             maxWidth: width - 150.0,
                             marginLeft: Sizes.fixPadding + 5.0,
-                            ...Fonts.blackColor14Bold
+                            ...Fonts.whiteColor14Bold
                         }}
                     >
                         {option}
@@ -129,7 +129,7 @@ const ProfileScreen = ({ navigation }) => {
                 </View>
                 <MaterialIcons
                     name="keyboard-arrow-right"
-                    color={Colors.blackColor}
+                    color={Colors.whiteColor}
                     size={25}
                 />
             </View>
@@ -169,7 +169,7 @@ const ProfileScreen = ({ navigation }) => {
                         maxWidth: width - 200,
                         marginLeft: Sizes.fixPadding,
                     }}>
-                        <Text numberOfLines={1} style={{ lineHeight: 18.0, ...Fonts.blackColor14Bold }}>
+                        <Text numberOfLines={1} style={{ lineHeight: 18.0, ...Fonts.whiteColor14Bold }}>
                             Krishna Rai
                         </Text>
                         <Text numberOfLines={1} style={{ ...Fonts.grayColor11SemiBold }}>
@@ -192,7 +192,7 @@ const ProfileScreen = ({ navigation }) => {
                 paddingHorizontal: Sizes.fixPadding * 2.0,
                 paddingVertical: Sizes.fixPadding + 5.0,
             }}>
-                <Text style={{ ...Fonts.blackColor20Bold }}>
+                <Text style={{ ...Fonts.whiteColor20Bold }}>
                     Profile
                 </Text>
             </View>

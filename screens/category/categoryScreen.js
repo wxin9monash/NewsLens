@@ -57,8 +57,9 @@ const categoriesList = [
         category: 'OTHER',
     },
 ];
-
 const CategoryScreen = ({ navigation }) => {
+
+    const searchType = ''
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
@@ -79,10 +80,10 @@ const CategoryScreen = ({ navigation }) => {
             >
                 <Image
                     source={item.categoryImage}
-                    style={{ width: 50.0, height: 50.0, }}
+                    style={{ width: 50.0, height: 50.0, tintColor: 'white' }}
                     resizeMode="contain"
                 />
-                <Text style={{ ...Fonts.blackColor14Bold }}>
+                <Text style={{ ...Fonts.whiteColor14Bold }}>
                     {item.category}
                 </Text>
             </TouchableOpacity>
@@ -102,14 +103,14 @@ const CategoryScreen = ({ navigation }) => {
     function header() {
         return (
             <View style={styles.headerWrapStyle}>
-                <Text style={{ ...Fonts.blackColor20Bold }}>
+                <Text style={{ ...Fonts.whiteColor20Bold }}>
                     Category
                 </Text>
                 <MaterialIcons
                     name="search"
-                    color={Colors.blackColor}
+                    color={Colors.whiteColor}
                     size={24}
-                    onPress={() => navigation.push('Search')}
+                    onPress={() => navigation.push('Search', {searchType})}
                 />
             </View>
         )
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
         paddingVertical: Sizes.fixPadding + 5.0,
     },
     categoriesWrapStyle: {
-        backgroundColor: Colors.whiteColor,
+        backgroundColor: '#65737e',
         elevation: 2.0,
         borderRadius: Sizes.fixPadding - 5.0,
         alignItems: 'center',

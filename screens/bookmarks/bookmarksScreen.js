@@ -190,7 +190,7 @@ const BookmarksScreen = ({ navigation }) => {
                             maxWidth: width - 140,
                             marginLeft: Sizes.fixPadding,
                         }}>
-                            <Text numberOfLines={2} style={{ ...Fonts.blackColor13Bold }}>
+                            <Text numberOfLines={2} style={{ ...Fonts.whiteColor14Bold }}>
                                 {data.item.headLine}
                             </Text>
                             <Text numberOfLines={3} style={{ ...Fonts.grayColor11Medium }}>
@@ -199,7 +199,7 @@ const BookmarksScreen = ({ navigation }) => {
                         </View>
                     </View>
                     <View style={styles.dateBookmarkAndCategoryWrapStyle}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{ marginLeft: 80 + Sizes.fixPadding,flexDirection: 'row', alignItems: 'center' }}>
                             <MaterialIcons
                                 name="access-time"
                                 color={Colors.grayColor}
@@ -208,7 +208,7 @@ const BookmarksScreen = ({ navigation }) => {
                             <Text style={{ marginLeft: Sizes.fixPadding - 7.0, ...Fonts.grayColor10SemiBold }}>
                                 {data.item.date}
                             </Text>
-                            <View style={{ marginLeft: Sizes.fixPadding * 3.0, flexDirection: 'row', alignItems: 'center' }}>
+                            {/* <View style={{ marginLeft: Sizes.fixPadding * 3.0, flexDirection: 'row', alignItems: 'center' }}>
                                 <SimpleLineIcons
                                     name="eye"
                                     size={13}
@@ -217,14 +217,14 @@ const BookmarksScreen = ({ navigation }) => {
                                 <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.grayColor10SemiBold }}>
                                     {data.item.viewsCount}
                                 </Text>
-                            </View>
+                            </View> */}
                             <Text style={{ marginLeft: Sizes.fixPadding * 3.0, ...Fonts.grayColor10SemiBold }}>
                                 {data.item.newsCategory}
                             </Text>
                         </View>
                         <Text
                             onPress={() => removeItem({ key: data.item.key })}
-                            style={{ ...Fonts.blackColor12Bold }}>
+                            style={{ ...Fonts.whiteColor12Bold }}>
                             Remove
                         </Text>
                     </View>
@@ -302,7 +302,7 @@ const BookmarksScreen = ({ navigation }) => {
                 paddingHorizontal: Sizes.fixPadding * 2.0,
                 paddingVertical: Sizes.fixPadding + 5.0,
             }}>
-                <Text style={{ ...Fonts.blackColor20Bold }}>
+                <Text style={{ ...Fonts.whiteColor20Bold }}>
                     Bookmarks
                 </Text>
             </View>

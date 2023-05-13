@@ -331,7 +331,7 @@ const HomeScreen = ({ navigation }) => {
                                         <Text
                                             numberOfLines={1}
                                             style={{
-                                                ...Fonts.blackColor14Bold,
+                                                ...Fonts.whiteColor14Bold,
                                                 maxWidth: width - 150.0,
                                             }}
                                         >
@@ -349,10 +349,10 @@ const HomeScreen = ({ navigation }) => {
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                             <MaterialIcons
                                                 name="access-time"
-                                                color={Colors.grayColor}
+                                                color={Colors.whiteColor}
                                                 size={13}
                                             />
-                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.grayColor10Light }}>
+                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor10Medium }}>
                                                 {item.date}
                                             </Text>
                                         </View>
@@ -360,29 +360,29 @@ const HomeScreen = ({ navigation }) => {
                                             <SimpleLineIcons
                                                 name="eye"
                                                 size={13}
-                                                color={Colors.grayColor}
+                                                color={Colors.whiteColor}
                                             />
-                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.grayColor10Light }}>
+                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor10Medium }}>
                                                 {item.viewsCount}
                                             </Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                             <MaterialIcons
                                                 name="share"
-                                                color={Colors.grayColor}
+                                                color={Colors.whiteColor}
                                                 size={13}
                                             />
-                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.grayColor10Light }}>
+                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor10Medium }}>
                                                 Share
                                             </Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                             <MaterialCommunityIcons
                                                 name="comment-text-outline"
-                                                color={Colors.grayColor}
+                                                color={Colors.whiteColor}
                                                 size={13}
                                             />
-                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.grayColor10Medium }}>
+                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor10Medium }}>
                                                 {item.commentsCount}comments
                                             </Text>
                                         </View>
@@ -390,7 +390,7 @@ const HomeScreen = ({ navigation }) => {
 
                                     <Text
                                         numberOfLines={4}
-                                        style={{ ...Fonts.grayColor10Medium }}
+                                        style={{ ...Fonts.whiteColor10Medium }}
                                     >
                                         {item.newsDetail}
                                     </Text>
@@ -743,7 +743,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     latestNewsDetailWrapStyle: {
-        backgroundColor: Colors.whiteColor,
+        backgroundColor: '#65737e',
         elevation: 4.0,
         marginTop: -30.0,
         marginHorizontal: Sizes.fixPadding * 2.5,
@@ -764,7 +764,8 @@ const styles = StyleSheet.create({
         marginVertical: Sizes.fixPadding - 7.0,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        // backgroundColor: '#65737e'
     },
     container: {
         flex: 1,
