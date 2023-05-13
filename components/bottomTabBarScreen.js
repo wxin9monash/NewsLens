@@ -41,7 +41,7 @@ const TabNavigator = ({ navigation }) => {
                     headerShown: false,
                     tabBarShowLabel: false,
                     tabBarHideOnKeyboard: true,
-                    tabBarStyle: { backgroundColor: Colors.backColor, height: 60.0 }
+                    tabBarStyle: { backgroundColor: Colors.backColor, height: 80.0 }
                 }}
             >
                 <Tab.Screen
