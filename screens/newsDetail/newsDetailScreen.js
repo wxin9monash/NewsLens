@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { SafeAreaView, Dimensions, View, StatusBar, Text, TouchableOpacity, StyleSheet, Button, Modal, Animated, Easing, } from "react-native";
 import { WebView } from 'react-native-webview';
 import { TextInput} from 'react-native-paper';
@@ -56,141 +56,99 @@ const NewsDetailScreen = ({ navigation, route }) => {
     )
 
     function newsDetail() {
-        const newUrl = item.newsUrl
+        const newUrl = item.newsUrl;
         const [modalVisible, setModalVisible] = useState(false);
         const redRatio = 0.3;
         const greenRatio = 0.4;
         const blueRatio = 0.3;
+      
         const FoldableSection = ({ title, children, isfold }) => {
-            const [expanded, setExpanded] = useState(isfold);
-            const [rotation] = useState(new Animated.Value(0));
-          
-            const toggleExpanded = () => {
-              Animated.timing(rotation, {
-                toValue: expanded ? 0 : 1,
-                duration: 200,
-                easing: Easing.linear,
-                useNativeDriver: true,
-              }).start();
-          
-              setExpanded(!expanded);
-            };
-          
-            const arrowRotation = rotation.interpolate({
-              inputRange: [0, 1],
-              outputRange: ['0deg', '90deg'],
-            });
-          
-            return (
-              <View>
-                <TouchableOpacity
-                  style={styles.sectionHeader}
-                  onPress={toggleExpanded}
-                >
-                  <Text style={styles.sectionTitle}>{title}</Text>
-                  <Animated.View style={{ transform: [{ rotate: arrowRotation }] }}>
-                    <Ionicons name="chevron-forward" size={24} color="black" />
-                  </Animated.View>
-                </TouchableOpacity>
-                {expanded && <View style={styles.sectionContent}>{children}</View>}
-              </View>
-            );
+          const [expanded, setExpanded] = useState(isfold === 'false');
+          const rotation = useRef(new Animated.Value(0)).current;
+      
+          const toggleExpanded = () => {
+            Animated.timing(rotation, {
+              toValue: expanded ? 0 : 1,
+              duration: 200,
+              easing: Easing.linear,
+              useNativeDriver: true,
+            }).start();
+      
+            setExpanded(!expanded);
+          };
+      
+          const arrowRotation = rotation.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['0deg', '90deg'],
+          });
+      
+          return (
+            <View>
+              <TouchableOpacity
+                style={styles.sectionHeader}
+                onPress={toggleExpanded}
+              >
+                <Text style={styles.sectionTitle}>{title}</Text>
+                <Animated.View style={{ transform: [{ rotate: arrowRotation }] }}>
+                  <Ionicons name="chevron-forward" size={24} color="black" />
+                </Animated.View>
+              </TouchableOpacity>
+              {expanded && <View style={styles.sectionContent}>{children}</View>}
+            </View>
+          );
+        };
+      
+        const handleSubmit = (rating) => {
+          console.log('User rating:', rating);
+          // Perform any action after receiving the rating
         };
 
-        const handleSubmit = (rating) => {
-            console.log('User rating:', rating);
-            // Perform any action after receiving the rating
-          };
-
-        // const [query, setQuery] = useState('');
-        // const [newsResults, setNewsResults] = useState([]);
-        
-        // // Replace YOUR_API_KEY with your actual SerpApi key
-        // const apiKey = '58dc965f755f122b3067a0d51f373c147cbfc15af03d7586084c321848730d97';
-        
-        // const searchGoogleNews = async (newsTitle) => {
-        //     const parameters = {
-        //     q: newsTitle,
-        //     tbm: 'nws',
-        //     num: 10,
-        //     };
-        
-        //     const queryString = new URLSearchParams(parameters).toString();
-        //     const apiUrl = `https://serpapi.com/search?${queryString}&api_key=${apiKey}`;
-        
-        //     try {
-        //     const response = await fetch(apiUrl);
-        //     const searchResults = await response.json();
-        
-        //     if (searchResults && searchResults.organic_results) {
-        //         setNewsResults(searchResults.organic_results);
-        //     } else {
-        //         setNewsResults([]);
-        //     }
-        //     } catch (error) {
-        //     console.error(error);
-        //     }
-        // };
-        
-        // const handleSearch = () => {
-        //     searchGoogleNews(query);
-        // };
-
         return (
-            // <View style={{ marginHorizontal: Sizes.fixPadding * 2.0 }}>
-            //     <Text style={{ ...Fonts.grayColor10Medium }}>
-            //         E-commerce giant <Text style={{ ...Fonts.blueColor11Medium }}>Amazon.com</Text> Inc’s online store was grappling with widespread outages on Sunday night, according to outage monitoring website Downdetector, the second broad disruption to services since late June.
-            //     </Text>
-            //     <Text style={{ marginTop: Sizes.fixPadding + 5.0, ...Fonts.grayColor10Medium }}>
-            //         Its online store showed error messages on several regional domains. Reuters could not access product listing on its domains including, the United States, India, Canada, the United Kingdom, France and Singapore.
-            // </View>
-            
             <View style={styles.container}>
-                <FoldableSection title="Summary" isfold='false'>
-                    <Text style={{marginVertical: Sizes.fixPadding,marginHorizontal: Sizes.fixPadding * 1.0, ...Fonts.blackColor13Bold}}>{item.description}</Text>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Button
-                            color = 'black'
-                            title="Read Full Article"
-                            onPress={() => setModalVisible(true)}
-                        />
-                        <Modal
-                            animationType="slide"
-                            transparent={false}
-                            visible={modalVisible}
-                            onRequestClose={() => {
-                            setModalVisible(false);
-                            }}
-                        >
-                            <WebView source={{ uri: newUrl }} />
-                            <Button color = 'black' title="Close" onPress={() => setModalVisible(false)} />
-                        </Modal>
-                    </View>
-                </FoldableSection>
-                <FoldableSection title="Full Media Coverage">
-                    <View style={styles.mediaContainer}>
-                        <BannerSlider />
-                    </View>
-                </FoldableSection>               
-                <FoldableSection title="Political Bias Analysis">
-                    <View style={styles.googleNewsContainer}>
-                        <GoogleNewsSearch />
-                    </View>
-                    <ColorBar
-                            redRatio={redRatio}
-                            greenRatio={greenRatio}
-                            blueRatio={blueRatio}
-                    />
-                </FoldableSection>   
-                <FoldableSection title="Sentiment Analysis">
-
-                </FoldableSection>   
-                <FoldableSection title="User Review">
-                    <UserReview onSubmit={handleSubmit}/>
-                </FoldableSection>                   
+              <FoldableSection title="Summary" isfold="false">
+                <Text style={styles.summaryText}>{item.description}</Text>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <Button
+                    color="black"
+                    title="Read Full Article"
+                    onPress={() => setModalVisible(true)}
+                  />
+                  <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                      setModalVisible(false);
+                    }}
+                  >
+                    <WebView source={{ uri: newUrl }} />
+                    <Button color="black" title="Close" onPress={() => setModalVisible(false)} />
+                  </Modal>
+                </View>
+              </FoldableSection>
+              <FoldableSection title="Full Media Coverage">
+                <View style={styles.mediaContainer}>
+                  <BannerSlider />
+                </View>
+              </FoldableSection>
+              <FoldableSection title="Political Bias Analysis">
+                <View style={styles.googleNewsContainer}>
+                  <GoogleNewsSearch />
+                </View>
+                <ColorBar
+                  redRatio={redRatio}
+                  greenRatio={greenRatio}
+                  blueRatio={blueRatio}
+                />
+              </FoldableSection>
+              <FoldableSection title="Sentiment Analysis">
+              </FoldableSection>
+              <FoldableSection title="User Review">
+                <UserReview onSubmit={handleSubmit} />
+              </FoldableSection>
             </View>
-        )
-    }
+          );
+        }
 
     function newsCommentViewsAndDateInfo() {
         return (
@@ -243,7 +201,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
         // fetchNewsBias(newsTitle);
         return (
             <View style={styles.newsInfoWrapStyle}>
-                <Text style={{ maxWidth: width - 100.0, ...Fonts.blackColor14Bold }}>
+                <Text style={{ maxWidth: width - 100.0, ...Fonts.whiteColor16Bold }}>
                     {item.headLine}
                 </Text>
                 <View style={{
@@ -253,13 +211,13 @@ const NewsDetailScreen = ({ navigation, route }) => {
                 }}>
                     <MaterialIcons
                         name={isLike ? "thumb-up-alt" : "thumb-up-off-alt"}
-                        color={Colors.blackColor}
+                        color={Colors.whiteColor}
                         size={18}
                         onPress={() => setisLike(!isLike)}
                     />
                     <MaterialIcons
                         name={inBookMark ? "bookmark" : 'bookmark-outline'}
-                        color={Colors.blackColor}
+                        color={Colors.whiteColor}
                         size={18}
                         style={{ marginLeft: Sizes.fixPadding - 5.0 }}
                         onPress={() => setinBookMark(!inBookMark)}
@@ -297,61 +255,77 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
-        paddingHorizontal: 16,
+        paddingHorizontal: 20,
       },
       sectionHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0',
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderBottomWidth: 1,
-        borderBottomColor: '#e0e0e0',
+        padding: 16,
+        backgroundColor: '#65737e',
+        borderRadius: 4,
+        marginBottom: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 3,
       },
       sectionTitle: {
         fontSize: 18,
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+        fontFamily: 'OpenSans_Bold'
       },
       sectionContent: {
         padding: 16,
+        backgroundColor: '#65737e',
+        borderRadius: 4,
+        marginBottom: 20,
       },
-      sectionText: {
+      summaryText: {
+        marginVertical: 10,
+        marginHorizontal: 10,
         fontSize: 16,
+        color: '#FFFFFF',
+        fontFamily: 'OpenSans_Medium'
       },
-      mediaContainer: {
+    mediaContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-      },
-      serpContainer: {
+    },
+    serpContainer: {
         flex: 1,
         justifyContent: 'center',
         padding: 20,
-      },
-      serpInput: {
-        marginBottom: 10,
-      },
-      serpResult: {
+    },
+    serpInput: {
+    marginBottom: 10,
+    },
+    serpResult: {
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         paddingBottom: 10,
         marginBottom: 10,
-      },
-      serpTitle: {
+    },
+    serpTitle: {
         fontSize: 16,
         fontWeight: 'bold',
-      },
-      serpLink: {
+    },
+    serpLink: {
         fontSize: 12,
         color: 'blue',
-      },
-      serpSource: {
+    },
+        serpSource: {
         fontSize: 12,
-      },
-      googleNewsContainer: {
+    },
+        googleNewsContainer: {
         flex: 1,
-      },
+    },
 })
 
 export default NewsDetailScreen;

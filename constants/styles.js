@@ -180,6 +180,12 @@ export const Fonts = {
         fontFamily: 'OpenSans_Bold'
     },
 
+    whiteColor14Bold: {
+        color: '#FFFFFF',
+        fontSize: 14,
+        fontFamily: 'OpenSans_Bold'
+    },
+
     whiteColor16Bold: {
         color: '#FFFFFF',
         fontSize: 16,
@@ -209,7 +215,7 @@ export const Colors = {
     blackColor: '#000000',
     whiteColor: '#FFFFFF',
     grayColor: '#9E9E9E',
-    backColor: '#FAFAFA',
+    backColor: '#343d46',
     blueColor: '#2196F3',
 }
 

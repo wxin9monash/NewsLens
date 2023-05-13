@@ -246,7 +246,8 @@ const HomeScreen = ({ navigation }) => {
                 translucent={false}
                 backgroundColor={Colors.blackColor}
             />
-            <View style={{ flex: 1, backgroundColor: '#4f5b66'}}>
+            <View style={{ flex: 1}}>
+            {/* #343d46 */}
                 {header()}
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {bannerSlider()}
@@ -658,12 +659,12 @@ const HomeScreen = ({ navigation }) => {
                 <TouchableOpacity onPress={() => handleTabPress('Title', 1)} style={styles.tab}>
                     <Text style={[styles.tabText, searchType === 'Title' ? styles.activeTabText : {}]}>Title</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleTabPress('URL', 2)} style={styles.tab}>
-                    <Text style={[styles.tabText, searchType === 'URL' ? styles.activeTabText : {}]}>Link</Text>
+                <TouchableOpacity onPress={() => handleTabPress('Link', 2)} style={styles.tab}>
+                    <Text style={[styles.tabText, searchType === 'Link' ? styles.activeTabText : {}]}>Link</Text>
                 </TouchableOpacity>
                 </View>
                 <Text style={styles.tabDescription}>Searching by {searchType} will provide results based on the selected option.</Text>
-                <Button style={styles.searchButton} mode="contained" onPress={() => navigation.push('Search')} contentStyle={{ backgroundColor: '#343d46' }} icon={({ size, color }) => <MaterialIcons name="search" size={size} color={color} />}>
+                <Button style={styles.searchButton} mode="contained" onPress={() => navigation.push('Search', {searchType})} contentStyle={{ backgroundColor: '#4f5b66' }} icon={({ size, color }) => <MaterialIcons name="search" size={size} color={color} />}>
                     Search News by {searchType}
                 </Button>
                 
@@ -777,7 +778,7 @@ const styles = StyleSheet.create({
         borderRadius: 13,
         // borderWidth: 1,
         // borderColor: 'black',
-        backgroundColor: '#343d46',
+        backgroundColor: '#4f5b66',
         overflow: 'hidden',
       },
       tab: {

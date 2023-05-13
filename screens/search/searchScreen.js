@@ -11,7 +11,8 @@ let searchResultsList_live = [];
 let recentSearchesList = [];
 
 
-const SearchScreen = ({ navigation }) => {
+const SearchScreen = ({ navigation, route }) => {
+    const searchType = route.params.searchType
 
     const [state, setState] = useState({
         recentSearches: recentSearchesList,
@@ -83,7 +84,7 @@ const SearchScreen = ({ navigation }) => {
                                             }}
                                         />
                                         <View style={{ maxWidth: width - 130, marginLeft: Sizes.fixPadding, }}>
-                                            <Text numberOfLines={2} style={{ lineHeight: 18.0, ...Fonts.blackColor13Bold }}>
+                                            <Text numberOfLines={2} style={{ lineHeight: 18.0, ...Fonts.whiteColor14Bold }}>
                                                 {item.headLine}
                                             </Text>
                                             <Text numberOfLines={2} style={{ ...Fonts.grayColor10SemiBold }}>
@@ -93,7 +94,7 @@ const SearchScreen = ({ navigation }) => {
                                     </View>
                                     <View style={{ marginTop: Sizes.fixPadding - 7.0, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                         <View style={{ marginRight: Sizes.fixPadding * 6.0, flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <View style={{ marginLeft: 65 + Sizes.fixPadding, flexDirection: 'row', alignItems: 'center' }}>
                                                 <MaterialIcons
                                                     name="access-time"
                                                     color={Colors.grayColor}
@@ -103,7 +104,7 @@ const SearchScreen = ({ navigation }) => {
                                                     {item.date}
                                                 </Text>
                                             </View>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                 <SimpleLineIcons
                                                     name="eye"
                                                     size={13}
@@ -112,9 +113,9 @@ const SearchScreen = ({ navigation }) => {
                                                 <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.grayColor10SemiBold }}>
                                                     {item.viewsCount}
                                                 </Text>
-                                            </View>
+                                            </View> */}
 
-                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                 <MaterialCommunityIcons
                                                     name="comment-text-outline"
                                                     color={Colors.grayColor}
@@ -123,7 +124,7 @@ const SearchScreen = ({ navigation }) => {
                                                 <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.grayColor10SemiBold }}>
                                                     {item.commentsCount}comments
                                                 </Text>
-                                            </View>
+                                            </View> */}
                                         </View>
                                         <MaterialIcons
                                             name={item.inBookmark ? "bookmark" : 'bookmark-outline'}
@@ -149,7 +150,7 @@ const SearchScreen = ({ navigation }) => {
     function recentSearchesData() {
         return (
             <View style={{ marginHorizontal: Sizes.fixPadding * 2.0, }}>
-                <Text style={{ ...Fonts.blackColor14Bold }}>
+                <Text style={{ ...Fonts.whiteColor16Bold }}>
                     Recent Searches
                 </Text>
                 {
@@ -303,17 +304,7 @@ const SearchScreen = ({ navigation }) => {
 
 function searchTextField() {
         const textInputRef = createRef();
-        // const sleep = (ms) => {
-        //     return new Promise((resolve) => setTimeout(resolve, ms));
-        //   };
-          
-        // const doSomething = async () => {
-        //     if (searchResultsList_live.length === 0){await sleep(1000);}
-        //     await sleep(1000);
-            
-        //     // Do something else
-        //     console.log('1 second has passed!');
-        // };
+
         return (
             <View style={{ marginVertical: Sizes.fixPadding, marginHorizontal: Sizes.fixPadding * 2.0, }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -322,8 +313,8 @@ function searchTextField() {
                         value={search}
                         onChangeText={(text) => updateState({ search: text })}
                         selectionColor={Colors.blackColor}
-                        placeholder="Search News"
-                        style={{ ...Fonts.blackColor12SemiBold, flex: 1, }}
+                        placeholder={'Search News by ' + searchType}
+                        style={{ ...Fonts.whiteColor14SemiBold, flex: 1, }}
                         placeholderTextColor={Colors.grayColor}
                     />
                     {
@@ -362,7 +353,7 @@ function searchTextField() {
         return (
             <MaterialIcons
                 name="arrow-back-ios"
-                color={Colors.blackColor}
+                color={Colors.whiteColor}
                 size={24}
                 onPress={() => navigation.pop()}
                 style={{ marginVertical: Sizes.fixPadding + 5.0, marginHorizontal: Sizes.fixPadding * 2.0 }}
