@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { SafeAreaView, View, Dimensions, StatusBar, FlatList, TouchableOpacity, Image, Text, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { SafeAreaView, View, Dimensions, StatusBar, FlatList, TouchableOpacity, Image, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
+const {searchType} = 'Keywords'
+const NewsAPI = require('newsapi');
+const newsapi = new NewsAPI('65d1f052cb624a518a8e5c48aeb8e75d'); 
 
 const topNewsList = [
     {
@@ -94,10 +97,23 @@ const topNewsList = [
     },
 ];
 
-const AllTopNewsScreen = ({ navigation }) => {
+const AllTopNewsScreen = ({ navigation, route }) => {
 
-    const [topNews, setTopNews] = useState(topNewsList);
+    const category = route.params.category;
+    const keywords = category;
+    let bannerSliderList_temp = []
+    const [topNews, setTopNews] = useState(bannerSliderList_temp);
+    const [isLoading, setIsLoading] = useState(true);
 
+    useEffect(() => {
+        async function fetchData() {
+            await fetchNews({keywords});
+        }
+        fetchData();
+        // if (bannerSliderList_live.length <= 4) {
+        //     fetchData();
+        // }
+    }, []);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
             <StatusBar translucent={false} backgroundColor={Colors.blackColor} />
@@ -107,8 +123,110 @@ const AllTopNewsScreen = ({ navigation }) => {
             </View>
         </SafeAreaView>
     )
+    async function fetchNews({keywords}) {
+        let count = 0;
+        let bannerSliderList_temp = [];
+    
+        const currentDate = new Date();
+        const currentDay = currentDate.getDate();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+    
+        const startDate = currentYear + "-" + (currentMonth) + "-" + (currentDay);
+        // const sevenDaysAgo = new Date(currentYear, currentMonth, currentDay - 7);
+    
+        function convertTimeToAustralia(dateString) {
+    
+            const date = new Date(Date.parse(dateString));
+          
+            // Determine the time zone offset in minutes
+            const timezoneOffset = date.getTimezoneOffset();
+          
+            // Adjust the time by adding the time zone offset to the minutes
+            date.setMinutes(date.getMinutes() + timezoneOffset);
+          
+            // Format the date and time in a way that is appropriate for Australia
+            const options = {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric',
+              second: 'numeric',
+              timeZone: 'Australia/Sydney'
+            };
+          
+            const localTimeString = date.toLocaleString('en-AU', options);
+          
+            return localTimeString;
+          }
+          
+        try {
+            const response = await newsapi.v2.everything({
+                q: keywords,
+                sortBy: 'relevancy',
+                // from: startDate,
+                language: 'en',
+                // searchIn: 'description',
+                source:'au',
+            });
+    
+            const articles = response.articles;
+            let bannerSliderList_temp = [];
+            console.log('Found', articles.length, 'articles:');
+            console.log(bannerSliderList_temp.length);
+    
+            for (const article of articles) {
+                if (bannerSliderList_temp.length <= 12){
+                    const image = {uri: article.urlToImage};
+                    const randomInteger = Math.floor(Math.random() * (1000 - 800 + 1)) + 800;
+                    const news ={
+                        id: count,
+                        inBookmark: false,
+                        newsImage: image,
+                        headLine: article.title,
+                        date: convertTimeToAustralia(article.publishedAt),
+                        viewsCount: randomInteger,
+                        commentsCount: randomInteger - 729,
+                        newsDetail: article.content,
+                        description: article.description,
+                        newsUrl: article.url,
+                        newsSource: article.source.name,
+                    }
+                    console.log(bannerSliderList_temp.length)
+                    console.log('Title:', article.title);
+                    console.log('URL:', article.url);
+                    console.log('Description:', article.description);
+                    console.log('Publish Time:', article.publishedAt);
+                    console.log('Image:', image);
+                    console.log('Source:', article.source);
+                    console.log('------');
+                    if (news.description && news.newsImage != null){
+                        bannerSliderList_temp.push(news)
+                        count++
+                    }
+                } else {
+                    setTopNews(bannerSliderList_temp); 
+                    setIsLoading(false); 
+                    return;
+                }
+            }
+    
+        } catch (error) {
+            console.error('Error fetching news:', error);
+        }
+      
+    }
 
     function news() {
+        if (isLoading) {
+            return (
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <ActivityIndicator size="large" color={Colors.primaryColor} />
+                </View>
+            );
+        }
 
         const renderItem = ({ item }) => (
             <TouchableOpacity
@@ -151,7 +269,7 @@ const AllTopNewsScreen = ({ navigation }) => {
                     }}>
                         <Text
                             numberOfLines={2}
-                            style={{ lineHeight: 18, ...Fonts.blackColor13Bold }}
+                            style={{ lineHeight: 18, ...Fonts.whiteColor14Bold }}
                         >
                             {item.headLine}
                         </Text>
@@ -165,7 +283,7 @@ const AllTopNewsScreen = ({ navigation }) => {
                 </View>
                 <MaterialIcons
                     name={item.inBookmark ? "bookmark" : 'bookmark-outline'}
-                    color={item.inBookmark ? Colors.blackColor : Colors.grayColor}
+                    color={item.inBookmark ? Colors.whiteColor : Colors.grayColor}
                     size={16}
                     onPress={() => updateTopNews({ id: item.id })}
                 />
@@ -201,15 +319,15 @@ const AllTopNewsScreen = ({ navigation }) => {
             <View style={styles.headerWrapStyle}>
                 <MaterialIcons
                     name="arrow-back-ios"
-                    color={Colors.blackColor}
+                    color={Colors.whiteColor}
                     size={24}
                     onPress={() => navigation.pop()}
                 />
                 <MaterialIcons
                     name="search"
-                    color={Colors.blackColor}
+                    color={Colors.whiteColor}
                     size={24}
-                    onPress={() => navigation.push('Search')}
+                    onPress={() => navigation.push('Search',{searchType})}
                 />
             </View>
         )

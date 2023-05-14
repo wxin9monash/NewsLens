@@ -128,7 +128,7 @@ const SearchScreen = ({ navigation, route }) => {
                                         </View>
                                         <MaterialIcons
                                             name={item.inBookmark ? "bookmark" : 'bookmark-outline'}
-                                            color={item.inBookmark ? Colors.blackColor : Colors.grayColor}
+                                            color={item.inBookmark ? Colors.whiteColor : Colors.grayColor}
                                             size={15}
                                             onPress={() => updateSearchResults({ id: item.id })}
                                         />
@@ -312,7 +312,7 @@ function searchTextField() {
                         ref={textInputRef}
                         value={search}
                         onChangeText={(text) => updateState({ search: text })}
-                        selectionColor={Colors.blackColor}
+                        selectionColor={Colors.whiteColor}
                         placeholder={'Search News by ' + searchType}
                         style={{ ...Fonts.whiteColor14SemiBold, flex: 1, }}
                         placeholderTextColor={Colors.grayColor}

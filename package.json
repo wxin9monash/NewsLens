@@ -26,6 +26,7 @@
     "expo-linear-gradient": "^12.1.2",
     "expo-status-bar": "~1.4.4",
     "expo-updates": "~0.16.4",
+    "firebase": "^9.22.0",
     "google-news-json": "^2.1.0",
     "http": "^0.0.1-security",
     "https": "^1.0.0",

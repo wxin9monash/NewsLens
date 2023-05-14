@@ -1,119 +1,153 @@
 ﻿[
     {
-        "Media": "The Guardian Australia",
-        "Bias": "Partisan Left",
+        "Media": "The Guardian",
+        "Bias": "Left",
         "Quality": "Mixed",
         "Link": "https://www.theguardian.com/",
-        "Credibility": "40"
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/The_Guardian_Australia.jpg"
+    },
+    {
+        "Media": "BBC",
+        "Bias": "Center",
+        "Quality": "High",
+        "Link": "https://www.bbc.com/news/",
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/BBC.png"
     },
     {
         "Media": "Green Left Weekly",
-        "Bias": "Partisan Left",
+        "Bias": "Left",
         "Quality": "Poor ",
         "Link": "https://www.greenleft.org.au/",
-        "Credibility": "30"
+        "Credibility": "30",
+        "Image": "../../assets/images/media_image/The_Guardian_Australia.jpg"
     },
     {
         "Media": "New Matilda",
-        "Bias": "Partisan Left",
+        "Bias": "Left",
         "Quality": "Mixed",
         "Link": "https://newmatilda.com/",
-        "Credibility": "40"
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/The_Guardian_Australia.jpg"
     },
     {
         "Media": "The Saturday Paper",
         "Bias": "Leans Left",
         "Quality": "High",
         "Link": "https://www.thesaturdaypaper.com.au/",
-        "Credibility": "60"
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/The_Guardian_Australia.jpg"
     },
     {
-        "Media": "Independent Australia",
+        "Media": "Independent",
         "Bias": "Leans Left",
         "Quality": "Mixed",
         "Link": "https://store.independenceaustralia.com/",
-        "Credibility": "40"
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/Independent Australia.jpg"
     },
     {
         "Media": "Red Flag",
-        "Bias": "Partisan Left",
+        "Bias": "Left",
         "Quality": "Mixed",
         "Link": "https://redflag.org.au/",
         "Credibility": "40"
     },
     {
         "Media": "Junkee",
-        "Bias": "Partisan Left",
+        "Bias": "Left",
         "Quality": "Poor ",
         "Link": "https://junkee.com/",
         "Credibility": "30"
     },
     {
         "Media": "Vice",
-        "Bias": "Partisan Left",
+        "Bias": "Left",
         "Quality": "Poor ",
         "Link": "https://www.vice.com/en",
         "Credibility": "30"
     },
     {
         "Media": "The Australian",
-        "Bias": "Right Wing",
+        "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.theaustralian.com.au/",
-        "Credibility": "40"
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/The_Australian.png"
+    },
+    {
+        "Media": "Sky News",
+        "Bias": "Leans Right",
+        "Quality": "Mixed",
+        "Link": "https://www.skynews.com.au/",
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/Sky News Australia.png"
     },
     {
         "Media": "Sky News Australia",
-        "Bias": "Right Wing",
+        "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.skynews.com.au/",
-        "Credibility": "40"
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/Sky News Australia.png"
     },
     {
-        "Media": "The Daily Telegraph",
-        "Bias": "Right Wing",
+        "Media": "Daily Telegraph",
+        "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.dailytelegraph.com.au/",
-        "Credibility": "40"
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/The Daily Telegraph.jpg"
     },
     {
         "Media": "The Herald Sun",
-        "Bias": "Right Wing",
+        "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.heraldsun.com.au/",
-        "Credibility": "40"
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/The Herald Sun.png"
     },
     {
         "Media": "Quadrant",
-        "Bias": "Partisan Right",
+        "Bias": "Right",
         "Quality": "Poor ",
         "Link": "https://quadrant.org.au/",
         "Credibility": "30"
     },
     {
-        "Media": "Daily Mail Australia",
-        "Bias": "Partisan Right",
+        "Media": "Daily Mail",
+        "Bias": "Right",
         "Quality": "Poor ",
         "Link": "https://www.dailymail.co.uk/auhome/index.html",
-        "Credibility": "30"
+        "Credibility": "30",
+        "Image": "../../assets/images/media_image/Daily Mail Australia.jpg"
+    },
+    {
+        "Media": "Daily Mail Australia",
+        "Bias": "Right",
+        "Quality": "Poor ",
+        "Link": "https://www.dailymail.co.uk/auhome/index.html",
+        "Credibility": "30",
+        "Image": "../../assets/images/media_image/Daily Mail Australia.jpg"
     },
     {
         "Media": "Spectator Australia",
-        "Bias": "Partisan Right",
+        "Bias": "Right",
         "Quality": "Poor ",
         "Link": "https://www.spectator.com.au/",
         "Credibility": "30"
     },
     {
         "Media": "Sky News Opinion",
-        "Bias": "Partisan Right",
+        "Bias": "Right",
         "Quality": "Poor ",
         "Link": "https://www.skynews.com.au/opinion",
         "Credibility": "30"
     },
     {
         "Media": "The Australian Opinion",
-        "Bias": "Partisan Right",
+        "Bias": "Right",
         "Quality": "Poor ",
         "Link": "https://www.theaustralian.com.au/commentary/opinion",
         "Credibility": "30"
@@ -133,32 +167,36 @@
         "Credibility": "30"
     },
     {
-        "Media": "Financial Review",
+        "Media": "AFR",
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.afr.com/",
-        "Credibility": "40"
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/Financial Review.jpg"
     },
     {
-        "Media": "7 News",
+        "Media": "7News",
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://7news.com.au/",
-        "Credibility": "40"
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/7_News.png"
     },
     {
-        "Media": "9 News",
+        "Media": "9News",
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.9news.com.au/",
-        "Credibility": "40"
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/9_News.png"
     },
     {
-        "Media": "news.com.au",
+        "Media": "News.com.au",
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.news.com.au/",
-        "Credibility": "40"
+        "Credibility": "40",
+        "Image": "../../assets/images/media_image/news.com.au.jpg"
     },
     {
         "Media": "Michael West",
@@ -175,25 +213,28 @@
         "Credibility": "60"
     },
     {
-        "Media": "SBS News",
+        "Media": "SBS",
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://www.sbs.com.au/news",
-        "Credibility": "60"
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/SBS_News.png"
     },
     {
-        "Media": "ABC News",
+        "Media": "ABC",
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://www.abc.net.au/news",
-        "Credibility": "60"
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/ABC_News.jpg"
     },
     {
         "Media": "Sydney Morning Herald",
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://www.smh.com.au/",
-        "Credibility": "60"
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/Sydney Morning Herald.png"
     },
     {
         "Media": "The Age",

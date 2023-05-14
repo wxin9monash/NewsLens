@@ -10,7 +10,7 @@ const { width } = Dimensions.get('window');
 const onboardingScreenList = [
     {
         id: '1',
-        onboardingImage: require("../../assets/images/welcome.png"),
+        onboardingImage: require("../../assets/images/category_01.png"),
         title: 'Welcome to NEWSLENZ App',
         description: `Thank you for download India Today News\nApp, enjoy this amazing app with\ncool features.`,
     },

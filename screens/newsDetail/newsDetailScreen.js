@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { SafeAreaView, Dimensions, View, StatusBar, Text, TouchableOpacity, StyleSheet, Button, Modal, Animated, Easing, } from "react-native";
+import { SafeAreaView, Dimensions, View, StatusBar, Text, TouchableOpacity, StyleSheet, Button, Modal, Animated, Easing, ActivityIndicator } from "react-native";
 import { WebView } from 'react-native-webview';
 import { TextInput} from 'react-native-paper';
 import { Colors, Fonts, Sizes } from "../../constants/styles";
@@ -90,7 +90,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
               >
                 <Text style={styles.sectionTitle}>{title}</Text>
                 <Animated.View style={{ transform: [{ rotate: arrowRotation }] }}>
-                  <Ionicons name="chevron-forward" size={24} color="black" />
+                  <Ionicons name="chevron-forward" size={24} color="white" />
                 </Animated.View>
               </TouchableOpacity>
               {expanded && <View style={styles.sectionContent}>{children}</View>}
@@ -108,6 +108,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
               <FoldableSection title="Summary" isfold="false">
                 <Text style={styles.summaryText}>{item.description}</Text>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  
                   <Button
                     color="black"
                     title="Read Full Article"
@@ -126,20 +127,15 @@ const NewsDetailScreen = ({ navigation, route }) => {
                   </Modal>
                 </View>
               </FoldableSection>
-              <FoldableSection title="Full Media Coverage">
+              {/* <FoldableSection title="Full Media Coverage" isfold="false">
                 <View style={styles.mediaContainer}>
                   <BannerSlider />
                 </View>
-              </FoldableSection>
-              <FoldableSection title="Political Bias Analysis">
+              </FoldableSection> */}
+              <FoldableSection title="Political Bias Analysis" isfold="false">
                 <View style={styles.googleNewsContainer}>
-                  <GoogleNewsSearch />
+                  <GoogleNewsSearch searchInput ={newsTitle} width = {width}/>
                 </View>
-                <ColorBar
-                  redRatio={redRatio}
-                  greenRatio={greenRatio}
-                  blueRatio={blueRatio}
-                />
               </FoldableSection>
               <FoldableSection title="Sentiment Analysis">
               </FoldableSection>
@@ -255,7 +251,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingHorizontal: 20,
+        paddingHorizontal: Sizes.fixPadding,
       },
       sectionHeader: {
         flexDirection: 'row',

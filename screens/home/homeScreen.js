@@ -10,9 +10,10 @@ const { width } = Dimensions.get('window');
 
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI('65d1f052cb624a518a8e5c48aeb8e75d'); 
-const keywords = 'bbc'; 
+const keywords = 'Australian'; 
 const screenWidth = Dimensions.get('window').width;
 const tabWidth = (screenWidth - (Sizes.fixPadding * 6.0)) / 3;
+const latest = 'latest'
 let count = 0;
 let bannerSliderList_live = [];
 
@@ -59,7 +60,7 @@ async function fetchNews() {
             sortBy: 'relevancy',
             from: startDate,
             language: 'en',
-            searchIn: 'description',
+            // searchIn: 'description',
             source:'au',
         });
 
@@ -277,7 +278,7 @@ const HomeScreen = ({ navigation }) => {
                         Latest News
                     </Text>
                     <Text
-                        onPress={() => navigation.push('AllLatestNews')}
+                        onPress={() => navigation.push('AllLatestNews', {latest} )}
                         style={{ ...Fonts.whiteColor12Bold }}
                     >
                         View All

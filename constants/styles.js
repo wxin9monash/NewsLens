@@ -156,6 +156,12 @@ export const Fonts = {
         fontFamily: 'OpenSans_Medium'
     },
 
+    whiteColor14Medium: {
+        color: '#FFFFFF',
+        fontSize: 14,
+        fontFamily: 'OpenSans_Medium'
+    },
+
     whiteColor12SemiBold: {
         color: '#FFFFFF',
         fontSize: 12,

@@ -75,7 +75,7 @@ const CategoryScreen = ({ navigation }) => {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => navigation.push('AllTopNews')}
+                onPress={() => navigation.push('AllTopNews', {category: item.category})}
                 style={styles.categoriesWrapStyle}
             >
                 <Image
@@ -87,6 +87,7 @@ const CategoryScreen = ({ navigation }) => {
                     {item.category}
                 </Text>
             </TouchableOpacity>
+            
         )
         return (
             <FlatList

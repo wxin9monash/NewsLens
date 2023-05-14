@@ -13,7 +13,7 @@ import {
 // Import the images from the 'assets' folder
 import image1 from '../../assets/images/media_image/7_News.png';
 import image2 from '../../assets/images/media_image/9_News.png';
-import image3 from '../../assets/images/media_image/ABC_News.png';
+import image3 from '../../assets/images/media_image/ABC_News.jpg';
 import image4 from '../../assets/images/media_image/The_Australian.png';
 import image5 from '../../assets/images/media_image/SBS_News.png';
 import image6 from '../../assets/images/media_image/The_Guardian_Australia.jpg';
