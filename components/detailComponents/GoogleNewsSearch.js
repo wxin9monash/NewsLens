@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
   biasLabelsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: -150
+    // marginBottom: -150
   },
   biasLabelText: {
     fontSize: 12,
