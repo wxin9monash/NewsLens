@@ -436,7 +436,7 @@ const HomeScreen = ({ navigation }) => {
 
     function header() {
         const [searchType, setSearchType] = useState('Title');
-        const animatedValue = useRef(new Animated.Value(0)).current;
+        const animatedValue = useRef(new Animated.Value(1)).current;
         const screenWidth = Dimensions.get('window').width;
         const tabWidth = (screenWidth - (Sizes.fixPadding * 6.0)) / 3;
       
