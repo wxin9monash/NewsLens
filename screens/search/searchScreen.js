@@ -5,7 +5,9 @@ import { MaterialCommunityIcons, MaterialIcons, SimpleLineIcons } from '@expo/ve
 
 const { width } = Dimensions.get('window');
 const NewsAPI = require('newsapi');
-const newsapi = new NewsAPI('65d1f052cb624a518a8e5c48aeb8e75d');
+const newsapi = new NewsAPI('2cd35fd59fe44ea3841b860501b72886');
+// 88a285931c764d54b7dc0a8bdcb9baab
+// f53ef1482bff4b87aa86646ad673f635
 const apiKey = '5f7947962e85a25fa6552bb9ef58f9931e325ac8abe248c4985d1c642c407ee1';
 let count = 1;
 let searchResultsList_live = [];

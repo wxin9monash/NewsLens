@@ -16,6 +16,14 @@
         "Image": "../../assets/images/media_image/BBC.png"
     },
     {
+        "Media": "BBC News",
+        "Bias": "Center",
+        "Quality": "High",
+        "Link": "https://www.bbc.com/news/",
+        "Credibility": "70",
+        "Image": "../../assets/images/media_image/BBC.png"
+    },
+    {
         "Media": "Green Left Weekly",
         "Bias": "Left",
         "Quality": "Poor ",
@@ -101,6 +109,22 @@
         "Image": "../../assets/images/media_image/The Daily Telegraph.jpg"
     },
     {
+        "Media": "The Telegraph",
+        "Bias": "Leans Right",
+        "Quality": "Mixed",
+        "Link": "https://www.dailytelegraph.com.au/",
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/The Daily Telegraph.jpg"
+    },
+    {
+        "Media": "The Daily Telegraph",
+        "Bias": "Leans Right",
+        "Quality": "Mixed",
+        "Link": "https://www.dailytelegraph.com.au/",
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/The Daily Telegraph.jpg"
+    },
+    {
         "Media": "The Herald Sun",
         "Bias": "Leans Right",
         "Quality": "Mixed",
@@ -125,6 +149,22 @@
     },
     {
         "Media": "Daily Mail Australia",
+        "Bias": "Right",
+        "Quality": "Poor ",
+        "Link": "https://www.dailymail.co.uk/auhome/index.html",
+        "Credibility": "50",
+        "Image": "../../assets/images/media_image/Daily Mail Australia.jpg"
+    },
+    {
+        "Media": "The Daily Mail",
+        "Bias": "Right",
+        "Quality": "Poor ",
+        "Link": "https://www.dailymail.co.uk/auhome/index.html",
+        "Credibility": "50",
+        "Image": "../../assets/images/media_image/Daily Mail Australia.jpg"
+    },
+    {
+        "Media": "The Daily Mail Australia",
         "Bias": "Right",
         "Quality": "Poor ",
         "Link": "https://www.dailymail.co.uk/auhome/index.html",
@@ -175,7 +215,31 @@
         "Image": "../../assets/images/media_image/Financial Review.jpg"
     },
     {
+        "Media": "Financial Review",
+        "Bias": "Leans Right",
+        "Quality": "Mixed",
+        "Link": "https://www.afr.com/",
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/Financial Review.jpg"
+    },
+    {
+        "Media": "Australian Financial Review",
+        "Bias": "Leans Right",
+        "Quality": "Mixed",
+        "Link": "https://www.afr.com/",
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/Financial Review.jpg"
+    },
+    {
         "Media": "7News",
+        "Bias": "Leans Right",
+        "Quality": "Mixed",
+        "Link": "https://7news.com.au/",
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/7_News.png"
+    },
+    {
+        "Media": "7 News",
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://7news.com.au/",
@@ -191,7 +255,23 @@
         "Image": "../../assets/images/media_image/9_News.png"
     },
     {
+        "Media": "9 News",
+        "Bias": "Leans Right",
+        "Quality": "Mixed",
+        "Link": "https://www.9news.com.au/",
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/9_News.png"
+    },
+    {
         "Media": "News.com.au",
+        "Bias": "Leans Right",
+        "Quality": "Mixed",
+        "Link": "https://www.news.com.au/",
+        "Credibility": "60",
+        "Image": "../../assets/images/media_image/news.com.au.jpg"
+    },
+    {
+        "Media": "news.com.au",
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.news.com.au/",
@@ -222,6 +302,14 @@
     },
     {
         "Media": "ABC",
+        "Bias": "Center",
+        "Quality": "High",
+        "Link": "https://www.abc.net.au/news",
+        "Credibility": "70",
+        "Image": "../../assets/images/media_image/ABC_News.jpg"
+    },
+    {
+        "Media": "ABC News",
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://www.abc.net.au/news",

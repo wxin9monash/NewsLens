@@ -9,6 +9,7 @@ import ProfileScreen from "../screens/profile/profileScreen";
 import { useFocusEffect } from '@react-navigation/native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import PoliticalBiasScreen from "../screens/politicalBias/PoliticalBiasScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -54,11 +55,11 @@ const TabNavigator = ({ navigation }) => {
                     component={CategoryScreen}
                     options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/category.png'), focused, text: 'Category' }) }}
                 />
-                {/* <Tab.Screen
-                    name="Video"
-                    component={VideosScreen}
-                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/video.png'), focused, text: 'Category' }) }}
-                /> */}
+                <Tab.Screen
+                    name="Focus"
+                    component={PoliticalBiasScreen}
+                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/view.png'), focused, text: 'Focus' }) }}
+                />
                 <Tab.Screen
                     name="Bookmark"
                     component={BookmarksScreen}

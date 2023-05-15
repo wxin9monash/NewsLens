@@ -14,6 +14,7 @@ import notificationsScreen from "./screens/notifications/notificationsScreen";
 import settingsScreen from "./screens/settings/settingsScreen";
 import onboardingScreen from "./screens/onboarding/onboardingScreen";
 import splashScreen from "./screens/splashScreen";
+import PoliticalBiasScreen from './screens/politicalBias/PoliticalBiasScreen';
 
 LogBox.ignoreAllLogs();
 
@@ -36,6 +37,7 @@ const App = () => {
         <Stack.Screen name="VideoDetail" component={videoDetailScreen} />
         <Stack.Screen name="NewsDetail" component={newsDetailScreen} />
         <Stack.Screen name="AllTopNews" component={allTopNewsScreen} />
+        <Stack.Screen name="PoliticalBias" component={PoliticalBiasScreen} />
         <Stack.Screen name="AllLatestNews" component={allLatestNewsScreen} />
         <Stack.Screen name="EditProfile" component={editProfileScreen}
           sharedElements={(route, otherRoute, showing) => {

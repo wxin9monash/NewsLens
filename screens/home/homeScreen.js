@@ -9,7 +9,9 @@ import { style } from "deprecated-react-native-prop-types/DeprecatedImagePropTyp
 const { width } = Dimensions.get('window');
 
 const NewsAPI = require('newsapi');
-const newsapi = new NewsAPI('65d1f052cb624a518a8e5c48aeb8e75d'); 
+const newsapi = new NewsAPI('2cd35fd59fe44ea3841b860501b72886'); 
+// 65d1f052cb624a518a8e5c48aeb8e75d
+// 2cd35fd59fe44ea3841b860501b72886
 const screenWidth = Dimensions.get('window').width;
 const tabWidth = (screenWidth - (Sizes.fixPadding * 6.0)) / 3;
 const latest = 'australia'
@@ -146,30 +148,6 @@ const topNewsList = [
         viewsCount: 365,
         commentsCount: 10,
     }
-];
-
-const latestNewsList = [
-    {
-        id: '1',
-        inBookmark: false,
-        isVideo: true,
-        newsImage: require('../../assets/images/news_image/img4.png'),
-        headLine: 'Euro 2020:England fans left feeling  blue after heartbreaking loss to Italy in final on penalties - Sports News.',
-        date: '10/07/2021',
-        viewsCount: 365,
-        commentsCount: 10,
-        newsDetail: 'A nail-biting match turned heart-breaking when penalties got the best of team England and they lost to the Italians 3-2 on penalties on the 11th of July in UEFA Euro Cup 2020 at the Wembley Stadium, London.',
-    },
-    {
-        id: '2',
-        inBookmark: false,
-        newsImage: require('../../assets/images/news_image/img5.png'),
-        headLine: 'Dilip Kumar was shocked to learn that stars charge money to attend weddings.',
-        date: '10/07/2021',
-        viewsCount: 365,
-        commentsCount: 10,
-        newsDetail: 'Dilip Kumar along with veteran comedian Johnny Walker at his residence. Speaking about his first meeting with the thespian, Jaffrey said, “Because I had accompanied Johnny Walker uncle I was given extra importance by Dilip saab.',
-    },
 ];
 
 const HomeScreen = ({ navigation }) => {

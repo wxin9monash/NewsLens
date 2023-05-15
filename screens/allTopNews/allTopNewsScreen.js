@@ -6,7 +6,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 const { width } = Dimensions.get('window');
 const {searchType} = 'Keywords'
 const NewsAPI = require('newsapi');
-const newsapi = new NewsAPI('65d1f052cb624a518a8e5c48aeb8e75d'); 
+const newsapi = new NewsAPI('88a285931c764d54b7dc0a8bdcb9baab'); 
+// 2cd35fd59fe44ea3841b860501b72886
+// 88a285931c764d54b7dc0a8bdcb9baab
+// f53ef1482bff4b87aa86646ad673f635
 
 const topNewsList = [
     {

@@ -5,7 +5,9 @@ import { TextInput, Button } from 'react-native-paper';
 import { Sizes, Fonts } from '../../constants/styles';
 import { WebView } from 'react-native-webview';
 import { Modal } from 'react-native';
+import { getDoc, doc } from 'firebase/firestore';
 import CredibilityScore from './CredibilityScore';
+import { FIRESTORE_DB } from '../../firebaseConfig';
 import image1 from '../../assets/images/media_image/7_News.png';
 import image2 from '../../assets/images/media_image/9_News.png';
 import image3 from '../../assets/images/media_image/ABC_News.jpg';
@@ -42,7 +44,8 @@ const images = [
   { name: 'Sydney Morning Herald', source: image16 },
 ];
 
-const GoogleNewsSearch = ({ searchInput }, { width }) => {
+const GoogleNewsSearch = ({ searchInput, media }) => {
+  const news_media = `${media}`
   const query_media_au = `${searchInput}`
   const [query, setQuery] = useState({ query_media_au });
   const [newsResults, setNewsResults] = useState([]);
@@ -50,15 +53,18 @@ const GoogleNewsSearch = ({ searchInput }, { width }) => {
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
-  // const [mediaBiasData, setMediaBiasData] = useState([]);
+  const [biasScore, setBiasScore] = useState(null);
 
   const openLink = (url) => {
     setCurrentUrl(url);
     setModalVisible(true);
   };
 
-
   const apiKey = '17643c42c76596e64787481d58a44dbd6a09c8096788423ba3a30a08c21837fb';
+  // 46a5a4727b4fc5a940e3abf2f792fd255683dee662ce31df157fc16ba4aa6291
+  // e9e1915a46577b2706bbe40649ccb1c86a761cf5626f089cc9cb72ae7620174a
+
+
   const mediaBiasData = require('../../assets/json/media_bias.json');
   const filterUniqueSources = (results) => {
     const uniqueResults = [];
@@ -95,6 +101,58 @@ const GoogleNewsSearch = ({ searchInput }, { width }) => {
     return uniqueResults;
   };
 
+  const findMedia = (mediaName) => {
+    const mediaItem = mediaBiasData.find(item => item.Media.toLowerCase() === mediaName.toLowerCase());
+    return mediaItem ? mediaItem :     {
+      "Media": "The Guardian",
+      "Bias": "Left",
+      "Quality": "Mixed",
+      "Link": "https://www.theguardian.com/",
+      "Credibility": "60",
+      "Image": "../../assets/images/media_image/The_Guardian_Australia.jpg"
+  };
+  }
+
+  function getScore(num_media) {
+    if (num_media >= 0 && num_media <= 3) {
+      return 40;
+    } else if (num_media >= 4 && num_media <= 6) {
+      return 70;
+    } else if (num_media >= 7) {
+      return 100;
+    } else {
+      return 40; // Return 40 for invalid input or cases not covered
+    }
+  }
+
+  const getReviewData = async (url) => {
+    try {
+      const reviewRef = doc(FIRESTORE_DB, 'reviews', url);
+      const reviewSnap = await getDoc(reviewRef);
+
+      if (reviewSnap.exists()) {
+        const data = reviewSnap.data();
+        // console.log(`Total rating: ${data.totalRating}, Count: ${data.count}`);
+        return data.totalRating / data.count;
+      } else {
+        console.log('No such review!');
+        return 3; // default value
+      }
+    } catch (error) {
+      console.error('Error getting review data:', error);
+      return 3; // default value in case of error
+    }
+  };
+
+  const url = news_media; // the media variable you passed to UserReview component
+  let userScore = 2.5 * 20; //set base 
+  getReviewData(url)
+    .then(score => {
+      userScore = score;
+    })
+  const mediaItem = findMedia(news_media);
+  const mediaScore = parseFloat(mediaItem.Credibility);
+  const sourceScore = getScore(newsResults.length)
 
   const searchGoogleNews = async (searchQuery) => {
     setLoading(true);
@@ -129,6 +187,7 @@ const GoogleNewsSearch = ({ searchInput }, { width }) => {
     setNewsResults([]);
     setQuery(query_media_au);
     searchGoogleNews(query_media_au);
+
   };
 
   // Add the useEffect hook to trigger handleSearch when the component is rendered
@@ -157,7 +216,7 @@ const GoogleNewsSearch = ({ searchInput }, { width }) => {
     }
   };
 
-  const BiasDistribution = ({ data }) => {
+  const BiasDistribution = ({ data, setBiasScore }) => {
     const biasCategories = ['Left', 'Leans Left', 'Center', 'Leans Right', 'Right'];
     const biasMedia = {
       'Left': [],
@@ -166,6 +225,53 @@ const GoogleNewsSearch = ({ searchInput }, { width }) => {
       'Leans Right': [],
       'Right': [],
     };
+
+    const getLongestBiasCategory = () => {
+      let max = 0;
+      let maxKey = '';
+      let tie = false;
+
+      Object.keys(biasMedia).forEach((key) => {
+        const length = biasMedia[key].length;
+        if (length > max) {
+          max = length;
+          maxKey = key;
+          tie = false;
+        } else if (length === max) {
+          tie = true;
+        }
+      });
+
+      return tie ? 'Mixed' : maxKey;
+    };
+
+    const getBiasScore = () => {
+      const biasCategory = getLongestBiasCategory();
+
+      let score;
+      switch (biasCategory) {
+        case 'Center':
+          score = 100;
+          break;
+        case 'Leans Right':
+        case 'Leans Left':
+          score = 70;
+          break;
+        case 'Right':
+        case 'Left':
+        case 'Mixed':
+        default:
+          score = 40;
+          break;
+      }
+
+      setBiasScore(score);
+    };
+
+    useEffect(() => {
+      getBiasScore();
+    }, [data]);
+
 
     data.forEach((item) => {
       if (biasCategories.includes(item.Bias)) {
@@ -183,7 +289,7 @@ const GoogleNewsSearch = ({ searchInput }, { width }) => {
 
     const handleBiasBarPress = (biasCategory, mediaName) => {
       setSelectedBias(selectedBias === biasCategory ? null : biasCategory);
-      setSelectedMedia(mediaName); // Add this line
+      setSelectedMedia(mediaName);
     };
 
     return (
@@ -193,7 +299,7 @@ const GoogleNewsSearch = ({ searchInput }, { width }) => {
             <TouchableOpacity
               key={index}
               style={[styles.biasMediaIcons, { width: `${bias.percentage}%` }]}
-              onPress={() => handleBiasBarPress(bias.category, bias.media)} // Change media.name to bias.media here
+              onPress={() => handleBiasBarPress(bias.category, bias.media)}
             >
               {biasMedia[bias.category].slice(0, 5).map((media, idx) => (
                 <Image
@@ -233,6 +339,11 @@ const GoogleNewsSearch = ({ searchInput }, { width }) => {
               {bias.category}
             </Text>
           ))}
+        </View>
+        <View style={styles.longestBiasCategoryContainer}>
+          <Text style={styles.longestBiasCategoryText}>
+            {getLongestBiasCategory()}
+          </Text>
         </View>
       </View>
     );
@@ -292,16 +403,18 @@ const GoogleNewsSearch = ({ searchInput }, { width }) => {
               snapToInterval={containerWidth - Sizes.fixPadding - 14}
               decelerationRate="fast"
             />
-            <BiasDistribution data={newsResults} />
+            <BiasDistribution data={newsResults} setBiasScore={setBiasScore} />
           </>
         )}
       </View>
-      <CredibilityScore
-        mediaScore={70}
-        biasScore={70}
-        sourceScore={40}
-        userScore={50}
-      />
+      {!loading && (
+        <CredibilityScore
+          mediaScore={mediaScore}
+          biasScore={biasScore}
+          sourceScore={sourceScore}
+          userScore={userScore}
+        />
+      )}
     </View>
   );
 }
@@ -336,7 +449,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 2,
-    elevation: 3,
+    elevation: 5,
   },
   newsImage: {
     width: 50,
@@ -455,6 +568,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#ffffff',
     textAlign: 'center',
+    fontFamily: 'OpenSans_SemiBold'
+  },
+  longestBiasCategoryContainer: {
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  longestBiasCategoryText: {
+    fontSize: 16,
+    color: '#ffffff',
     fontFamily: 'OpenSans_SemiBold'
   },
 });

@@ -5,8 +5,6 @@ import { TextInput } from 'react-native-paper';
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import CollapsingToolbar from "../../components/collapsingHeaderScreen";
 import { MaterialIcons, SimpleLineIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
-import ColorBar from "../../components/detailComponents/biasBar";
-import BannerSlider from "../../components/detailComponents/BannerSlider";
 import UserReview from "../../components/detailComponents/UserReview";
 import GoogleNewsSearch from "../../components/detailComponents/GoogleNewsSearch";
 
@@ -17,6 +15,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
   const item = route.params.item;
   const newsTitle = route.params.item.headLine
   const newsSource = route.params.item.newsSource
+  console.log(newsSource)
 
   // const updateState = (data) => setState((state) => ({ ...state, ...data }))
   const [isLike, setisLike] = useState(false);
@@ -115,11 +114,6 @@ const NewsDetailScreen = ({ navigation, route }) => {
             <TouchableOpacity onPress={() => openLink(newUrl)}>
               <Text numberOfLines={3} style={styles.readmore}>Read Full Article</Text>
             </TouchableOpacity>
-            {/* <Button
-              color="black"
-              title="Read Full Article"
-              onPress={() => setModalVisible(true)}
-            /> */}
             <Modal
               animationType="slide"
               transparent={false}
@@ -140,11 +134,11 @@ const NewsDetailScreen = ({ navigation, route }) => {
               </FoldableSection> */}
         <FoldableSection title="Political Bias Analysis" isfold="false">
           <View style={styles.googleNewsContainer}>
-            <GoogleNewsSearch searchInput={newsTitle} width={width} />
+            <GoogleNewsSearch searchInput={newsTitle} media={newsSource} />
           </View>
         </FoldableSection>
-        <FoldableSection title="Sentiment Analysis">
-        </FoldableSection>
+        {/* <FoldableSection title="Sentiment Analysis">
+        </FoldableSection> */}
         <FoldableSection title="User Review">
           <UserReview onSubmit={handleSubmit} media={newsSource} />
         </FoldableSection>
