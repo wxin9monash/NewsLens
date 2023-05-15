@@ -245,8 +245,11 @@ const GoogleNewsSearch = ({searchInput}, {width}) => {
       <View style={styles.resultsContainer}>
         {loading ? (
           <ActivityIndicator size="large" color="#ffffff" />
+        ) : newsResults.length === 0 ? (
+          <Text style={{ ...Fonts.whiteColor14Medium, margin: Sizes.fixPadding, marginLeft:0 }}>No results found</Text>
         ) : (
-          <FlatList
+          <>
+            <FlatList
             horizontal
             data={
               selectedMedia
@@ -288,11 +291,12 @@ const GoogleNewsSearch = ({searchInput}, {width}) => {
             snapToInterval={containerWidth - Sizes.fixPadding - 14}
             decelerationRate="fast"
           />
-        )}
-      </View>
-      {loading ? null : <BiasDistribution data={newsResults} />}
+      <BiasDistribution data={newsResults} />
+       </>
+      )}
     </View>
-  );
+  </View>
+);
 }
 const styles = StyleSheet.create({
   container: {
