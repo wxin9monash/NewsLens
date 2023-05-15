@@ -21,6 +21,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
   // const updateState = (data) => setState((state) => ({ ...state, ...data }))
   const [isLike, setisLike] = useState(false);
   const [inBookMark, setinBookMark] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState('');
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
@@ -101,17 +102,24 @@ const NewsDetailScreen = ({ navigation, route }) => {
       // Perform any action after receiving the rating
     };
 
+    const openLink = (url) => {
+      setCurrentUrl(url);
+      setModalVisible(true);
+    };
+
     return (
       <View style={styles.container}>
         <FoldableSection title="Summary" isfold="false">
           <Text style={styles.summaryText}>{item.description}</Text>
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-
-            <Button
+            <TouchableOpacity onPress={() => openLink(newUrl)}>
+              <Text numberOfLines={3} style={styles.readmore}>Read Full Article</Text>
+            </TouchableOpacity>
+            {/* <Button
               color="black"
               title="Read Full Article"
               onPress={() => setModalVisible(true)}
-            />
+            /> */}
             <Modal
               animationType="slide"
               transparent={false}
@@ -319,6 +327,14 @@ const styles = StyleSheet.create({
   },
   googleNewsContainer: {
     flex: 1,
+  },
+  readmore: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontFamily: 'OpenSans_SemiBold',
+    margin: Sizes.fixPadding,
+    marginLeft: 0,
+    textDecorationLine: 'underline',
   },
 })
 

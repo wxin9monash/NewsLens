@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
-import { Sizes, Fonts} from '../../constants/styles';
+import { Sizes, Fonts } from '../../constants/styles';
 import { WebView } from 'react-native-webview';
 import { Modal } from 'react-native';
+import CredibilityScore from './CredibilityScore';
 import image1 from '../../assets/images/media_image/7_News.png';
 import image2 from '../../assets/images/media_image/9_News.png';
 import image3 from '../../assets/images/media_image/ABC_News.jpg';
@@ -41,9 +42,9 @@ const images = [
   { name: 'Sydney Morning Herald', source: image16 },
 ];
 
-const GoogleNewsSearch = ({searchInput}, {width}) => {
+const GoogleNewsSearch = ({ searchInput }, { width }) => {
   const query_media_au = `${searchInput}`
-  const [query, setQuery] = useState({query_media_au});
+  const [query, setQuery] = useState({ query_media_au });
   const [newsResults, setNewsResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedMedia, setSelectedMedia] = useState(null);
@@ -57,25 +58,25 @@ const GoogleNewsSearch = ({searchInput}, {width}) => {
   };
 
 
-  const apiKey = '58dc965f755f122b3067a0d51f373c147cbfc15af03d7586084c321848730d97';
+  const apiKey = '17643c42c76596e64787481d58a44dbd6a09c8096788423ba3a30a08c21837fb';
   const mediaBiasData = require('../../assets/json/media_bias.json');
   const filterUniqueSources = (results) => {
     const uniqueResults = [];
     const sources = new Set();
-  
+
     results.forEach((result) => {
       if (!sources.has(result.source)) {
         const matchingImage = images.find((image) => image.name === result.source);
-  
+
         // Find matching media bias data
         const matchingMediaBiasData = mediaBiasData.find((item) => item.Media === result.source);
-  
+
         if (matchingImage) {
           let modifiedResult = {
             ...result,
             image: matchingImage.source,
           };
-  
+
           // Add attributes from mediaBiasData if a match is found
           if (matchingMediaBiasData) {
             modifiedResult = {
@@ -83,14 +84,14 @@ const GoogleNewsSearch = ({searchInput}, {width}) => {
               ...matchingMediaBiasData,
             };
           }
-  
+
           uniqueResults.push(modifiedResult);
           console.log(modifiedResult)
           sources.add(result.source);
         }
       }
     });
-  
+
     return uniqueResults;
   };
 
@@ -102,10 +103,10 @@ const GoogleNewsSearch = ({searchInput}, {width}) => {
       tbm: 'nws',
       num: 200, // Request 100 results from the API
     };
-  
+
     const queryString = new URLSearchParams(parameters).toString();
     const apiUrl = `https://serpapi.com/search?${queryString}&api_key=${apiKey}`;
-  
+
     try {
       const response = await fetch(apiUrl);
       const searchResults = await response.json();
@@ -135,7 +136,7 @@ const GoogleNewsSearch = ({searchInput}, {width}) => {
     handleSearch();
   }, []);
 
-  
+
   // const containerWidth = Dimensions.get('container').width;
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -165,13 +166,13 @@ const GoogleNewsSearch = ({searchInput}, {width}) => {
       'Leans Right': [],
       'Right': [],
     };
-  
+
     data.forEach((item) => {
       if (biasCategories.includes(item.Bias)) {
         biasMedia[item.Bias].push(item);
       }
     });
-  
+
     const totalCount = data.length;
     const biasPercentages = Object.keys(biasMedia).map((key) => ({
       category: key,
@@ -184,31 +185,31 @@ const GoogleNewsSearch = ({searchInput}, {width}) => {
       setSelectedBias(selectedBias === biasCategory ? null : biasCategory);
       setSelectedMedia(mediaName); // Add this line
     };
-  
+
     return (
       <View>
-      <View style={styles.biasMediaIconsContainer}>
-        {biasPercentages.map((bias, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[styles.biasMediaIcons, { width: `${bias.percentage}%` }]}
-            onPress={() => handleBiasBarPress(bias.category, bias.media)} // Change media.name to bias.media here
-          >
-            {biasMedia[bias.category].slice(0, 5).map((media, idx) => (
-              <Image
-                key={idx}
-                source={media.image}
-                style={[
-                  styles.mediaIcon,
-                  selectedBias === bias.category ? styles.mediaIconLarge : null,
-                ]}
-              />
-            ))}
-            {biasMedia[bias.category].length > 5 && (
-              <Text style={styles.additionalMediaText}>+{biasMedia[bias.category].length - 5}</Text>
-            )}
-          </TouchableOpacity>
-        ))}
+        <View style={styles.biasMediaIconsContainer}>
+          {biasPercentages.map((bias, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[styles.biasMediaIcons, { width: `${bias.percentage}%` }]}
+              onPress={() => handleBiasBarPress(bias.category, bias.media)} // Change media.name to bias.media here
+            >
+              {biasMedia[bias.category].slice(0, 5).map((media, idx) => (
+                <Image
+                  key={idx}
+                  source={media.image}
+                  style={[
+                    styles.mediaIcon,
+                    selectedBias === bias.category ? styles.mediaIconLarge : null,
+                  ]}
+                />
+              ))}
+              {biasMedia[bias.category].length > 5 && (
+                <Text style={styles.additionalMediaText}>+{biasMedia[bias.category].length - 5}</Text>
+              )}
+            </TouchableOpacity>
+          ))}
         </View>
         <View style={styles.biasDistributionBar}>
           {biasPercentages.map((bias, index) => (
@@ -227,12 +228,12 @@ const GoogleNewsSearch = ({searchInput}, {width}) => {
           ))}
         </View>
         <View style={styles.biasLabelsContainer}>
-        {biasPercentages.map((bias, index) => (
-          <Text key={index} style={[styles.biasLabelText, { width: `${bias.percentage}%` }]}>
-            {bias.category}
-          </Text>
-        ))}
-      </View>
+          {biasPercentages.map((bias, index) => (
+            <Text key={index} style={[styles.biasLabelText, { width: `${bias.percentage}%` }]}>
+              {bias.category}
+            </Text>
+          ))}
+        </View>
       </View>
     );
   };
@@ -240,63 +241,69 @@ const GoogleNewsSearch = ({searchInput}, {width}) => {
   return (
     <View style={styles.container} onLayout={(event) => setContainerWidth(event.nativeEvent.layout.width)}>
       {loading ? null : (
-        <Text style={{ ...Fonts.whiteColor14Medium, margin: Sizes.fixPadding, marginLeft:0 }}>Total sources: {newsResults.length}</Text>
+        <Text style={{ ...Fonts.whiteColor14Medium, margin: Sizes.fixPadding, marginLeft: 0 }}>Total sources: {newsResults.length}</Text>
       )}
       <View style={styles.resultsContainer}>
         {loading ? (
           <ActivityIndicator size="large" color="#ffffff" />
         ) : newsResults.length === 0 ? (
-          <Text style={{ ...Fonts.whiteColor14Medium, margin: Sizes.fixPadding, marginLeft:0 }}>No results found</Text>
+          <Text style={{ ...Fonts.whiteColor14Medium, margin: Sizes.fixPadding, marginLeft: 0 }}>No results found</Text>
         ) : (
           <>
             <FlatList
-            horizontal
-            data={
-              selectedMedia
-                ? newsResults.filter((result) => result.source === selectedMedia)
-                : newsResults
-            }
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item, index }) => (
-              <View style={[styles.result, { width: containerWidth - 2 * Sizes.fixPadding - 14 }]}>
-                <View style={styles.topRow}>
-                  <View style={[styles.biasColor, { backgroundColor: getBiasColor(item.Bias), borderColor: getBiasColor(item.Bias) }]}>
-                    <Text style={styles.biasText}>{item.Bias}</Text>
+              horizontal
+              data={
+                selectedMedia
+                  ? newsResults.filter((result) => result.source === selectedMedia)
+                  : newsResults
+              }
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item, index }) => (
+                <View style={[styles.result, { width: containerWidth - 2 * Sizes.fixPadding - 14 }]}>
+                  <View style={styles.topRow}>
+                    <View style={[styles.biasColor, { backgroundColor: getBiasColor(item.Bias), borderColor: getBiasColor(item.Bias) }]}>
+                      <Text style={styles.biasText}>{item.Bias}</Text>
+                    </View>
+
+                    <View style={styles.sourceImageContainer}>
+                      {item.image && <Image source={item.image} style={styles.newsImage} />}
+                      <Text style={styles.source}>{item.source}</Text>
+                    </View>
                   </View>
-                  
-                  <View style={styles.sourceImageContainer}>
-                    {item.image && <Image source={item.image} style={styles.newsImage} />}
-                    <Text style={styles.source}>{item.source}</Text>
-                  </View>
+                  {/* <Image style={styles.thumbnail} source={{ uri: item.thumbnail }} /> */}
+                  <Text numberOfLines={3} style={styles.title}>{item.title}</Text>
+                  <Text numberOfLines={3} style={styles.snippet}>{item.snippet}</Text>
+                  <TouchableOpacity onPress={() => openLink(item.link)}>
+                    <Text numberOfLines={3} style={styles.readmore}>Read Full Article</Text>
+                  </TouchableOpacity>
+                  <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                      setModalVisible(false);
+                    }}
+                  >
+                    <WebView source={{ uri: currentUrl }} />
+                    <Button onPress={() => setModalVisible(false)}>Close</Button>
+                  </Modal>
                 </View>
-                {/* <Image style={styles.thumbnail} source={{ uri: item.thumbnail }} /> */}
-                <Text numberOfLines={3} style={styles.title}>{item.title}</Text>
-                <Text numberOfLines={3} style={styles.snippet}>{item.snippet}</Text>
-                <TouchableOpacity onPress={() => openLink(item.link)}>
-                  <Text numberOfLines={3} style={styles.readmore}>Read Full Article</Text>
-                </TouchableOpacity>
-                <Modal
-                  animationType="slide"
-                  transparent={false}
-                  visible={modalVisible}
-                  onRequestClose={() => {
-                    setModalVisible(false);
-                  }}
-                >
-                <WebView source={{ uri: currentUrl }} />
-                <Button onPress={() => setModalVisible(false)}>Close</Button>
-              </Modal>
-            </View>
-            )}
-            snapToInterval={containerWidth - Sizes.fixPadding - 14}
-            decelerationRate="fast"
-          />
-      <BiasDistribution data={newsResults} />
-       </>
-      )}
+              )}
+              snapToInterval={containerWidth - Sizes.fixPadding - 14}
+              decelerationRate="fast"
+            />
+            <BiasDistribution data={newsResults} />
+          </>
+        )}
+      </View>
+      <CredibilityScore
+        mediaScore={70}
+        biasScore={70}
+        sourceScore={40}
+        userScore={50}
+      />
     </View>
-  </View>
-);
+  );
 }
 const styles = StyleSheet.create({
   container: {
@@ -334,9 +341,9 @@ const styles = StyleSheet.create({
   newsImage: {
     width: 50,
     height: 50,
-    borderRadius: 25, 
+    borderRadius: 25,
     marginBottom: 10,
-    resizeMode: 'cover', 
+    resizeMode: 'cover',
   },
   title: {
     color: '#FFFFFF',
@@ -398,7 +405,7 @@ const styles = StyleSheet.create({
   },
   biasMediaIconsContainer: {
     flexDirection: 'row',
-    marginBottom: 5,
+    margin: Sizes.fixPadding,
   },
   biasMediaIcons: {
     flexDirection: 'column',
@@ -437,6 +444,7 @@ const styles = StyleSheet.create({
   biasPercentageText: {
     fontSize: 12,
     color: '#ffffff',
+    fontFamily: 'OpenSans_SemiBold'
   },
   biasLabelsContainer: {
     flexDirection: 'row',
@@ -447,6 +455,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#ffffff',
     textAlign: 'center',
+    fontFamily: 'OpenSans_SemiBold'
   },
 });
 
