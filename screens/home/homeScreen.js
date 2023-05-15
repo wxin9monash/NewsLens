@@ -10,22 +10,21 @@ const { width } = Dimensions.get('window');
 
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI('65d1f052cb624a518a8e5c48aeb8e75d'); 
-const keywords = 'Australian'; 
 const screenWidth = Dimensions.get('window').width;
 const tabWidth = (screenWidth - (Sizes.fixPadding * 6.0)) / 3;
-const latest = 'latest'
+const latest = 'australia'
 let count = 0;
 let bannerSliderList_live = [];
+let latestNewsList_live = [];
+const currentDate = new Date();
+const currentDay = currentDate.getDate();
+const currentMonth = currentDate.getMonth();
+const currentYear = currentDate.getFullYear();
 
-async function fetchNews() {
+const startDate = currentYear + "-" + (currentMonth) + "-" + (currentDay);
+const latestDate = currentYear + "-" + (currentMonth+1) + "-" + (currentDay-7);
 
-    const currentDate = new Date();
-    const currentDay = currentDate.getDate();
-    const currentMonth = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear();
-
-    const startDate = currentYear + "-" + (currentMonth) + "-" + (currentDay);
-    // const sevenDaysAgo = new Date(currentYear, currentMonth, currentDay - 7);
+async function fetchTopNews(startDate, keywords = 'Australia', language = 'en', source = 'au', sortBy = 'relevancy') {
 
     function convertTimeToAustralia(dateString) {
 
@@ -57,20 +56,20 @@ async function fetchNews() {
     try {
         const response = await newsapi.v2.everything({
             q: keywords,
-            sortBy: 'relevancy',
+            sortBy: sortBy,
             from: startDate,
-            language: 'en',
-            // searchIn: 'description',
-            source:'au',
+            language: language,
+            source: source,
         });
 
         const articles = response.articles;
         bannerSliderList_live = [];
+        latestNewsList_live =[];
         console.log('Found', articles.length, 'articles:');
         console.log(bannerSliderList_live.length);
 
         for (const article of articles) {
-            if (bannerSliderList_live.length <= 5){
+            if (bannerSliderList_live.length <= 8){
                 const image = {uri: article.urlToImage};
                 const randomInteger = Math.floor(Math.random() * (1000 - 800 + 1)) + 800;
                 const news ={
@@ -99,6 +98,9 @@ async function fetchNews() {
                     count++
                 }
             } else {
+                latestNewsList_live.push(bannerSliderList_live[5])
+                latestNewsList_live.push(bannerSliderList_live[6])
+                bannerSliderList_live.splice(-4)
                 return;
             }
         }
@@ -109,7 +111,7 @@ async function fetchNews() {
 }
 
 if (bannerSliderList_live.length <= 4){
-    fetchNews();
+    fetchTopNews(startDate);
 } 
 
 const topNewsList = [
@@ -176,7 +178,7 @@ const HomeScreen = ({ navigation }) => {
         bannerList: bannerSliderList_live,
         activeSlide: 0,
         topNews: topNewsList,
-        latestNews: latestNewsList,
+        latestNews: latestNewsList_live,
     })
 
     const updateState = (data) => setState((state) => ({ ...state, ...data }))
@@ -225,7 +227,7 @@ const HomeScreen = ({ navigation }) => {
                         Latest News
                     </Text>
                     <Text
-                        onPress={() => navigation.push('AllLatestNews', {latest} )}
+                        onPress={() => navigation.push('AllTopNews', {category: latest} )}
                         style={{ ...Fonts.whiteColor12Bold }}
                     >
                         View All
@@ -277,7 +279,7 @@ const HomeScreen = ({ navigation }) => {
                                         alignItems: 'center'
                                     }}>
                                         <Text
-                                            numberOfLines={1}
+                                            numberOfLines={3}
                                             style={{
                                                 ...Fonts.whiteColor14Bold,
                                                 maxWidth: width - 150.0,
@@ -287,8 +289,8 @@ const HomeScreen = ({ navigation }) => {
                                         </Text>
                                         <MaterialIcons
                                             name={item.inBookmark ? "bookmark" : "bookmark-outline"}
-                                            color={item.inBookmark ? Colors.blackColor : Colors.grayColor}
-                                            size={15}
+                                            color={item.inBookmark ? Colors.whiteColor : Colors.whiteColor}
+                                            size={22}
                                             onPress={() => updateLatestNews({ id: item.id })}
                                         />
                                     </View>
@@ -300,7 +302,7 @@ const HomeScreen = ({ navigation }) => {
                                                 color={Colors.whiteColor}
                                                 size={13}
                                             />
-                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor10Medium }}>
+                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor12Medium }}>
                                                 {item.date}
                                             </Text>
                                         </View>
@@ -310,133 +312,20 @@ const HomeScreen = ({ navigation }) => {
                                                 size={13}
                                                 color={Colors.whiteColor}
                                             />
-                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor10Medium }}>
+                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor12Medium }}>
                                                 {item.viewsCount}
                                             </Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <MaterialIcons
-                                                name="share"
-                                                color={Colors.whiteColor}
-                                                size={13}
-                                            />
-                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor10Medium }}>
-                                                Share
-                                            </Text>
-                                        </View>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <MaterialCommunityIcons
-                                                name="comment-text-outline"
-                                                color={Colors.whiteColor}
-                                                size={13}
-                                            />
-                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor10Medium }}>
-                                                {item.commentsCount}comments
-                                            </Text>
-                                        </View>
+
                                     </View>
 
                                     <Text
                                         numberOfLines={4}
-                                        style={{ ...Fonts.whiteColor10Medium }}
+                                        style={{ ...Fonts.whiteColor11Medium }}
                                     >
-                                        {item.newsDetail}
+                                        {item.description}
                                     </Text>
                                 </View>
-                            </TouchableOpacity>
-                        </View>
-                    ))
-                }
-            </View>
-        )
-    }
-
-    function updateTopNews({ id }) {
-        const newList = topNews.map((item) => {
-            if (item.id === id) {
-                const updatedItem = { ...item, inBookmark: !item.inBookmark };
-                return updatedItem;
-            }
-            return item;
-        });
-        updateState({ topNews: newList })
-    }
-
-    function topNewsInfo() {
-        return (
-            <View>
-                <View style={styles.topNewsTitleWrapStyle}>
-                    <Text style={{ ...Fonts.blackColor16Bold }}>
-                        Top News
-                    </Text>
-                    <Text
-                        onPress={() => navigation.push('AllTopNews')}
-                        style={{ ...Fonts.blackColor12Bold }}
-                    >
-                        View All
-                    </Text>
-                </View>
-                {
-                    topNews.map((item) => (
-                        <View key={`${item.id}`}>
-                            <TouchableOpacity
-                                activeOpacity={0.7}
-                                onPress={() => {
-                                    item.isVideo
-                                        ?
-                                        navigation.push('VideoDetail', { item })
-                                        :
-                                        navigation.push('NewsDetail', { item })
-                                }}
-                                style={styles.topNewsWrapStyle}
-                            >
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <View>
-                                        <Image
-                                            source={item.newsImage}
-                                            style={{ width: 60.0, height: 60.0, borderRadius: Sizes.fixPadding - 6.0, }}
-                                        />
-                                        {
-                                            item.isVideo
-                                                ?
-                                                <MaterialIcons
-                                                    name="play-arrow"
-                                                    color={Colors.whiteColor}
-                                                    size={23}
-                                                    style={{
-                                                        position: 'absolute',
-                                                        bottom: 0.0,
-                                                        left: 0.0,
-                                                    }}
-                                                />
-                                                :
-                                                null
-                                        }
-                                    </View>
-                                    <View style={{
-                                        marginLeft: Sizes.fixPadding,
-                                        maxWidth: width - 160,
-                                    }}>
-                                        <Text
-                                            numberOfLines={2}
-                                            style={{ lineHeight: 18, ...Fonts.blackColor13Bold }}
-                                        >
-                                            {item.headLine}
-                                        </Text>
-                                        <Text
-                                            numberOfLines={2}
-                                            style={{ ...Fonts.grayColor10SemiBold }}
-                                        >
-                                            {item.newsDetail}
-                                        </Text>
-                                    </View>
-                                </View>
-                                <MaterialIcons
-                                    name={item.inBookmark ? "bookmark" : 'bookmark-outline'}
-                                    color={item.inBookmark ? Colors.blackColor : Colors.grayColor}
-                                    size={16}
-                                    onPress={() => updateTopNews({ id: item.id })}
-                                />
                             </TouchableOpacity>
                         </View>
                     ))
@@ -484,7 +373,7 @@ const HomeScreen = ({ navigation }) => {
                         <View style={{ marginTop: 0, marginRight: Sizes.fixPadding * 5.0, }}>
                             <Text
                                 numberOfLines={2}
-                                style={{ ...Fonts.whiteColor14SemiBold }}
+                                style={{ ...Fonts.whiteColor14Bold }}
                             >
                                 {item.headLine}
                             </Text>
@@ -521,7 +410,7 @@ const HomeScreen = ({ navigation }) => {
                                     </Text>
                                 </View>
                             </View>
-                            <Text style={{ ...Fonts.whiteColor10Medium }}>
+                            <Text style={{ ...Fonts.whiteColor11Medium }}>
                                 {item.description}
                             </Text>
                         </View>
@@ -694,7 +583,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#65737e',
         elevation: 4.0,
         marginTop: -30.0,
-        marginHorizontal: Sizes.fixPadding * 2.5,
+        marginHorizontal: Sizes.fixPadding * 1.5,
         paddingVertical: Sizes.fixPadding - 5.0,
         paddingHorizontal: Sizes.fixPadding,
         borderRadius: Sizes.fixPadding - 5.0,

@@ -9,7 +9,7 @@ import {
 
 import { doc, setDoc } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../firebaseConfig';
-import Slider from 'react-native-slider';
+import Slider from '@react-native-community/slider';
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { runTransaction, updateDoc } from 'firebase/firestore';
 
