@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Colors } from "../constants/styles";
 import {
     Animated,
@@ -8,24 +7,6 @@ import {
     View,
     TouchableOpacity,
 } from 'react-native';
-
-const propTypes = {
-    children: PropTypes.node.isRequired,
-    src: PropTypes.any,
-    element: PropTypes.element,
-    titleColor: PropTypes.string,
-    leftItem: PropTypes.element,
-    leftItemPress: PropTypes.func,
-    rightItem: PropTypes.element,
-    rightItemPress: PropTypes.func,
-    toolbarColor: PropTypes.string,
-    toolbarMaxHeight: PropTypes.number,
-    toolbarMinHeight: PropTypes.number,
-    borderBottomRadius: PropTypes.number,
-    isImageBlur: PropTypes.bool,
-    childrenMinHeight: PropTypes.number,
-    isImage: PropTypes.bool,
-}
 
 const defaultProps = {
     leftItem: null,
@@ -165,7 +146,6 @@ class CollapsingToolbar extends Component {
     }
 }
 
-CollapsingToolbar.propTypes = propTypes;
 CollapsingToolbar.defaultProps = defaultProps;
 
 const styles = StyleSheet.create({

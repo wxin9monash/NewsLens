@@ -112,59 +112,6 @@ if (bannerSliderList_live.length <= 4){
     fetchNews();
 } 
 
-const bannerSliderList = [
-    {
-        id: '1',
-        inBookmark: false,
-        newsImage: require('../../assets/images/news_image/img22.png'),
-        headLine: 'Over 2,500% rise in Covid death registrations in second wave in Kerala',
-        date: '10/07/2021',
-        viewsCount: 365,
-        commentsCount: 100,
-        newsDetail: 'Covid-19 death registration in local bodies in the state picked up at alarming pace during the second wave, going from 404 covid deaths a month to over...'
-    },
-    {
-        id: '2',
-        inBookmark: false,
-        newsImage: require('../../assets/images/news_image/img23.jpg'),
-        headLine: 'High Court Grants Temporary Bail To Surendra Gadling In Elgar Parishad Case',
-        date: '10/07/2021',
-        viewsCount: 565,
-        commentsCount: 20,
-        newsDetail: 'Surendra Gadling. ladged at Taloja Jail in Navi Mumbai, can be out on bail from August 13 to 21, said a division bench of Justices SS Shinde and N J Jamadar.'
-    },
-    {
-        id: '3',
-        inBookmark: false,
-        newsImage: require('../../assets/images/news_image/img26.png'),
-        headLine: 'Gujarat Zoo To Trade 40 Asiatic Lions For Other Wild Animals',
-        date: '10/07/2021',
-        viewsCount: 360,
-        commentsCount: 70,
-        newsDetail: 'Gujarat Zoo To Trade 40 Asiatic Lions For Other Wild Animals Under the animal exchange programme, 40 Asiatic lions of this zoo will be traded with zoos across the country for different wild animals.',
-    },
-    {
-        id: '4',
-        inBookmark: false,
-        newsImage: require('../../assets/images/news_image/img25.png'),
-        headLine: 'Mi Hyper Sonic Power Bank With 50W Fast Charging, 20,000mAh Capacity Launched in India.',
-        date: '10/07/2021',
-        viewsCount: 300,
-        commentsCount: 50,
-        newsDetail: 'Mi Hyper Sonic Power Bank can deliver up to 22.5W via USB Type-A ports.'
-    },
-    {
-        id: '5',
-        inBookmark: false,
-        newsImage: require('../../assets/images/news_image/img24.png'),
-        headLine: 'Flat White: The Coffe Brew That Australia And New Zealand Continue To Fight Over',
-        date: '10/07/2021',
-        viewsCount: 305,
-        commentsCount: 10,
-        newsDetail: 'It\'s not just the Aussie-Kiwi legends that form the backdrop of the Flat White origin story, there\'s also the rivalry between Sydney and Melbourne akin to the Delhi-Mumbai city rivarly.'
-    }
-];
-
 const topNewsList = [
     {
         id: '1',

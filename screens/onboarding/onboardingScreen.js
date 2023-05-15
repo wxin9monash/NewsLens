@@ -35,11 +35,12 @@ const onboardingScreenList = [
 ];
 
 const OnboardingScreen = ({ navigation }) => {
+    const [backClickCount, setBackClickCount] = useState(0);
 
-    const backAction = () => {
-        backClickCount == 1 ? BackHandler.exitApp() : _spring();
+    const backAction = useCallback(() => {
+        backClickCount === 1 ? BackHandler.exitApp() : _spring();
         return true;
-    }
+    }, [backClickCount]); // <-- dependency array added
 
     useFocusEffect(
         useCallback(() => {
@@ -49,13 +50,13 @@ const OnboardingScreen = ({ navigation }) => {
     );
 
     function _spring() {
-        setBackClickCount(1);
+        setBackClickCount((prevCount) => prevCount + 1); // <-- use function to update state
         setTimeout(() => {
-            setBackClickCount(0)
-        }, 1000)
+            setBackClickCount(0);
+        }, 1000);
     }
 
-    const [backClickCount, setBackClickCount] = useState(0);
+
     const [onboardingScreens, setOnboardingScreen] = useState(onboardingScreenList);
     const [activeSlide, setActiveSlide] = useState(0);
 

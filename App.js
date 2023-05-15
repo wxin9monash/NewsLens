@@ -10,7 +10,6 @@ import newsDetailScreen from "./screens/newsDetail/newsDetailScreen";
 import allTopNewsScreen from "./screens/allTopNews/allTopNewsScreen";
 import allLatestNewsScreen from "./screens/allLatestNews/allLatestNewsScreen";
 import editProfileScreen from "./screens/editProfile/editProfileScreen";
-import addNewCardScreen from "./screens/addNewCard/addNewCardScreen";
 import notificationsScreen from "./screens/notifications/notificationsScreen";
 import settingsScreen from "./screens/settings/settingsScreen";
 import onboardingScreen from "./screens/onboarding/onboardingScreen";
@@ -44,7 +43,6 @@ const App = () => {
             return [id];
           }}
         />
-        <Stack.Screen name="AddNewCard" component={addNewCardScreen} />
         <Stack.Screen name="Notifications" component={notificationsScreen} />
         <Stack.Screen name="Settings" component={settingsScreen} />
       </Stack.Navigator>
