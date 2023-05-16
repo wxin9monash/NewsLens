@@ -119,12 +119,12 @@ const SearchScreen = ({ navigation, route }) => {
                                             </View>
 
                                         </View>
-                                        <MaterialIcons
+                                        {/* <MaterialIcons
                                             name={item.inBookmark ? "bookmark" : 'bookmark-outline'}
                                             color={item.inBookmark ? Colors.whiteColor : Colors.grayColor}
                                             size={15}
                                             onPress={() => updateSearchResults({ id: item.id })}
-                                        />
+                                        /> */}
                                     </View>
                                 </View>
                             </View>

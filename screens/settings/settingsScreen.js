@@ -16,7 +16,7 @@ const SettingsScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
-            <StatusBar translucent={false} backgroundColor={Colors.blackColor} />
+            <StatusBar translucent={false} backgroundColor={Colors.backColor} />
             <View style={{ flex: 1 }}>
                 {header()}
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -42,7 +42,7 @@ const SettingsScreen = ({ navigation }) => {
     function versionInfo() {
         return (
             <View style={{ marginVertical: Sizes.fixPadding, marginHorizontal: Sizes.fixPadding * 2.0, }}>
-                <Text style={{ ...Fonts.blackColor14Bold }}>
+                <Text style={{ ...Fonts.whiteColor14Bold }}>
                     Version
                 </Text>
                 <Text style={{ marginTop: Sizes.fixPadding - 15.0, ...Fonts.grayColor12Medium }}>
@@ -57,7 +57,7 @@ const SettingsScreen = ({ navigation }) => {
             <Text style={{
                 marginHorizontal: Sizes.fixPadding * 2.0,
                 marginVertical: Sizes.fixPadding,
-                ...Fonts.blackColor14Bold
+                ...Fonts.whiteColor14Bold
             }}>
                 Terms of use
             </Text>
@@ -69,7 +69,7 @@ const SettingsScreen = ({ navigation }) => {
             <Text style={{
                 marginHorizontal: Sizes.fixPadding * 2.0,
                 marginVertical: Sizes.fixPadding,
-                ...Fonts.blackColor14Bold
+                ...Fonts.whiteColor14Bold
             }}>
                 About Us
             </Text>
@@ -81,7 +81,7 @@ const SettingsScreen = ({ navigation }) => {
             <Text style={{
                 marginHorizontal: Sizes.fixPadding * 2.0,
                 marginVertical: Sizes.fixPadding,
-                ...Fonts.blackColor14Bold
+                ...Fonts.whiteColor14Bold
             }}>
                 Privacy Policy
             </Text>
@@ -91,7 +91,7 @@ const SettingsScreen = ({ navigation }) => {
     function servicesInfo() {
         return (
             <View style={{ marginVertical: Sizes.fixPadding, marginHorizontal: Sizes.fixPadding * 2.0, }}>
-                <Text style={{ ...Fonts.blackColor14Bold }}>
+                <Text style={{ ...Fonts.whiteColor14Bold }}>
                     Services
                 </Text>
                 <Text style={{ marginTop: Sizes.fixPadding - 15.0, ...Fonts.grayColor12Medium }}>
@@ -104,7 +104,7 @@ const SettingsScreen = ({ navigation }) => {
     function clearCacheInfo() {
         return (
             <View style={{ marginVertical: Sizes.fixPadding, marginHorizontal: Sizes.fixPadding * 2.0, }}>
-                <Text style={{ ...Fonts.blackColor14Bold }}>
+                <Text style={{ ...Fonts.whiteColor14Bold }}>
                     Clear Cache
                 </Text>
                 <Text style={{ marginTop: Sizes.fixPadding - 15.0, ...Fonts.grayColor12Medium }}>
@@ -129,14 +129,14 @@ const SettingsScreen = ({ navigation }) => {
     function notificationSetting() {
         return (
             <View style={styles.notificationSettingWrapStyle}>
-                <Text style={{ ...Fonts.blackColor14Bold }}>
+                <Text style={{ ...Fonts.whiteColor14Bold }}>
                     Push Notifications
                 </Text>
                 <Switch
                     trackColor={{ true: '#7D7D7D', false: '#C3C3C3' }}
-                    thumbColor={pushNotification ? Colors.blackColor : '#9E9E9E'}
+                    thumbColor={pushNotification ? Colors.whiteColor : '#9E9E9E'}
                     value={pushNotification}
-                    color={Colors.blackColor}
+                    color={Colors.whiteColor}
                     style={{ transform: [{ scaleX: .9 }, { scaleY: .8 }] }}
                     onValueChange={(value) => updateState({ pushNotification: value })}
                 />
@@ -149,11 +149,11 @@ const SettingsScreen = ({ navigation }) => {
             <View style={styles.headerWrapStyle}>
                 <MaterialIcons
                     name="arrow-back-ios"
-                    color={Colors.blackColor}
+                    color={Colors.whiteColor}
                     size={25}
                     onPress={() => navigation.pop()}
                 />
-                <Text style={{ marginLeft: Sizes.fixPadding + 5.0, ...Fonts.blackColor20Bold }}>
+                <Text style={{ marginLeft: Sizes.fixPadding + 5.0, ...Fonts.whiteColor20Bold }}>
                     Settings
                 </Text>
             </View>

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { SafeAreaView, View, StatusBar, TouchableHighlight, Animated, TouchableOpacity, Dimensions, Image, Text, StyleSheet } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Snackbar } from 'react-native-paper';
 import { MaterialIcons, SimpleLineIcons, FontAwesome } from '@expo/vector-icons';
-
+import { BookmarkContext } from "../BookmarkContext";
 const { width } = Dimensions.get('window');
+
 
 const bookmarkList = [
     {
@@ -70,20 +71,37 @@ const bookmarkList = [
     }
 ];
 
-const rowSwipeAnimatedValues = {};
-
-Array(bookmarkList.length + 1)
-    .fill('')
-    .forEach((_, i) => {
-        rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
-    });
+// Array(bookmarkList.length).fill('').forEach((_, i) => {
+//     rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
+// });
 
 const BookmarksScreen = ({ navigation }) => {
-
+    const { bookmarks, removeBookmark, updateBookmark } = useContext(BookmarkContext);
     const [showSnackBar, setShowSnackBar] = useState(false);
+    const [listData, setListData] = useState(bookmarks);
 
-    const [listData, setListData] = useState(bookmarkList);
+    const rowSwipeAnimatedValues = {};
+    bookmarks.forEach((item) => {
+        if (!rowSwipeAnimatedValues[item.key]) {
+            rowSwipeAnimatedValues[item.key] = new Animated.Value(0);
+        }
+    });
 
+    // Listen for changes in bookmarkUpdated and update local state accordingly.
+    useEffect(() => {
+        setListData(bookmarks);
+    }, [bookmarks]);
+
+    useEffect(() => {
+        bookmarks.forEach((item) => {
+            if (!rowSwipeAnimatedValues[item.key]) {
+                rowSwipeAnimatedValues[item.key] = new Animated.Value(0);
+            }
+        });
+    }, [bookmarks]);
+
+
+    console.log(bookmarks)
     const closeRow = (rowMap, rowKey) => {
         if (rowMap[rowKey]) {
             rowMap[rowKey].closeRow();
@@ -132,8 +150,8 @@ const BookmarksScreen = ({ navigation }) => {
         const newData = [...listData];
         const prevIndex = listData.findIndex(item => item.key === rowKey);
         newData.splice(prevIndex, 1);
+        updateBookmark(newData);
         setShowSnackBar(true);
-        setListData(newData);
     };
 
     const onSwipeValueChange = swipeData => {
@@ -142,8 +160,8 @@ const BookmarksScreen = ({ navigation }) => {
     };
 
     function removeItem({ key }) {
-        const newList = listData.filter((item) => item.key != key)
-        setListData(newList);
+        console.log(key)
+        removeBookmark(key);
         setShowSnackBar(true);
     }
 
@@ -156,7 +174,7 @@ const BookmarksScreen = ({ navigation }) => {
                 <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
-                        data.item.isVideo ?
+                        data.isVideo ?
                             navigation.push('VideoDetail', { item: data.item })
                             :
                             navigation.push('NewsDetail', { item: data.item })
@@ -199,7 +217,7 @@ const BookmarksScreen = ({ navigation }) => {
                         </View>
                     </View>
                     <View style={styles.dateBookmarkAndCategoryWrapStyle}>
-                        <View style={{ marginLeft: 80 + Sizes.fixPadding,flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{ marginLeft: 80 + Sizes.fixPadding, flexDirection: 'row', alignItems: 'center' }}>
                             <MaterialIcons
                                 name="access-time"
                                 color={Colors.grayColor}
@@ -223,7 +241,7 @@ const BookmarksScreen = ({ navigation }) => {
                             </Text>
                         </View>
                         <Text
-                            onPress={() => removeItem({ key: data.item.key })}
+                            onPress={() => removeItem(data.item)}
                             style={{ ...Fonts.whiteColor12Bold }}>
                             Remove
                         </Text>
@@ -272,7 +290,7 @@ const BookmarksScreen = ({ navigation }) => {
                         </>
                         :
                         <SwipeListView
-                            data={listData}
+                            data={bookmarks}
                             renderItem={renderItem}
                             renderHiddenItem={renderHiddenItem}
                             rightOpenValue={-100}
@@ -288,13 +306,14 @@ const BookmarksScreen = ({ navigation }) => {
                         onDismiss={() => setShowSnackBar(false)}
                     >
                         <Text style={{ ...Fonts.whiteColor13Medium }}>
-                            News remove from bookmarks
+                            News removed from bookmarks
                         </Text>
                     </Snackbar>
                 </View>
             </View>
         </SafeAreaView>
     );
+
 
     function header() {
         return (

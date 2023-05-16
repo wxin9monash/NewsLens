@@ -41,7 +41,7 @@ const ProfileScreen = ({ navigation }) => {
                             style={{
                                 ...styles.cancelAndLogoutButtonStyle,
                                 marginRight: Sizes.fixPadding,
-                                backgroundColor: Colors.blackColor,
+                                backgroundColor: Colors.whiteColor,
                             }}>
                             <Text style={{ ...Fonts.whiteColor20Bold }}>
                                 Cancel

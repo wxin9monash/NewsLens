@@ -15,6 +15,7 @@ import settingsScreen from "./screens/settings/settingsScreen";
 import onboardingScreen from "./screens/onboarding/onboardingScreen";
 import splashScreen from "./screens/splashScreen";
 import PoliticalBiasScreen from './screens/politicalBias/PoliticalBiasScreen';
+import { BookmarkProvider } from './screens/BookmarkContext';
 
 LogBox.ignoreAllLogs();
 
@@ -22,6 +23,7 @@ const Stack = createStackNavigator();
 
 const App = () => {
   return (
+    <BookmarkProvider>
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
@@ -49,6 +51,7 @@ const App = () => {
         <Stack.Screen name="Settings" component={settingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+    </BookmarkProvider>
   );
 }
 

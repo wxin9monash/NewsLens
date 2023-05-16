@@ -118,7 +118,7 @@ const PoliticalBiasScreen = () => {
                                 {expandedSection === 'right' &&
                                     <ScrollView>
                                         <Text style={styles.sectionText}>
-                                            <Text style={styles.sectionTitle}>What is <Text style={{ color: 'red' }}>"Left"</Text></Text>{"\n"}
+                                            <Text style={styles.sectionTitle}>What is <Text style={{ color: 'red' }}>"Right"</Text></Text>{"\n"}
                                             {"\n"}&gt; The "right" is usually emphasizes individualism and is more conservative in its political approach and views.{"\n"}
                                             {"\n"}&gt; The Enlightenment period emerged as a distinct political viewpoint that gained importance during the Industrial Revolution.{"\n"}
                                             {"\n"}&gt; Characterized by authority, hierarchy, and tradition.{"\n"}

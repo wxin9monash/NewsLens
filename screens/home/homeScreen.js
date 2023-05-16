@@ -1,11 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { SafeAreaView, Dimensions, ScrollView, View, TouchableOpacity, StatusBar, Image, Text, ImageBackground, StyleSheet, Animated } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons, SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Carousel, { Pagination } from 'react-native-snap-carousel-v4';
 import { TextInput, Button } from 'react-native-paper';
 import { style } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
-
+import { BookmarkContext } from "../BookmarkContext";
 const { width } = Dimensions.get('window');
 
 const NewsAPI = require('newsapi');
@@ -25,6 +25,7 @@ const currentYear = currentDate.getFullYear();
 
 const startDate = currentYear + "-" + (currentMonth) + "-" + (currentDay);
 const latestDate = currentYear + "-" + (currentMonth+1) + "-" + (currentDay-7);
+
 
 async function fetchTopNews(startDate, keywords = 'Australia', language = 'en', source = 'au', sortBy = 'relevancy') {
 
@@ -151,6 +152,7 @@ const topNewsList = [
 ];
 
 const HomeScreen = ({ navigation }) => {
+    const { addBookmark } = useContext(BookmarkContext);
 
     const [state, setState] = useState({
         bannerList: bannerSliderList_live,
@@ -260,17 +262,18 @@ const HomeScreen = ({ navigation }) => {
                                             numberOfLines={3}
                                             style={{
                                                 ...Fonts.whiteColor14Bold,
-                                                maxWidth: width - 150.0,
+                                                maxWidth: width,
+                                                margin: Sizes.fixPadding
                                             }}
                                         >
                                             {item.headLine}
                                         </Text>
-                                        <MaterialIcons
+                                        {/* <MaterialIcons
                                             name={item.inBookmark ? "bookmark" : "bookmark-outline"}
                                             color={item.inBookmark ? Colors.whiteColor : Colors.whiteColor}
                                             size={22}
                                             onPress={() => updateLatestNews({ id: item.id })}
-                                        />
+                                        /> */}
                                     </View>
 
                                     <View style={styles.latestNewsCommentDateViewsWrapStyle}>
@@ -299,7 +302,7 @@ const HomeScreen = ({ navigation }) => {
 
                                     <Text
                                         numberOfLines={4}
-                                        style={{ ...Fonts.whiteColor11Medium }}
+                                        style={{marginTop: Sizes.fixPadding, marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor12Medium, alignSelf:'center' }}
                                     >
                                         {item.description}
                                     </Text>
@@ -326,6 +329,7 @@ const HomeScreen = ({ navigation }) => {
     function bannerSlider() {
 
         const renderItem = ({ item }) => (
+
             
             <TouchableOpacity
                 activeOpacity={0.7}
@@ -346,12 +350,15 @@ const HomeScreen = ({ navigation }) => {
                             color={Colors.whiteColor}
                             size={22}
                             style={{ alignSelf: 'flex-end' }}
-                            onPress={() => updateBannerList({ id: item.id })}
+                            onPress={() => {
+                                addBookmark(item);
+                                updateBannerList({ id: item.id });
+                              }}
                         />
                         <View style={{ marginTop: 0, marginRight: Sizes.fixPadding * 5.0, }}>
                             <Text
                                 numberOfLines={2}
-                                style={{ ...Fonts.whiteColor14Bold }}
+                                style={{ ...Fonts.whiteColor16Bold }}
                             >
                                 {item.headLine}
                             </Text>
@@ -362,7 +369,7 @@ const HomeScreen = ({ navigation }) => {
                                         color={Colors.whiteColor}
                                         size={13}
                                     />
-                                    <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor12Medium }}>
+                                    <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor13Medium }}>
                                         {item.date}
                                     </Text>
                                 </View>
@@ -372,24 +379,24 @@ const HomeScreen = ({ navigation }) => {
                                         size={13}
                                         color={Colors.whiteColor}
                                     />
-                                    <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor12Medium }}>
+                                    <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor13Medium }}>
                                         {item.viewsCount}
                                     </Text>
                                 </View>
 
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <MaterialCommunityIcons
                                         name="comment-text-outline"
                                         color={Colors.whiteColor}
                                         size={13}
                                     />
-                                    <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor12Medium }}>
+                                    <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor13Medium }}>
                                         {item.commentsCount}
                                     </Text>
-                                </View>
+                                </View> */}
                             </View>
-                            <Text style={{ ...Fonts.whiteColor11Medium }}>
-                                {item.description}
+                            <Text style={{ ...Fonts.whiteColor12Medium }}>
+                                {item.description.slice(0, 210)}
                             </Text>
                         </View>
                     </View>
@@ -577,6 +584,7 @@ const styles = StyleSheet.create({
     },
     latestNewsCommentDateViewsWrapStyle: {
         marginVertical: Sizes.fixPadding - 7.0,
+        margin: Sizes.fixPadding,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',

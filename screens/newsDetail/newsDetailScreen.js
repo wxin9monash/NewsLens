@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { SafeAreaView, Dimensions, View, StatusBar, Text, TouchableOpacity, StyleSheet, Button, Modal, Animated, Easing, ActivityIndicator } from "react-native";
 import { WebView } from 'react-native-webview';
 import { TextInput } from 'react-native-paper';
@@ -7,6 +7,7 @@ import CollapsingToolbar from "../../components/collapsingHeaderScreen";
 import { MaterialIcons, SimpleLineIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import UserReview from "../../components/detailComponents/UserReview";
 import GoogleNewsSearch from "../../components/detailComponents/GoogleNewsSearch";
+import { BookmarkContext } from "../BookmarkContext";
 
 const { width } = Dimensions.get('window');
 
@@ -15,6 +16,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
   const item = route.params.item;
   const newsTitle = route.params.item.headLine
   const newsSource = route.params.item.newsSource
+  const { addBookmark, removeBookmark } = useContext(BookmarkContext);
   console.log(newsSource)
 
   // const updateState = (data) => setState((state) => ({ ...state, ...data }))
@@ -205,18 +207,27 @@ const NewsDetailScreen = ({ navigation, route }) => {
           flexDirection: 'row',
           alignItems: 'center',
         }}>
-          <MaterialIcons
+          {/* <MaterialIcons
             name={isLike ? "thumb-up-alt" : "thumb-up-off-alt"}
             color={Colors.whiteColor}
             size={18}
             onPress={() => setisLike(!isLike)}
-          />
+          /> */}
           <MaterialIcons
-            name={inBookMark ? "bookmark" : 'bookmark-outline'}
+            name={inBookMark ? "bookmark" : "bookmark-outline"}
             color={Colors.whiteColor}
-            size={18}
+            size={25}
             style={{ marginLeft: Sizes.fixPadding - 5.0 }}
-            onPress={() => setinBookMark(!inBookMark)}
+            onPress={() => {
+              if (inBookMark) {
+                // Handle the action when the item is already bookmarked
+                addBookmark(item);
+              } else {
+                // Handle the action when the item is not bookmarked
+                removeBookmark(item);
+              }
+              setinBookMark(!inBookMark);
+            }}
           />
         </View>
       </View>

@@ -60,7 +60,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
     setModalVisible(true);
   };
 
-  const apiKey = '17643c42c76596e64787481d58a44dbd6a09c8096788423ba3a30a08c21837fb';
+  const apiKey = 'e9e1915a46577b2706bbe40649ccb1c86a761cf5626f089cc9cb72ae7620174a';
   // 46a5a4727b4fc5a940e3abf2f792fd255683dee662ce31df157fc16ba4aa6291
   // e9e1915a46577b2706bbe40649ccb1c86a761cf5626f089cc9cb72ae7620174a
 
@@ -255,11 +255,11 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
           break;
         case 'Leans Right':
         case 'Leans Left':
+        case 'Mixed':
           score = 70;
           break;
         case 'Right':
         case 'Left':
-        case 'Mixed':
         default:
           score = 40;
           break;
@@ -396,7 +396,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
                     }}
                   >
                     <WebView source={{ uri: currentUrl }} />
-                    <Button onPress={() => setModalVisible(false)}>Close</Button>
+                    <Button backgroundColor='black' title="Close" onPress={() => setModalVisible(false)}>Close</Button>
                   </Modal>
                 </View>
               )}
