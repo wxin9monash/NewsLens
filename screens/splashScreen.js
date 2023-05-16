@@ -44,14 +44,14 @@ const SplashScreen = ({ navigation }) => {
                     <Image
                         source={require('../assets/images/logo.png')}
                         style={{
-                            height: '100%',
-                            width: 150.0,
+                            height: '150%',
+                            width: 150.0*1.5,
                         }}
                         resizeMode="contain"
                     />
                     <CircleFade
                         size={50}
-                        color={Colors.blackColor}
+                        color={Colors.whiteColor}
                         style={{
                             position: 'absolute',
                             bottom: 60.0,

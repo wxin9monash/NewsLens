@@ -10,27 +10,27 @@ const { width } = Dimensions.get('window');
 const onboardingScreenList = [
     {
         id: '1',
-        onboardingImage: require("../../assets/images/category_01.png"),
-        title: 'Welcome to NEWSLENZ App',
-        description: `Thank you for download India Today News\nApp, enjoy this amazing app with\ncool features.`,
+        onboardingImage: require("../../assets/images/content.png"),
+        title: 'Investigate Current News',
+        description: `Find what you need, when you need it - our news software search function covers links, headlines, and keywords, so you never miss a beat.`,
     },
     {
         id: '2',
-        onboardingImage: require("../../assets/images/content.png"),
-        title: 'Welcome to NEWSLENZ App',
-        description: `Thank you for download NEWSLENZ\nApp, enjoy this amazing app with\ncool features.`,
+        onboardingImage: require("../../assets/images/category_01.png"),
+        title: 'Dive into Specific Themes',
+        description: `From global headlines to your favorite hobbies, our news software keeps you in the know with a category for every interest.`,
     },
     {
         id: '3',
-        onboardingImage: require("../../assets/images/subscribe.png"),
-        title: 'Take your freedom',
-        description: `Check political bias of the news, and take\nyour freedom to decide if you want to see the anslyis.`,
+        onboardingImage: require("../../assets/images/political_bias.png"),
+        title: 'Evaluate Political Leanings',
+        description: `Stay informed, stay objective - our news software's bias feature lets you see the political leanings of your news sources, so you can make up your own mind.`,
     },
     {
         id: '4',
-        onboardingImage: require("../../assets/images/bookmark.png"),
-        title: 'Save artical for later',
-        description: `Hit the bookmark icon on any article to\nsave for later.`,
+        onboardingImage: require("../../assets/images/credit.png"),
+        title: 'Quantify News Credibility',
+        description: `Get the facts, not the fiction - our news software's credibility score feature rates the truthfulness of your news sources, making it easy to identify reliable sources and stay informed.`,
     }
 ];
 
@@ -71,8 +71,8 @@ const OnboardingScreen = ({ navigation }) => {
             }}>
                 <Text
                     style={{
-                        ...Fonts.blackColor12SemiBold,
-                        marginTop: StatusBar.currentHeight + 20.0,
+                        ...Fonts.blackColor18Bold,
+                        marginTop: StatusBar.currentHeight + 60.0,
                     }}
                 >
                     {item.title}
@@ -80,7 +80,7 @@ const OnboardingScreen = ({ navigation }) => {
                 <Image
                     source={item.onboardingImage}
                     style={{
-                        width: 250.0, height: 200.0,
+                        width: 250.0*1.3, height: 200.0*1.3,
                         alignSelf: 'center',
                         flex: 1,
                     }}
@@ -88,8 +88,9 @@ const OnboardingScreen = ({ navigation }) => {
                 />
                 <Text
                     style={{
-                        marginBottom: Sizes.fixPadding - 5.0,
-                        ...Fonts.whiteColor13Medium,
+                        marginBottom: Sizes.fixPadding  + 80.0,
+                        margin: Sizes.fixPadding,
+                        ...Fonts.whiteColor14Medium,
                         textAlign: 'center',
                     }}
                 >
@@ -151,7 +152,7 @@ const OnboardingScreen = ({ navigation }) => {
                     ?
                     <Text
                         onPress={() => { navigation.push('BottomTabBar') }}
-                        style={{ ...Fonts.whiteColor13Medium, }}
+                        style={{ ...Fonts.whiteColor14Medium, }}
                     >
                         Skip
                     </Text>
@@ -164,7 +165,7 @@ const OnboardingScreen = ({ navigation }) => {
                         ?
                         <Text
                             onPress={() => { navigation.push('BottomTabBar') }}
-                            style={{ position: 'absolute', right: 0.0, bottom: 0.0, ...Fonts.whiteColor13Medium, }}
+                            style={{ position: 'absolute', right: 0.0, bottom: 0.0, ...Fonts.whiteColor14Medium, }}
                         >
                             Done
                         </Text>
@@ -182,7 +183,7 @@ const OnboardingScreen = ({ navigation }) => {
                                 }
                             }}
                             style={{
-                                ...Fonts.whiteColor13Medium,
+                                ...Fonts.whiteColor14Medium,
                             }}
                         >
                             Next
@@ -245,7 +246,8 @@ const styles = StyleSheet.create({
         right: 20.0,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: 20,
     }
 })
 

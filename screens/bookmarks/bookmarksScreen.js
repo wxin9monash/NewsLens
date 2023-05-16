@@ -11,8 +11,8 @@ const bookmarkList = [
     {
         key: '1',
         newsImage: require('../../assets/images/news_image/img16.png'),
-        headLine: 'Euro 2020: Portugal Captain Cristiano Ronaldo Wins Golden Boot',
-        newsDetail: 'Cristiano Ronaldo won the Golden Boot at Euro 2020 on Sunday Cristiano Ronaldo, 36, scored five goals for Portugal Ronaldo also featured in a record fifth European Championship',
+        headLine: 'Euro 2023: Portugal Captain Cristiano Ronaldo Wins Golden Boot',
+        newsDetail: 'Cristiano Ronaldo won the Golden Boot at Euro 2023 on Sunday Cristiano Ronaldo, 36, scored five goals for Portugal Ronaldo also featured in a record fifth European Championship',
         date: '2 days ago',
         viewsCount: 365,
         newsCategory: 'Sports',
