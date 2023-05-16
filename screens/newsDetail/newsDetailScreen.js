@@ -221,10 +221,10 @@ const NewsDetailScreen = ({ navigation, route }) => {
             onPress={() => {
               if (inBookMark) {
                 // Handle the action when the item is already bookmarked
-                addBookmark(item);
+                removeBookmark(item);
               } else {
                 // Handle the action when the item is not bookmarked
-                removeBookmark(item);
+                addBookmark(item);
               }
               setinBookMark(!inBookMark);
             }}

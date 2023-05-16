@@ -19,6 +19,7 @@ export const BookmarkProvider = ({ children }) => {
   };
 
   const removeBookmark = (key) => {
+    console.log(key)
     setBookmarks(prevBookmarks => prevBookmarks.filter(bookmark => bookmark.key !== key));
     setBookmarkUpdated(true);
   };
