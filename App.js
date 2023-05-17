@@ -16,6 +16,7 @@ import onboardingScreen from "./screens/onboarding/onboardingScreen";
 import splashScreen from "./screens/splashScreen";
 import PoliticalBiasScreen from './screens/politicalBias/PoliticalBiasScreen';
 import { BookmarkProvider } from './screens/BookmarkContext';
+import HomeScreen from './screens/home/homeScreen';
 
 LogBox.ignoreAllLogs();
 
@@ -35,8 +36,8 @@ const App = () => {
         <Stack.Screen name="Splash" component={splashScreen} options={{ ...TransitionPresets.DefaultTransition }} />
         <Stack.Screen name="Onboarding" component={onboardingScreen} />
         <Stack.Screen name="BottomTabBar" component={bottomTabBarScreen} options={{ ...TransitionPresets.DefaultTransition }} />
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Search" component={searchScreen} />
-        <Stack.Screen name="VideoDetail" component={videoDetailScreen} />
         <Stack.Screen name="NewsDetail" component={newsDetailScreen} />
         <Stack.Screen name="AllTopNews" component={allTopNewsScreen} />
         <Stack.Screen name="PoliticalBias" component={PoliticalBiasScreen} />

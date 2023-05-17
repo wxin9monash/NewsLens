@@ -7,16 +7,16 @@ import { ProgressBar } from 'react-native-paper';
 
 
 const questions = [
-    "Do you believe that government should play a major role in distributing wealth to even out society's economic disparities?",
-    "Do you think that society's traditions and established social order should be mostly preserved?",
-    "Do you believe that individuals should have the right to make decisions without government interference, even if they might harm themselves?",
-    "Do you support public spending on programs like healthcare, education, and welfare?",
-    "Do you believe that businesses and industries should be deregulated and free from government interference?",
-    "Do you think that society should be more accepting of non-traditional lifestyles and social changes?",
-    "Do you support higher taxes on the wealthy to fund public services?",
-    "Do you think that a strong military and national defense should be a government's top priority?",
-    "Do you believe that environmental regulations are necessary, even if they might hinder businesses and economic growth?",
-    "Do you believe in the right to own firearms without significant government regulation?"
+    "1. Do you believe that government should play a major role in distributing wealth to even out society's economic disparities?",
+    "2. Do you think that society's traditions and established social order should be mostly preserved?",
+    "3. Do you believe that individuals should have the right to make decisions without government interference, even if they might harm themselves?",
+    "4. Do you support public spending on programs like healthcare, education, and welfare?",
+    "5. Do you believe that businesses and industries should be deregulated and free from government interference?",
+    "6. Do you think that society should be more accepting of non-traditional lifestyles and social changes?",
+    "7. Do you support higher taxes on the wealthy to fund public services?",
+    "8. Do you think that a strong military and national defense should be a government's top priority?",
+    "9. Do you believe that environmental regulations are necessary, even if they might hinder businesses and economic growth?",
+    "10. Do you believe in the right to own firearms without significant government regulation?"
 ];
 
 const options = ["Agree", "Neutral", "Disagree"];
@@ -38,7 +38,12 @@ const PoliticalBiasScreen = () => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setExpandedSection(section);
     };
-    const [quizStep, setQuizStep] = useState(0);
+
+    const handleRetakeQuiz = () => {
+        setCurrentQuestion(0);
+        setAnswers(Array(questions.length).fill(null));
+        setResult(null);
+    };
 
     const handleAnswer = (option) => {
         setAnswers((prev) => {
@@ -128,12 +133,14 @@ const PoliticalBiasScreen = () => {
                                 }
                             </TouchableOpacity>
                         </View>
-                        <Text style={styles.quizTitle}>Quiz: Test Your Political Bias</Text>
+                        <Text style={styles.quizTitle}>Test Your Political Bias</Text>
                         <View style={styles.quizContainer}>
                             {!result ? (
                                 <>
                                     <ProgressBar progress={currentQuestion / questions.length} color={Colors.primary} />
-                                    <Text style={styles.question}>{questions[currentQuestion]}</Text>
+                                    <View style={styles.questionContainer}>
+                                        <Text style={styles.question}>{questions[currentQuestion]}</Text>
+                                    </View>
                                     <View style={styles.optionsContainer}>
                                         {options.map((option, index) => (
                                             <Button
@@ -148,12 +155,19 @@ const PoliticalBiasScreen = () => {
                                     </View>
                                 </>
                             ) : null}
-                        </View>
+                        {/* </View> */}
                         {result && (
                             <View style={styles.resultContainer}>
                                 <Text style={styles.resultText}>{result}</Text>
+                                <Button
+                                    title="Retake Quiz"
+                                    buttonStyle={styles.retakeButton}
+                                    titleStyle={{ fontSize: 14, fontFamily: 'OpenSans_SemiBold' }} // Add your font size and family here
+                                    onPress={handleRetakeQuiz}
+                                />
                             </View>
                         )}
+</View>
                     </View>
                 </ScrollView>
             </View>
@@ -268,8 +282,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        margin: Sizes.fixPadding,
-        marginLeft: 4*Sizes.fixPadding,
+        margin: 0.5*Sizes.fixPadding,
+        marginLeft: 4.5 * Sizes.fixPadding,
     },
     buttonTitle: {
         fontSize: 15,
@@ -286,6 +300,10 @@ const styles = StyleSheet.create({
     },
     resultText: {
         ...Fonts.whiteColor14Bold,
+        marginBottom: 4*Sizes.fixPadding
+    },
+    questionContainer:{
+        height:120
     },
     expanded: {
         flex: 3,

@@ -17,7 +17,6 @@ const NewsDetailScreen = ({ navigation, route }) => {
   const newsTitle = route.params.item.headLine
   const newsSource = route.params.item.newsSource
   const { addBookmark, removeBookmark } = useContext(BookmarkContext);
-  console.log(newsSource)
 
   // const updateState = (data) => setState((state) => ({ ...state, ...data }))
   const [isLike, setisLike] = useState(false);
@@ -134,7 +133,7 @@ const NewsDetailScreen = ({ navigation, route }) => {
                   <BannerSlider />
                 </View>
               </FoldableSection> */}
-        <FoldableSection title="Political Bias Analysis" isfold="false">
+        <FoldableSection title="Media Political Bias Analysis" isfold="false">
           <View style={styles.googleNewsContainer}>
             <GoogleNewsSearch searchInput={newsTitle} media={newsSource} />
           </View>

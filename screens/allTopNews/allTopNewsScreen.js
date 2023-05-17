@@ -284,12 +284,6 @@ const AllTopNewsScreen = ({ navigation, route }) => {
                         </Text>
                     </View>
                 </View>
-                <MaterialIcons
-                    name={item.inBookmark ? "bookmark" : 'bookmark-outline'}
-                    color={item.inBookmark ? Colors.whiteColor : Colors.grayColor}
-                    size={16}
-                    onPress={() => updateTopNews({ id: item.id })}
-                />
             </TouchableOpacity>
         )
         return (

@@ -35,6 +35,7 @@ const onboardingScreenList = [
 ];
 
 const OnboardingScreen = ({ navigation }) => {
+
     const [backClickCount, setBackClickCount] = useState(0);
 
     const backAction = useCallback(() => {
@@ -44,6 +45,7 @@ const OnboardingScreen = ({ navigation }) => {
 
     useFocusEffect(
         useCallback(() => {
+            console.log("onboarding")
             BackHandler.addEventListener("hardwareBackPress", backAction);
             return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
         }, [backAction])

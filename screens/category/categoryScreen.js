@@ -110,7 +110,7 @@ const CategoryScreen = ({ navigation }) => {
                 <MaterialIcons
                     name="search"
                     color={Colors.whiteColor}
-                    size={24}
+                    size={30}
                     onPress={() => navigation.push('Search', {searchType})}
                 />
             </View>

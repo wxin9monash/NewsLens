@@ -92,7 +92,6 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
           }
 
           uniqueResults.push(modifiedResult);
-          console.log(modifiedResult)
           sources.add(result.source);
         }
       }
@@ -132,10 +131,8 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
 
       if (reviewSnap.exists()) {
         const data = reviewSnap.data();
-        // console.log(`Total rating: ${data.totalRating}, Count: ${data.count}`);
         return data.totalRating / data.count;
       } else {
-        console.log('No such review!');
         return 3; // default value
       }
     } catch (error) {

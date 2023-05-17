@@ -29,8 +29,6 @@
     "expo-updates": "~0.16.4",
     "firebase": "^9.22.0",
     "google-news-json": "^2.1.0",
-    "http": "^0.0.1-security",
-    "https": "^1.0.0",
     "message": "^0.0.1",
     "newsapi": "^2.4.1",
     "querystring": "^0.2.1",

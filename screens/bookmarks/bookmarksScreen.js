@@ -71,9 +71,6 @@ const bookmarkList = [
     }
 ];
 
-// Array(bookmarkList.length).fill('').forEach((_, i) => {
-//     rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
-// });
 
 const BookmarksScreen = ({ navigation }) => {
     const { bookmarks, removeBookmark, updateBookmark } = useContext(BookmarkContext);

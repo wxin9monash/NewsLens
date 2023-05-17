@@ -14,6 +14,7 @@ import PoliticalBiasScreen from "../screens/politicalBias/PoliticalBiasScreen";
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({ navigation }) => {
+
     const backAction = () => {
         backClickCount == 1 ? BackHandler.exitApp() : _spring();
         return true;
@@ -65,11 +66,11 @@ const TabNavigator = ({ navigation }) => {
                     component={BookmarksScreen}
                     options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/save.png'), focused, text: 'Bookmark' }) }}
                 />
-                <Tab.Screen
+                {/* <Tab.Screen
                     name="Profile"
                     component={ProfileScreen}
                     options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/user.png'), focused, text: 'Profile' }) }}
-                />
+                /> */}
             </Tab.Navigator>
             {exitInfo()}
         </>

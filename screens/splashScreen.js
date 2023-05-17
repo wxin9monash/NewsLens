@@ -14,6 +14,7 @@ const SplashScreen = ({ navigation }) => {
 
     useFocusEffect(
         useCallback(() => {
+            console.log("SplashScreen")
             BackHandler.addEventListener("hardwareBackPress", backAction);
             return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
         }, [backAction])

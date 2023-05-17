@@ -355,7 +355,7 @@ const SearchScreen = ({ navigation, route }) => {
 
     function searchTextField() {
         const textInputRef = createRef();
-
+    
         const handleSearchFunction = (search) => {
             if (searchType === 'Keywords'){
                 SearchNews(search)
@@ -374,7 +374,7 @@ const SearchScreen = ({ navigation, route }) => {
                         onChangeText={(text) => updateState({ search: text })}
                         selectionColor={Colors.whiteColor}
                         placeholder={'Search News by ' + searchType}
-                        style={{ ...Fonts.whiteColor14SemiBold, flex: 1, }}
+                        style={{ ...Fonts.whiteColor16SemiBold, flex: 1, }}
                         placeholderTextColor={Colors.grayColor}
                     />
                     {
@@ -383,9 +383,9 @@ const SearchScreen = ({ navigation, route }) => {
                             <MaterialIcons
                                 name="close"
                                 color={Colors.grayColor}
-                                size={22}
+                                size={30}
                                 onPress={() => {
-                                    updateState({ showSearchResults: false })
+                                    updateState({ showSearchResults: false, search: '' })  // Setting search to '' clears the text
                                     textInputRef.current.focus()
                                 }}
                             />
@@ -393,7 +393,7 @@ const SearchScreen = ({ navigation, route }) => {
                             <MaterialIcons
                                 name="search"
                                 color={Colors.grayColor}
-                                size={22}
+                                size={30}
                                 onPress={() => {
                                     console.log({ search })
                                     handleSearchFunction(search)
