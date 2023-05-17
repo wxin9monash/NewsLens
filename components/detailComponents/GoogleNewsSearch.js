@@ -25,6 +25,7 @@ import image14 from '../../assets/images/media_image/Financial_Review.png';
 import image15 from '../../assets/images/media_image/news_com_au.jpg';
 import image16 from '../../assets/images/media_image/Sydney_Morning_Herald.png';
 
+// Array of media images
 const images = [
   { name: '7News', source: image1 },
   { name: '9News', source: image2 },
@@ -55,17 +56,26 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
   const [currentUrl, setCurrentUrl] = useState('');
   const [biasScore, setBiasScore] = useState(null);
 
+  // Function to open a link in a modal
   const openLink = (url) => {
     setCurrentUrl(url);
     setModalVisible(true);
   };
 
   const apiKey = 'e9e1915a46577b2706bbe40649ccb1c86a761cf5626f089cc9cb72ae7620174a';
+  // SERPAI KEYS
   // 46a5a4727b4fc5a940e3abf2f792fd255683dee662ce31df157fc16ba4aa6291
   // e9e1915a46577b2706bbe40649ccb1c86a761cf5626f089cc9cb72ae7620174a
+  // 465b5c87a24534d967e433e411e99d3da2611496bc2862cb741d119667cfa4f0
+  // 5f7947962e85a25fa6552bb9ef58f9931e325ac8abe248c4985d1c642c407ee1
+  // f602700c8c886e2a13866218196530820d2e4a82de4716739ecd293a7ae3bab2
+
+
 
 
   const mediaBiasData = require('../../assets/json/media_bias.json');
+  
+  // Function to filter out duplicate sources and add media bias data
   const filterUniqueSources = (results) => {
     const uniqueResults = [];
     const sources = new Set();
@@ -100,6 +110,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
     return uniqueResults;
   };
 
+  // Function to find media bias data for a given media name
   const findMedia = (mediaName) => {
     const mediaItem = mediaBiasData.find(item => item.Media.toLowerCase() === mediaName.toLowerCase());
     return mediaItem ? mediaItem :     {
@@ -109,10 +120,11 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
       "Link": "https://www.theguardian.com/",
       "Credibility": "60",
       "Image": "../../assets/images/media_image/The_Guardian_Australia.jpg"
+    };
   };
-  }
 
-  function getScore(num_media) {
+  // Function to calculate the bias score based on the number of media results
+  const getScore = (num_media) => {
     if (num_media >= 0 && num_media <= 3) {
       return 40;
     } else if (num_media >= 4 && num_media <= 6) {
@@ -122,8 +134,9 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
     } else {
       return 40; // Return 40 for invalid input or cases not covered
     }
-  }
+  };
 
+  // Function to retrieve the user review score from Firestore
   const getReviewData = async (url) => {
     try {
       const reviewRef = doc(FIRESTORE_DB, 'reviews', url);
@@ -147,10 +160,12 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
     .then(score => {
       userScore = score;
     })
+
   const mediaItem = findMedia(news_media);
   const mediaScore = parseFloat(mediaItem.Credibility);
-  const sourceScore = getScore(newsResults.length)
+  const sourceScore = getScore(newsResults.length);
 
+  // Function to search Google News based on the search query
   const searchGoogleNews = async (searchQuery) => {
     setLoading(true);
     const parameters = {
@@ -184,7 +199,6 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
     setNewsResults([]);
     setQuery(query_media_au);
     searchGoogleNews(query_media_au);
-
   };
 
   // Add the useEffect hook to trigger handleSearch when the component is rendered
@@ -192,8 +206,6 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
     handleSearch();
   }, []);
 
-
-  // const containerWidth = Dimensions.get('container').width;
   const [containerWidth, setContainerWidth] = useState(0);
 
   const getBiasColor = (bias) => {
@@ -269,7 +281,6 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
       getBiasScore();
     }, [data]);
 
-
     data.forEach((item) => {
       if (biasCategories.includes(item.Bias)) {
         biasMedia[item.Bias].push(item);
@@ -289,132 +300,107 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
       setSelectedMedia(mediaName);
     };
 
+    // Render the BiasDistribution component
     return (
-      <View>
-        <View style={styles.biasMediaIconsContainer}>
-          {biasPercentages.map((bias, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[styles.biasMediaIcons, { width: `${bias.percentage}%` }]}
-              onPress={() => handleBiasBarPress(bias.category, bias.media)}
-            >
-              {biasMedia[bias.category].slice(0, 5).map((media, idx) => (
-                <Image
-                  key={idx}
-                  source={media.image}
-                  style={[
-                    styles.mediaIcon,
-                    selectedBias === bias.category ? styles.mediaIconLarge : null,
-                  ]}
-                />
-              ))}
-              {biasMedia[bias.category].length > 5 && (
-                <Text style={styles.additionalMediaText}>+{biasMedia[bias.category].length - 5}</Text>
-              )}
-            </TouchableOpacity>
-          ))}
-        </View>
-        <View style={styles.biasDistributionBar}>
-          {biasPercentages.map((bias, index) => (
-            <View
-              key={index}
-              style={[
-                styles.biasDistributionSegment,
-                {
-                  backgroundColor: getBiasColor(bias.category),
-                  width: `${bias.percentage}%`,
-                },
-              ]}
-            >
-              <Text style={styles.biasPercentageText}>{bias.percentage.toFixed(1)}%</Text>
-            </View>
-          ))}
-        </View>
-        <View style={styles.biasLabelsContainer}>
-          {biasPercentages.map((bias, index) => (
-            <Text key={index} style={[styles.biasLabelText, { width: `${bias.percentage}%` }]}>
-              {bias.category}
-            </Text>
-          ))}
-        </View>
-        <View style={styles.longestBiasCategoryContainer}>
-          <Text style={styles.longestBiasCategoryText}>
-            {getLongestBiasCategory()}
-          </Text>
-        </View>
-      </View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: Sizes.fixPadding }}
+        style={styles.biasDistributionContainer}
+      >
+        {biasPercentages.map((item) => (
+          <TouchableOpacity
+            key={item.category}
+            style={[styles.biasBar, { backgroundColor: getBiasColor(item.category) }]}
+            onPress={() => handleBiasBarPress(item.category, biasMedia[item.category][0]?.source)}
+          >
+            <View style={[styles.biasBarFill, { width: `${item.percentage}%` }]} />
+            <Text style={styles.biasBarText}>{item.percentage.toFixed(1)}%</Text>
+            {selectedBias === item.category && (
+              <Image source={require('../../assets/images/icons/right-chevron.png')} style={styles.chevronIcon} />
+            )}
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     );
   };
 
+  // Render the GoogleNewsSearch component
   return (
-    <View style={styles.container} onLayout={(event) => setContainerWidth(event.nativeEvent.layout.width)}>
-      {loading ? null : (
-        <Text style={{ ...Fonts.whiteColor14Medium, margin: Sizes.fixPadding, marginLeft: 0 }}>Total sources: {newsResults.length}</Text>
-      )}
-      <View style={styles.resultsContainer}>
-        {loading ? (
-          <ActivityIndicator size="large" color="#ffffff" />
-        ) : newsResults.length === 0 ? (
-          <Text style={{ ...Fonts.whiteColor14Medium, margin: Sizes.fixPadding, marginLeft: 0 }}>No results found</Text>
-        ) : (
-          <>
-            <FlatList
-              horizontal
-              data={
-                selectedMedia
-                  ? newsResults.filter((result) => result.source === selectedMedia)
-                  : newsResults
-              }
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item, index }) => (
-                <View style={[styles.result, { width: containerWidth - 2 * Sizes.fixPadding - 14 }]}>
-                  <View style={styles.topRow}>
-                    <View style={[styles.biasColor, { backgroundColor: getBiasColor(item.Bias), borderColor: getBiasColor(item.Bias) }]}>
-                      <Text style={styles.biasText}>{item.Bias}</Text>
-                    </View>
-
-                    <View style={styles.sourceImageContainer}>
-                      {item.image && <Image source={item.image} style={styles.newsImage} />}
-                      <Text style={styles.source}>{item.source}</Text>
-                    </View>
+    <View style={styles.container}>
+      <TextInput
+        label="Search"
+        value={query_media_au}
+        onChangeText={(text) => setQuery({ query_media_au: text })}
+        style={styles.searchInput}
+      />
+      <Button mode="contained" onPress={handleSearch} style={styles.searchButton}>
+        Search
+      </Button>
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" style={styles.loader} />
+      ) : (
+        <>
+          {newsResults.length > 0 ? (
+            <ScrollView
+              contentContainerStyle={styles.newsContainer}
+              onContentSizeChange={(width) => setContainerWidth(width)}
+            >
+              {newsResults.map((newsItem, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.newsItem}
+                  onPress={() => openLink(newsItem.link)}
+                >
+                  <Image
+                    source={newsItem.image ? { uri: newsItem.image } : require('../../assets/images/default_image.jpg')}
+                    style={styles.newsImage}
+                  />
+                  <View style={styles.newsContent}>
+                    <Text style={styles.newsTitle}>{newsItem.title}</Text>
+                    <Text style={styles.newsSource}>{newsItem.source}</Text>
                   </View>
-                  {/* <Image style={styles.thumbnail} source={{ uri: item.thumbnail }} /> */}
-                  <Text numberOfLines={3} style={styles.title}>{item.title}</Text>
-                  <Text numberOfLines={3} style={styles.snippet}>{item.snippet}</Text>
-                  <TouchableOpacity onPress={() => openLink(item.link)}>
-                    <Text numberOfLines={3} style={styles.readmore}>Read Full Article</Text>
-                  </TouchableOpacity>
-                  <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                      setModalVisible(false);
-                    }}
-                  >
-                    <WebView source={{ uri: currentUrl }} />
-                    <Button backgroundColor='black' title="Close" onPress={() => setModalVisible(false)}>Close</Button>
-                  </Modal>
-                </View>
-              )}
-              snapToInterval={containerWidth - Sizes.fixPadding - 14}
-              decelerationRate="fast"
-            />
-            <BiasDistribution data={newsResults} setBiasScore={setBiasScore} />
-          </>
-        )}
-      </View>
-      {!loading && (
-        <CredibilityScore
-          mediaScore={mediaScore}
-          biasScore={biasScore}
-          sourceScore={sourceScore}
-          userScore={userScore}
-        />
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          ) : (
+            <Text style={styles.noResultsText}>No results found.</Text>
+          )}
+        </>
+      )}
+
+      <Modal visible={modalVisible} animationType="slide" transparent>
+        <WebView source={{ uri: currentUrl }} style={styles.modalWebView} />
+      </Modal>
+
+      {selectedMedia && (
+        <Modal visible={selectedMedia !== null} animationType="slide" transparent>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>{selectedMedia}</Text>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>Bias: {selectedMedia.Bias}</Text>
+              <Text style={styles.modalText}>Quality: {selectedMedia.Quality}</Text>
+              <Text style={styles.modalText}>Credibility: {selectedMedia.Credibility}</Text>
+              <Text style={styles.modalText}>Link: {selectedMedia.Link}</Text>
+              <CredibilityScore
+                mediaScore={mediaScore}
+                biasScore={biasScore}
+                sourceScore={sourceScore}
+                userScore={userScore}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.modalCloseButton}
+              onPress={() => setSelectedMedia(null)}
+            >
+              <Text style={styles.modalCloseButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
       )}
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

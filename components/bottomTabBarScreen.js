@@ -76,6 +76,7 @@ const TabNavigator = ({ navigation }) => {
         </>
     );
 
+    // Renders the exit info view when the back button is pressed
     function exitInfo() {
         return (
             backClickCount == 1
@@ -90,6 +91,7 @@ const TabNavigator = ({ navigation }) => {
         )
     }
 
+    // Renders a tab bar item with icon and text
     function tabBarItem({ icon, focused, text }) {
         return (
             <View style={{ alignItems: 'center' }}>

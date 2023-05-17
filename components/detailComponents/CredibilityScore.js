@@ -6,28 +6,36 @@ import Modal from 'react-native-modal';
 import { Sizes, Fonts, Colors} from '../../constants/styles';
 
 const CredibilityScore = ({ mediaScore, biasScore, sourceScore, userScore }) => {
+  // State to control the visibility of the modal
   const [modalVisible, setModalVisible] = useState(false);
 
+  // Calculate the overall credibility score
   const credibilityScore = 
     (mediaScore * 0.7) + 
     (biasScore * 0.15) + 
     (sourceScore * 0.1) + 
     (userScore * 0.05);
 
-  // Interpolate color from red to green
+  // Interpolate color from red to green based on credibility score
   const barColor = new Animated.Value(credibilityScore).interpolate({
     inputRange: [0, 100],
     outputRange: ['#f15656','#419136']
   });
 
+  // Render the component
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
+        {/* Title */}
         <Text style={styles.title}>News Credibility Score</Text>
+        
+        {/* Button to open the modal */}
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Icon name="question-circle" type="font-awesome" color="white" size={20} />
         </TouchableOpacity>
       </View>
+      
+      {/* Progress bar */}
       <View style={styles.progressBarContainer}>
         <Progress.Bar 
           progress={credibilityScore / 100} 
@@ -38,17 +46,27 @@ const CredibilityScore = ({ mediaScore, biasScore, sourceScore, userScore }) => 
           borderWidth={0.5}
           borderColor="white"
         />
+        
+        {/* Marker to indicate the credibility score on the progress bar */}
         <View style={[styles.marker, {left: `${credibilityScore}%`}]}/>
       </View>
+      
+      {/* Display the credibility score */}
       <Text style={styles.score}>{credibilityScore.toFixed(2)}/100</Text>
       
+      {/* Modal */}
       <Modal isVisible={modalVisible} onBackdropPress={() => setModalVisible(false)}>
         <View style={styles.modalContent}>
+          {/* Modal title */}
           <Text style={styles.modalTitle}>How We Calculate the Score</Text>
+          
+          {/* Display individual scores */}
           <Text style={styles.modalText}>Media Score: {mediaScore * 0.7}</Text>
           <Text style={styles.modalText}>Bias Score: {biasScore * 0.15}</Text>
           <Text style={styles.modalText}>Source Score: {sourceScore * 0.1}</Text>
           <Text style={styles.modalText}>User Review Score: {userScore * 0.05}</Text>
+          
+          {/* Display total score */}
           <Text style={styles.modalScore}>Total Score: {credibilityScore.toFixed(2)}</Text>
         </View>
       </Modal>
