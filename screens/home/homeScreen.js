@@ -1,6 +1,6 @@
 // Importing required dependencies and assets
 import React, { useState, useRef, useContext, useEffect } from "react";
-import { SafeAreaView, Dimensions, ScrollView, View, TouchableOpacity, StatusBar, Image, Text, ImageBackground, StyleSheet, Animated } from "react-native";
+import { SafeAreaView, Dimensions, ScrollView, View, TouchableOpacity, StatusBar, Image, Text, ImageBackground, StyleSheet, Animated, ActivityIndicator } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons, SimpleLineIcons} from '@expo/vector-icons';
 import Carousel, { Pagination } from 'react-native-snap-carousel-v4';
@@ -14,6 +14,7 @@ const latest = 'australia'
 
 const HomeScreen = ({ navigation }) => {
     const { addBookmark } = useContext(BookmarkContext);
+    const [loading, setLoading] = useState(false);
 
     const [state, setState] = useState({
 
@@ -27,22 +28,25 @@ const HomeScreen = ({ navigation }) => {
 
     // Start useEffect hook
     useEffect(() => {
+        setLoading(true);  // start loading
         const currentDate = new Date();
         const currentDay = currentDate.getDate();
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
         const startDate = currentYear + "-" + (currentMonth) + "-" + (currentDay);
-        console.log("HOME")
+    
         fetchTopNews(startDate)
             .then(({ bannerList, latestNewsList }) => {
                 updateState({
                     bannerList,
                     latestNews: latestNewsList
                 });
+                setLoading(false);  // stop loading
             })
             .catch((error) => {
                 // Handle any errors here
                 console.log(error);
+                setLoading(false);  // stop loading
             });
     }, []);
 
@@ -61,8 +65,14 @@ const HomeScreen = ({ navigation }) => {
             <View style={{ flex: 1 }}>
                 {header()}
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    {bannerSlider()}
-                    {latestNewsInfo()}
+                    {loading ? (
+                        <ActivityIndicator size="large" color={Colors.primaryColor} />
+                    ) : (
+                        <>
+                            {bannerSlider()}
+                            {latestNewsInfo()}
+                        </>
+                    )}
                 </ScrollView>
             </View>
         </SafeAreaView>
