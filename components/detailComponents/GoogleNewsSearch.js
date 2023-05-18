@@ -44,9 +44,12 @@ const images = [
   { name: 'Sydney Morning Herald', source: image16 },
 ];
 
+// GoogleNewsSearch component, which takes a search input and media type as properties, 
+// and renders a list of filtered news articles along with their credibility score.
 const GoogleNewsSearch = ({ searchInput, media }) => {
-  const news_media = `${media}`
-  const query_media_au = `${searchInput}`
+  const news_media = `${media}`;
+  const query_media_au = `${searchInput}`;
+  // Initialize state variables
   const [query, setQuery] = useState({ query_media_au });
   const [newsResults, setNewsResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -55,21 +58,22 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
   const [currentUrl, setCurrentUrl] = useState('');
   const [biasScore, setBiasScore] = useState(null);
 
+  // Open a link with the specified URL in a modal WebView
   const openLink = (url) => {
     setCurrentUrl(url);
     setModalVisible(true);
   };
-
+   // API key for SERP API
   const apiKey = 'e9e1915a46577b2706bbe40649ccb1c86a761cf5626f089cc9cb72ae7620174a';
-   // SERPAI
   // 46a5a4727b4fc5a940e3abf2f792fd255683dee662ce31df157fc16ba4aa6291
   // e9e1915a46577b2706bbe40649ccb1c86a761cf5626f089cc9cb72ae7620174a
   // 465b5c87a24534d967e433e411e99d3da2611496bc2862cb741d119667cfa4f0
   // 5f7947962e85a25fa6552bb9ef58f9931e325ac8abe248c4985d1c642c407ee1
   // f602700c8c886e2a13866218196530820d2e4a82de4716739ecd293a7ae3bab2
 
-
+  // Load media bias data from a JSON file
   const mediaBiasData = require('../../assets/json/media_bias.json');
+  // Filter out duplicate sources from the search results and add additional information from mediaBiasData
   const filterUniqueSources = (results) => {
     const uniqueResults = [];
     const sources = new Set();
@@ -103,7 +107,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
 
     return uniqueResults;
   };
-
+   // Find media bias data for a given media name
   const findMedia = (mediaName) => {
     const mediaItem = mediaBiasData.find(item => item.Media.toLowerCase() === mediaName.toLowerCase());
     return mediaItem ? mediaItem :     {
@@ -115,7 +119,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
       "Image": "../../assets/images/media_image/The_Guardian_Australia.jpg"
   };
   }
-
+  // Get score based on the number of media sources
   function getScore(num_media) {
     if (num_media >= 0 && num_media <= 3) {
       return 40;
@@ -128,6 +132,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
     }
   }
 
+  // Get review data for a given URL from Firestore
   const getReviewData = async (url) => {
     try {
       const reviewRef = doc(FIRESTORE_DB, 'reviews', url);
@@ -155,6 +160,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
   const mediaScore = parseFloat(mediaItem.Credibility);
   const sourceScore = getScore(newsResults.length)
 
+  // Search Google News API for articles matching the search query
   const searchGoogleNews = async (searchQuery) => {
     setLoading(true);
     const parameters = {
@@ -183,6 +189,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
     }
   };
 
+  // Handle search input and initiate Google News search
   const handleSearch = () => {
     setLoading(true);
     setNewsResults([]);
@@ -197,9 +204,10 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
   }, []);
 
 
-  // const containerWidth = Dimensions.get('container').width;
+  // Initialize containerWidth state variable
   const [containerWidth, setContainerWidth] = useState(0);
 
+  // Get the color representing the bias score
   const getBiasColor = (bias) => {
     switch (bias) {
       case 'Left':
@@ -217,6 +225,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
     }
   };
 
+  // BiasDistribution component renders a bar showing the distribution of media biases in the search results
   const BiasDistribution = ({ data, setBiasScore }) => {
     const biasCategories = ['Left', 'Leans Left', 'Center', 'Leans Right', 'Right'];
     const biasMedia = {
@@ -293,6 +302,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
       setSelectedMedia(mediaName);
     };
 
+    // Render GoogleNewsSearch component
     return (
       <View>
         <View style={styles.biasMediaIconsContainer}>

@@ -11,19 +11,26 @@ import { BookmarkContext } from "../BookmarkContext";
 
 const { width } = Dimensions.get('window');
 
+// This is a screen component for showing the details of a news item.
 const NewsDetailScreen = ({ navigation, route }) => {
 
+  // Extracting parameters passed from the previous screen.
   const item = route.params.item;
   const newsTitle = route.params.item.headLine
   const newsSource = route.params.item.newsSource
+  // Accessing the bookmark context, which allows adding and removing bookmarks.
   const { addBookmark, removeBookmark } = useContext(BookmarkContext);
 
+  // Declaring state variables for like status, bookmark status, and current URL.
   // const updateState = (data) => setState((state) => ({ ...state, ...data }))
   const [isLike, setisLike] = useState(false);
   const [inBookMark, setinBookMark] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
 
+  // The main render function of the component.
   return (
+    // The UI of the app, with a CollapsingToolbar containing various elements.
+    // Also provides navigation functionality via the back arrow.
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
       <StatusBar translucent={false} backgroundColor={Colors.blackColor} />
       <CollapsingToolbar
@@ -56,12 +63,16 @@ const NewsDetailScreen = ({ navigation, route }) => {
       </CollapsingToolbar>
     </SafeAreaView>
   )
-
+  
+  // Function to render the detail of a news item.
   function newsDetail() {
     const newUrl = item.newsUrl;
     const [modalVisible, setModalVisible] = useState(false);
 
+     // A functional component that renders an expandable/collapsible section.
     const FoldableSection = ({ title, children, isfold }) => {
+      // This component uses Animated API to create a rotating animation for the arrow
+      // indicating whether the section is expanded or collapsed.
       const [expanded, setExpanded] = useState(isfold === 'false');
       const rotation = useRef(new Animated.Value(0)).current;
 
@@ -97,17 +108,24 @@ const NewsDetailScreen = ({ navigation, route }) => {
       );
     };
 
+    // Function to handle submission of user ratings.
     const handleSubmit = (rating) => {
       console.log('User rating:', rating);
       // Perform any action after receiving the rating
     };
 
+    // Function to open a link in a modal with a WebView.
     const openLink = (url) => {
       setCurrentUrl(url);
       setModalVisible(true);
     };
 
+    // The main render function of the newsDetail component.
     return (
+      // This function returns a view with multiple foldable sections like "Summary", 
+      // "Media Political Bias Analysis", and "User Review". Each section can be expanded 
+      // or collapsed by the user. Also contains functionality for opening news links 
+      // in a WebView and capturing user reviews.
       <View style={styles.container}>
         <FoldableSection title="Summary" isfold="false">
           <Text style={styles.summaryText}>{item.description}</Text>

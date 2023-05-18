@@ -1,3 +1,5 @@
+// IMPORTRANT: This screen is not used in the application 
+// Import necessary dependencies
 import React, { useRef, useState, useEffect } from "react";
 import { SafeAreaView, View, StatusBar, Text, ScrollView, Dimensions, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";

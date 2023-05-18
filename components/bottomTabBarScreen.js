@@ -1,6 +1,9 @@
+// Import required React and React Native modules
 import React, { useState, useCallback } from "react";
 import { Colors, Fonts, Sizes, } from "../constants/styles";
 import { BackHandler, Text, View, StyleSheet, Image } from 'react-native'
+
+// Import required screens
 import HomeScreen from "../screens/home/homeScreen";
 import CategoryScreen from "../screens/category/categoryScreen";
 import VideosScreen from "../screens/videos/videosScreen";
@@ -8,18 +11,23 @@ import BookmarksScreen from "../screens/bookmarks/bookmarksScreen";
 import ProfileScreen from "../screens/profile/profileScreen";
 import { useFocusEffect } from '@react-navigation/native';
 
+// Import bottom tab navigation from React Navigation
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PoliticalBiasScreen from "../screens/politicalBias/PoliticalBiasScreen";
 
+// Create Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
 
+// The TabNavigator component
 const TabNavigator = ({ navigation }) => {
 
+    // A function for handling back action
     const backAction = () => {
         backClickCount == 1 ? BackHandler.exitApp() : _spring();
         return true;
     }
 
+    // The useFocusEffect hook manages the hardware back button on Android
     useFocusEffect(
         useCallback(() => {
             BackHandler.addEventListener("hardwareBackPress", backAction);
@@ -27,6 +35,7 @@ const TabNavigator = ({ navigation }) => {
         }, [backAction])
     );
 
+    // This function sets back click count and resets it after 1 second
     function _spring() {
         setBackClickCount(1);
         setTimeout(() => {
@@ -34,6 +43,7 @@ const TabNavigator = ({ navigation }) => {
         }, 1000)
     }
 
+    // State variable for back click count
     const [backClickCount, setBackClickCount] = useState(0);
 
     return (
@@ -46,6 +56,7 @@ const TabNavigator = ({ navigation }) => {
                     tabBarStyle: { backgroundColor: Colors.backColor, height: 80.0 }
                 }}
             >
+                {/* Define Tab Screens with respective icons */}
                 <Tab.Screen
                     name="Home"
                     component={HomeScreen}
@@ -66,17 +77,13 @@ const TabNavigator = ({ navigation }) => {
                     component={BookmarksScreen}
                     options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/save.png'), focused, text: 'Bookmark' }) }}
                 />
-                {/* <Tab.Screen
-                    name="Profile"
-                    component={ProfileScreen}
-                    options={{ tabBarIcon: ({ focused }) => tabBarItem({ icon: require('../assets/images/icons/user.png'), focused, text: 'Profile' }) }}
-                /> */}
             </Tab.Navigator>
+            {/* Call exitInfo function */}
             {exitInfo()}
         </>
     );
 
-    // Renders the exit info view when the back button is pressed
+    // Function for displaying an exit info view when back button is pressed
     function exitInfo() {
         return (
             backClickCount == 1
@@ -91,7 +98,7 @@ const TabNavigator = ({ navigation }) => {
         )
     }
 
-    // Renders a tab bar item with icon and text
+    // Function for rendering a tab bar item with icon and text
     function tabBarItem({ icon, focused, text }) {
         return (
             <View style={{ alignItems: 'center' }}>

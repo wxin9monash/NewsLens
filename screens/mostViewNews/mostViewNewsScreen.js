@@ -39,11 +39,16 @@ const mostViewNewsList = [
     },
 ];
 
+// This is a screen component to display the most viewed news.
 const MostViewNewsScreen = ({ navigation }) => {
 
+    // Using React's useState hook to manage state for most viewed news.
     const [mostViewNews, setMostViewNews] = useState(mostViewNewsList);
 
+    // The main render function for the component. 
+    // It returns a SafeAreaView containing the header and news items.
     return (
+        // The UI of the app, with a header and a list of news items.
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
             <StatusBar translucent={false} backgroundColor={Colors.blackColor} />
             <View style={{ flex: 1 }}>
@@ -54,6 +59,8 @@ const MostViewNewsScreen = ({ navigation }) => {
     )
 
     function updateMostViewNews({ id }) {
+        // This function is used to update the bookmark status of a news item in the mostViewNews list. 
+        // It toggles the inBookmark property of the news item.
         const newList = mostViewNews.map((item) => {
             if (item.id === id) {
                 const updatedItem = { ...item, inBookmark: !item.inBookmark };
@@ -64,9 +71,13 @@ const MostViewNewsScreen = ({ navigation }) => {
         setMostViewNews(newList)
     }
 
+    // Function to render a list of news items.
     function news() {
 
+         // The renderItem function specifies how each individual news item is rendered.
         const renderItem = ({ item }) => (
+            // Each item is rendered as a touchable opacity. This makes the news item clickable.
+            // Clicking on an item navigates to a detailed view of the news or video.
             <TouchableOpacity
                 activeOpacity={0.7}
                 onPress={() => {
@@ -178,8 +189,9 @@ const MostViewNewsScreen = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
         )
-
+        // The news function returns a FlatList component that renders the list of news items.
         return (
+            // The FlatList component gets its data from the mostViewNews state variable.
             <FlatList
                 data={mostViewNews}
                 keyExtractor={(item) => `${item.id}`}
@@ -190,7 +202,12 @@ const MostViewNewsScreen = ({ navigation }) => {
         )
     }
 
+    // Function to render a header with a back button, title and a search button.
     function header() {
+        // This function is used to render a header.
+        // The header contains a back button, title, and a search button.
+        // Clicking the back button navigates to the previous screen.
+        // Clicking the search button navigates to the Search screen.
         return (
             <View style={styles.headerWrapStyle}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>

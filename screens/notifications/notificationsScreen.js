@@ -68,28 +68,35 @@ const notificationList = [
     },
 ];
 
+// Animated values to track each row's animation state.
 const rowTranslateAnimatedValues = {};
 
+// NotificationsScreen is a React component that displays a list of notifications.
 const NotificationsScreen = ({ navigation }) => {
 
+    // State variables for managing the snack bar's visibility and message.
     const [showSnackBar, setShowSnackBar] = useState(false);
-
     const [snackBarMsg, setSnackBarMsg] = useState('');
 
+    // State variable for managing the list of notifications.
     const [listData, setListData] = useState(notificationList);
 
+    // Create an Animated.Value for each item in the list and store it in rowTranslateAnimatedValues.
     Array(listData.length + 1)
         .fill('')
         .forEach((_, i) => {
             rowTranslateAnimatedValues[`${i}`] = new Animated.Value(1);
         });
 
+    // A ref to track if an animation is running.
     const animationIsRunning = useRef(false);
 
+    // Function to handle swipe events.
     const onSwipeValueChange = swipeData => {
 
+        // Extract the key and value from the swipeData.
         const { key, value } = swipeData;
-
+        // If the swipe was significant and no animation is currently running, start an animation.
         if ((value < -width || value > width) && !animationIsRunning.current) {
             animationIsRunning.current = true;
             Animated.timing(rowTranslateAnimatedValues[key], {
@@ -110,6 +117,7 @@ const NotificationsScreen = ({ navigation }) => {
         }
     };
 
+    // Function to render an item in the list.
     const renderItem = data => (
         <Animated.View
             style={[
@@ -157,13 +165,16 @@ const NotificationsScreen = ({ navigation }) => {
             </View>
         </Animated.View>
     );
-
+    
+    // Function to render a hidden item that will be revealed when the user swipes.
     const renderHiddenItem = () => (
         <View style={styles.rowBack}>
         </View>
     );
-
+    
+    // Function to render the header of the screen.
     function header() {
+        // Contains a back arrow and the title "Notifications".
         return (
             <View style={styles.headerWrapStyle}>
                 <MaterialIcons
@@ -179,7 +190,11 @@ const NotificationsScreen = ({ navigation }) => {
         )
     }
 
+    // Main render function of the NotificationsScreen.
     return (
+        // SafeAreaView encapsulating everything. Contains a Snackbar for feedback on item removal.
+        // The list of notifications is rendered using a SwipeListView. When the list is empty, 
+        // an icon and a message "No new notifications" is shown.
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
             <StatusBar translucent={false} backgroundColor={Colors.blackColor} />
             <View style={{ backgroundColor: Colors.backColor, flex: 1, }}>

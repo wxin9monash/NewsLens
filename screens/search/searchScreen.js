@@ -1,9 +1,12 @@
+// React and React Native imports necessary for the screen
 import React, { useState, createRef } from "react";
 import { SafeAreaView, View, Dimensions, ScrollView, StatusBar, Image, TextInput, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
-import { MaterialCommunityIcons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
-
+import { MaterialIcons } from '@expo/vector-icons';
+// Dimensions API to get the window width
 const { width } = Dimensions.get('window');
+
+// NewsAPI for fetching news data
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI('2cd35fd59fe44ea3841b860501b72886');
 // 88a285931c764d54b7dc0a8bdcb9baab
@@ -14,11 +17,11 @@ let searchResultsList_live = [];
 let recentSearchesList = [];
 
 
-
+// Main component for the SearchScreen
 const SearchScreen = ({ navigation, route }) => {
-    const searchType = route.params.searchType
+    const searchType = route.params.searchType// Retrieve the searchType from the navigation params
 
-
+    // Initialize state for search and search results
     const [state, setState] = useState({
         recentSearches: recentSearchesList,
         search: '',
@@ -27,8 +30,10 @@ const SearchScreen = ({ navigation, route }) => {
         loading: false,
     })
 
+    // Function to update the state
     const updateState = (data) => setState((state) => ({ ...state, ...data }))
 
+    // Destructure state variables for convenience
     const {
         recentSearches,
         search,
@@ -37,6 +42,7 @@ const SearchScreen = ({ navigation, route }) => {
         loading,
     } = state;
 
+    // Return the rendered component
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
             <StatusBar translucent={false} backgroundColor={Colors.blackColor} />
@@ -56,6 +62,7 @@ const SearchScreen = ({ navigation, route }) => {
         </SafeAreaView>
     )
 
+    // Update the search results based on user's action
     function updateSearchResults({ id }) {
         const newList = searchResults.map((item) => {
             if (item.id === id) {
@@ -67,8 +74,9 @@ const SearchScreen = ({ navigation, route }) => {
         updateState({ searchResults: newList })
     }
 
+    // Render the search results, or a loading indicator if results are being fetched
     function searchResultsInfo() {
-        if (loading) {
+        if (loading) { // If loading, render a loading spinner
             return (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <ActivityIndicator size="large" color='white' />
@@ -76,6 +84,7 @@ const SearchScreen = ({ navigation, route }) => {
             );
         }
 
+        // Otherwise, render the search results
         return (
             <View style={{ marginTop: Sizes.fixPadding }}>
                 {
@@ -119,12 +128,6 @@ const SearchScreen = ({ navigation, route }) => {
                                             </View>
 
                                         </View>
-                                        {/* <MaterialIcons
-                                            name={item.inBookmark ? "bookmark" : 'bookmark-outline'}
-                                            color={item.inBookmark ? Colors.whiteColor : Colors.grayColor}
-                                            size={15}
-                                            onPress={() => updateSearchResults({ id: item.id })}
-                                        /> */}
                                     </View>
                                 </View>
                             </View>
@@ -135,11 +138,13 @@ const SearchScreen = ({ navigation, route }) => {
         )
     }
 
+    // Remove a search term from the recent searches list
     function removeSearch({ id }) {
         var data = recentSearches.filter((item) => item.id != id)
         updateState({ recentSearches: data });
     }
 
+    // Render the recent searches or a message if there are none
     function recentSearchesData() {
         return (
             <View style={{ marginHorizontal: Sizes.fixPadding * 2.0, }}>
@@ -157,8 +162,10 @@ const SearchScreen = ({ navigation, route }) => {
         )
     }
 
+    // Render the list of recent searches
     function recentSearchesInfo() {
         return (
+            // Here goes the code to render each individual recent search...
             <>
                 {
                     recentSearches.map((item) => (
@@ -197,7 +204,7 @@ const SearchScreen = ({ navigation, route }) => {
             </>
         )
     }
-
+    // Render a message indicating there are no recent searches
     function noRecentSearchesInfo() {
         return (
             <View style={{ marginTop: Sizes.fixPadding * 3.0, alignItems: 'center' }}>
@@ -212,6 +219,8 @@ const SearchScreen = ({ navigation, route }) => {
             </View>
         )
     }
+
+    // This function fetches news data from Google using the SerpApi
     async function searchGoogleNews(searchQuery) {
         updateState({ loading: true });;
         const parameters = {
@@ -220,16 +229,22 @@ const SearchScreen = ({ navigation, route }) => {
             num: 50, // Request 100 results from the API
         };
 
+        // Construct the query string from the parameters
         const queryString = new URLSearchParams(parameters).toString();
+        // Construct the API URL with the query string and API key
         const apiUrl = `https://serpapi.com/search?${queryString}&api_key=${apiKey}`;
 
         try {
+            // Fetch the search results from the API
             const response = await fetch(apiUrl);
             const searchResults = await response.json();
 
             if (searchResults && searchResults.news_results) {
+                // If there are search results, process them
                 for (const article of searchResults.news_results) {
+                    // Only process the first 10 results
                     if (searchResultsList_live.length <= 10) {
+                        // Extract the necessary data from each result
                         const image = { uri: article.thumbnail };
                         const randomInteger = Math.floor(Math.random() * (1000 - 800 + 1)) + 800;
                         const news = {
@@ -253,29 +268,36 @@ const SearchScreen = ({ navigation, route }) => {
                         console.log('image:', image);
                         console.log('------');
 
-
+                        // Add the result to the live search results list
                         searchResultsList_live.push(news);
                         count++;
                     } else {
+                        // If there are already 10 results, stop processing
                         updateState({ showSearchResults: true })
                         updateState({ searchResults: searchResultsList_live })
                         return;
                     }
                 }
             } else {
+                // If there are no search results, clear the results list
                 setNewsResults([]);
             }
         } catch (error) {
+            // If an error occurred, log it
             console.error('Error fetching news:', error);
         } finally {
+            // Once the processing is done, hide the loading indicator
             updateState({ loading: false });
         }
         updateState({ loading: false });
         console.log(searchResultsList_live.length)
     }
 
+    // This function fetches news data using the NewsAPI
+
     async function SearchNews(userInput) {
         updateState({ loading: true });
+        // A helper function to convert dates to the Australia/Sydney timezone
         function convertTimeToAustralia(dateString) {
 
             const date = new Date(Date.parse(dateString));
@@ -298,6 +320,7 @@ const SearchScreen = ({ navigation, route }) => {
         }
 
         try {
+            // Fetch the news articles from the API
             const response = await newsapi.v2.everything({
                 q: userInput,
                 language: 'en',
@@ -333,7 +356,7 @@ const SearchScreen = ({ navigation, route }) => {
                     console.log('Source:', article.source);
                     console.log('image:', article.urlToImage);
                     console.log('------');
-                    if (news.description && news.newsImage != null){
+                    if (news.description && news.newsImage != null) {
                         searchResultsList_live.push(news)
                         count++
                     }
@@ -346,20 +369,22 @@ const SearchScreen = ({ navigation, route }) => {
         } catch (error) {
             console.error('Error fetching news:', error);
         } finally {
+            // Once the processing is done, hide the loading indicator
             updateState({ loading: false });
         }
         updateState({ loading: false });
     }
 
 
-
+    // This function renders the search text input field
     function searchTextField() {
+        // The ref is used to control the focus of the text input
         const textInputRef = createRef();
-    
+
         const handleSearchFunction = (search) => {
-            if (searchType === 'Keywords'){
+            if (searchType === 'Keywords') {
                 SearchNews(search)
-            }else{
+            } else {
                 searchGoogleNews(search)
                 console.log(searchResultsList_live.length)
             }
@@ -409,6 +434,7 @@ const SearchScreen = ({ navigation, route }) => {
         )
     }
 
+    // This function renders a back arrow for navigation
     function backArrow() {
         return (
             <MaterialIcons

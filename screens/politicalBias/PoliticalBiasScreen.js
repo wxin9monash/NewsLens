@@ -1,11 +1,13 @@
+// React imports necessary for creating and managing the component
 import React, { useState } from 'react';
+// React Native and other related component and style imports
 import { View, Text, StyleSheet, TouchableOpacity, LayoutAnimation, Platform, UIManager, ScrollView, SafeAreaView, StatusBar } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Sizes, Fonts, Colors } from '../../constants/styles';
 import { ProgressBar } from 'react-native-paper';
 
-
+// An array of questions for the political bias quiz
 const questions = [
     "1. Do you believe that government should play a major role in distributing wealth to even out society's economic disparities?",
     "2. Do you think that society's traditions and established social order should be mostly preserved?",
@@ -19,8 +21,10 @@ const questions = [
     "10. Do you believe in the right to own firearms without significant government regulation?"
 ];
 
+// An array of options that can be chosen as an answer to each question
 const options = ["Agree", "Neutral", "Disagree"];
 
+// On Android, we enable LayoutAnimation for better experience
 if (
     Platform.OS === 'android' &&
     UIManager.setLayoutAnimationEnabledExperimental
@@ -28,23 +32,27 @@ if (
     UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
+// The main component of the screen
 const PoliticalBiasScreen = () => {
+     // Initialize states for expanded section, current question, answers, and result
     const [expandedSection, setExpandedSection] = useState('left');
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [answers, setAnswers] = useState(Array(questions.length).fill(null));
     const [result, setResult] = useState(null);
 
+    // Function to handle the expanding and collapsing of the section
     const toggleSection = (section) => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setExpandedSection(section);
     };
 
+    // Function to handle the retake quiz action
     const handleRetakeQuiz = () => {
         setCurrentQuestion(0);
         setAnswers(Array(questions.length).fill(null));
         setResult(null);
     };
-
+    // Function to handle the selected answer of the user
     const handleAnswer = (option) => {
         setAnswers((prev) => {
             const newAnswers = [...prev];
@@ -71,7 +79,7 @@ const PoliticalBiasScreen = () => {
         }
     };
 
-
+    // Render the component UI
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
             <StatusBar translucent={false} backgroundColor={Colors.blackColor} />
@@ -155,19 +163,19 @@ const PoliticalBiasScreen = () => {
                                     </View>
                                 </>
                             ) : null}
-                        {/* </View> */}
-                        {result && (
-                            <View style={styles.resultContainer}>
-                                <Text style={styles.resultText}>{result}</Text>
-                                <Button
-                                    title="Retake Quiz"
-                                    buttonStyle={styles.retakeButton}
-                                    titleStyle={{ fontSize: 14, fontFamily: 'OpenSans_SemiBold' }} // Add your font size and family here
-                                    onPress={handleRetakeQuiz}
-                                />
-                            </View>
-                        )}
-</View>
+                            {/* </View> */}
+                            {result && (
+                                <View style={styles.resultContainer}>
+                                    <Text style={styles.resultText}>{result}</Text>
+                                    <Button
+                                        title="Retake Quiz"
+                                        buttonStyle={styles.retakeButton}
+                                        titleStyle={{ fontSize: 14, fontFamily: 'OpenSans_SemiBold' }} // Add your font size and family here
+                                        onPress={handleRetakeQuiz}
+                                    />
+                                </View>
+                            )}
+                        </View>
                     </View>
                 </ScrollView>
             </View>
@@ -190,7 +198,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     section: {
-        backgroundColor: '#4f5b66',
+        backgroundColor: '#1e1e1e',
         borderRadius: 10,
         padding: Sizes.fixPadding,
         marginBottom: 20,
@@ -231,7 +239,7 @@ const styles = StyleSheet.create({
 
     },
     expandedSection: {
-        backgroundColor: '#4f5b66',
+        backgroundColor: '#1e1e1e',
         borderRadius: 10,
         padding: 20,
         marginBottom: 20,
@@ -248,7 +256,7 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     collapsedSection: {
-        backgroundColor: '#4f5b66',
+        backgroundColor: '#1e1e1e',
         borderRadius: 10,
         padding: Sizes.fixPadding,
         marginBottom: 20,
@@ -282,7 +290,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        margin: 0.5*Sizes.fixPadding,
+        margin: 0.5 * Sizes.fixPadding,
         marginLeft: 4.5 * Sizes.fixPadding,
     },
     buttonTitle: {
@@ -300,10 +308,10 @@ const styles = StyleSheet.create({
     },
     resultText: {
         ...Fonts.whiteColor14Bold,
-        marginBottom: 4*Sizes.fixPadding
+        marginBottom: 4 * Sizes.fixPadding
     },
-    questionContainer:{
-        height:120
+    questionContainer: {
+        height: 120
     },
     expanded: {
         flex: 3,

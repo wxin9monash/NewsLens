@@ -1,3 +1,4 @@
+// Import required modules
 import React, { Component } from 'react';
 import { Colors } from "../constants/styles";
 import {
@@ -8,6 +9,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
+// Set the default properties for the CollapsingToolbar component
 const defaultProps = {
     leftItem: null,
     leftItemPress: null,
@@ -27,12 +29,14 @@ class CollapsingToolbar extends Component {
     constructor(props) {
         super(props);
 
+        // Initialize state with scrollY as an Animated Value
         this.state = {
             scrollY: new Animated.Value(0),
         };
     }
 
     render() {
+        // Destructure properties from this.props
         const {
             children,
             src,
@@ -51,6 +55,7 @@ class CollapsingToolbar extends Component {
 
         const scrollDistance = toolbarMaxHeight - toolbarMinHeight;
 
+        // Define animations for various UI elements
         const headerTranslate = this.state.scrollY.interpolate({
             inputRange: [0, scrollDistance],
             outputRange: [0, -scrollDistance],
@@ -75,6 +80,7 @@ class CollapsingToolbar extends Component {
             extrapolate: 'clamp',
         });
 
+        // Render the collapsing toolbar component
         return (
             <View style={styles.fill}>
                 <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
@@ -146,6 +152,7 @@ class CollapsingToolbar extends Component {
     }
 }
 
+// Assign the default props to the CollapsingToolbar component
 CollapsingToolbar.defaultProps = defaultProps;
 
 const styles = StyleSheet.create({

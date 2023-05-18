@@ -1,3 +1,5 @@
+// Importing necessary libraries and components.
+// Importing 'react-native-snap-carousel-v4' for creating an onboarding carousel.
 import React, { useRef, useState, useCallback } from "react";
 import { SafeAreaView, View, BackHandler, StatusBar, Dimensions, Image, StyleSheet, Text, ImageBackground } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
@@ -7,6 +9,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 
+// onboardingScreenList contains the data that will be displayed in the onboarding carousel.
 const onboardingScreenList = [
     {
         id: '1',
@@ -34,15 +37,17 @@ const onboardingScreenList = [
     }
 ];
 
-const OnboardingScreen = ({ navigation }) => {
+const OnboardingScreen = ({ navigation }) => { // This is a functional component for the Onboarding Screen.
 
-    const [backClickCount, setBackClickCount] = useState(0);
+    const [backClickCount, setBackClickCount] = useState(0); // State for handling double back click to exit the app.
 
+    // Function that is called when back button is pressed.
     const backAction = useCallback(() => {
         backClickCount === 1 ? BackHandler.exitApp() : _spring();
         return true;
     }, [backClickCount]); // <-- dependency array added
 
+    // This hook helps us listen for back button events when the screen is in focus.
     useFocusEffect(
         useCallback(() => {
             console.log("onboarding")
@@ -51,19 +56,21 @@ const OnboardingScreen = ({ navigation }) => {
         }, [backAction])
     );
 
+    // This function increases the backClickCount and sets it back to 0 after 1 second.
     function _spring() {
-        setBackClickCount((prevCount) => prevCount + 1); // <-- use function to update state
+        setBackClickCount((prevCount) => prevCount + 1);
         setTimeout(() => {
             setBackClickCount(0);
         }, 1000);
     }
 
 
-    const [onboardingScreens, setOnboardingScreen] = useState(onboardingScreenList);
-    const [activeSlide, setActiveSlide] = useState(0);
+    const [onboardingScreens, setOnboardingScreen] = useState(onboardingScreenList); // State for handling onboarding screens data.
+    const [activeSlide, setActiveSlide] = useState(0); // State to keep track of the active slide in the carousel.
 
-    const flatListRef = useRef();
+    const flatListRef = useRef(); // A reference to access Carousel's methods.
 
+    // Function to render an onboarding item.
     const renderItem = ({ item, }) => {
         return (
             <View style={{
@@ -102,7 +109,13 @@ const OnboardingScreen = ({ navigation }) => {
         )
     }
 
+    // Main render function of the OnboardingScreen component.
     return (
+        // SafeAreaView encapsulating everything.
+        // Using LinearGradient for the gradient background.
+        // Using ImageBackground for the background image.
+        // Carousel is used for the onboarding process.
+        // Depending on the 'backClickCount', a view is shown to prompt users to press back again to exit the app.
         <SafeAreaView style={{ flex: 1, }}>
             <StatusBar translucent={true} backgroundColor='transparent' />
             <LinearGradient
@@ -126,7 +139,7 @@ const OnboardingScreen = ({ navigation }) => {
                         onSnapToItem={(index) => setActiveSlide(index)}
                         autoplay={true}
                         loop={true}
-                        autoplayInterval={3500}
+                        autoplayInterval={4000}
                         slideStyle={{ width: width }}
                     />
                     {pagination()}
@@ -146,9 +159,12 @@ const OnboardingScreen = ({ navigation }) => {
             }
         </SafeAreaView>
     )
-
+    
+    // Function to render skip, next, and done buttons.
     function skipNextAndDone() {
         return (
+            // Rendering 'Skip' when active slide is not the last one.
+            // Rendering 'Next' for the first three slides and 'Done' for the last slide.
             <View style={styles.skipNextAndDoneWrapStyle}>
                 {activeSlide != 3
                     ?
@@ -195,6 +211,7 @@ const OnboardingScreen = ({ navigation }) => {
         )
     }
 
+    // Function to render pagination dots.
     function pagination() {
         return (
             <Pagination

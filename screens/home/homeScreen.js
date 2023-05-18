@@ -1,9 +1,10 @@
+// Importing required dependencies and assets
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { SafeAreaView, Dimensions, ScrollView, View, TouchableOpacity, StatusBar, Image, Text, ImageBackground, StyleSheet, Animated } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
-import { MaterialIcons, SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons, SimpleLineIcons} from '@expo/vector-icons';
 import Carousel, { Pagination } from 'react-native-snap-carousel-v4';
-import { TextInput, Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { BookmarkContext } from "../BookmarkContext";
 const { width } = Dimensions.get('window');
 const screenWidth = Dimensions.get('window').width;
@@ -151,18 +152,24 @@ const HomeScreen = ({ navigation }) => {
         }
     }
 
-    function updateLatestNews({ id }) {
-        const newList = latestNews.map((item) => {
-            if (item.id === id) {
-                const updatedItem = { ...item, inBookmark: !item.inBookmark };
-                return updatedItem;
-            }
-            return item;
-        });
-        updateState({ latestNews: newList })
-    }
+    // function updateLatestNews({ id }) {
+    //     const newList = latestNews.map((item) => {
+    //         if (item.id === id) {
+    //             const updatedItem = { ...item, inBookmark: !item.inBookmark };
+    //             return updatedItem;
+    //         }
+    //         return item;
+    //     });
+    //     updateState({ latestNews: newList })
+    // }
 
+    // Function to display latest news
     function latestNewsInfo() {
+        // Displaying a list of news items. Each item has a title, image, 
+        // and a description. If the news item is a video, a play icon 
+        // is shown over the image. 
+        // Clicking on a news item navigates to a detailed view of the news.
+
         return (
             <View>
                 <View style={styles.latestNewsTitleStyle}>
@@ -272,7 +279,10 @@ const HomeScreen = ({ navigation }) => {
         )
     }
 
+    // Function to update the state of the banners list 
     function updateBannerList({ id }) {
+                // This function is used to update the bookmark status of a news item in the banner list. 
+        // It toggles the inBookmark property of the news item.
         const newList = bannerList.map((item) => {
             if (item.id === id) {
                 const updatedItem = { ...item, inBookmark: !item.inBookmark };
@@ -283,7 +293,12 @@ const HomeScreen = ({ navigation }) => {
         updateState({ bannerList: newList })
     }
 
+    // Function to display a slider with banner news items
     function bannerSlider() {
+        // Displaying a list of banner news items in a Carousel. 
+        // Each item has a title, image, and a description. 
+        // A bookmark icon is also displayed which can be toggled.
+        // Clicking on a banner news item navigates to a detailed view of the news.
 
         const renderItem = ({ item }) => (
 
@@ -376,6 +391,8 @@ const HomeScreen = ({ navigation }) => {
     }
 
     function pagination() {
+         // This function is used to render pagination for the Carousel.
+
         return (
             <Pagination
                 dotsLength={bannerList.length}
@@ -387,7 +404,11 @@ const HomeScreen = ({ navigation }) => {
         );
     }
 
+ // Function to display a header with tabs for searching news items
     function header() {
+        // This function is used to render a header with search tabs.
+        // The tabs are "Title", "Category", and "Date".
+        // Clicking a tab updates the searchType state and animates the tab indicator.
 
         const [searchType, setSearchType] = useState('Title');
         const animatedValue = useRef(new Animated.Value(1)).current;

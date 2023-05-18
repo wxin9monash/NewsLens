@@ -71,24 +71,30 @@ const bookmarkList = [
     }
 ];
 
-
+// This is BookmarksScreen component which is a function component receiving navigation props
 const BookmarksScreen = ({ navigation }) => {
+    // 'bookmarks' stores all bookmarked items, 'removeBookmark' and 'updateBookmark' are functions to manipulate the 'bookmarks'
+    // 'useContext' is a hook used to create context for bookmarks for state sharing
     const { bookmarks, removeBookmark, updateBookmark } = useContext(BookmarkContext);
+    // State to manage the visibility of the SnackBar, initially it is hidden (false)
     const [showSnackBar, setShowSnackBar] = useState(false);
+    // State to manage the listData, initially it is set to bookmarks
     const [listData, setListData] = useState(bookmarks);
 
     const rowSwipeAnimatedValues = {};
+     // For each item in bookmarks, an Animated Value is created and stored in 'rowSwipeAnimatedValues'
     bookmarks.forEach((item) => {
         if (!rowSwipeAnimatedValues[item.key]) {
             rowSwipeAnimatedValues[item.key] = new Animated.Value(0);
         }
     });
 
-    // Listen for changes in bookmarkUpdated and update local state accordingly.
+    // useEffect is a hook that runs after render. Here, it's used to update 'listData' whenever 'bookmarks' changes
     useEffect(() => {
         setListData(bookmarks);
     }, [bookmarks]);
 
+    // This useEffect creates a new Animated Value for each bookmark if it doesn't already exist
     useEffect(() => {
         bookmarks.forEach((item) => {
             if (!rowSwipeAnimatedValues[item.key]) {
@@ -97,14 +103,14 @@ const BookmarksScreen = ({ navigation }) => {
         });
     }, [bookmarks]);
 
-
-    console.log(bookmarks)
+    // Function to close a row
     const closeRow = (rowMap, rowKey) => {
         if (rowMap[rowKey]) {
             rowMap[rowKey].closeRow();
         }
     };
 
+    // Function to render hidden item (delete button in this case)
     const renderHiddenItem = (data, rowMap) => (
         <View style={{ alignItems: 'center', flex: 1 }}>
             <TouchableOpacity
@@ -141,7 +147,8 @@ const BookmarksScreen = ({ navigation }) => {
             </TouchableOpacity>
         </View>
     );
-
+    
+    // Function to delete a row
     const deleteRow = (rowMap, rowKey) => {
         closeRow(rowMap, rowKey);
         const newData = [...listData];
@@ -151,17 +158,20 @@ const BookmarksScreen = ({ navigation }) => {
         setShowSnackBar(true);
     };
 
+    // Function that is called when a swipe is detected
     const onSwipeValueChange = swipeData => {
         const { key, value } = swipeData;
         rowSwipeAnimatedValues[key].setValue(Math.abs(value));
     };
 
+    // Function to remove an item from bookmarks
     function removeItem({ key }) {
         console.log(key)
         removeBookmark(key);
         setShowSnackBar(true);
     }
 
+    // Function to render each bookmark item
     const renderItem = data => (
         <TouchableHighlight
             style={{ backgroundColor: Colors.backColor }}
@@ -223,16 +233,6 @@ const BookmarksScreen = ({ navigation }) => {
                             <Text style={{ marginLeft: Sizes.fixPadding - 7.0, ...Fonts.grayColor10SemiBold }}>
                                 {data.item.date}
                             </Text>
-                            {/* <View style={{ marginLeft: Sizes.fixPadding * 3.0, flexDirection: 'row', alignItems: 'center' }}>
-                                <SimpleLineIcons
-                                    name="eye"
-                                    size={13}
-                                    color={Colors.grayColor}
-                                />
-                                <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.grayColor10SemiBold }}>
-                                    {data.item.viewsCount}
-                                </Text>
-                            </View> */}
                             <Text style={{ marginLeft: Sizes.fixPadding * 3.0, ...Fonts.grayColor10SemiBold }}>
                                 {data.item.newsCategory}
                             </Text>
@@ -247,7 +247,8 @@ const BookmarksScreen = ({ navigation }) => {
             </View>
         </TouchableHighlight>
     );
-
+    
+    // Function to render a message when no items are saved
     function noItemsSaveInfo() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -311,7 +312,7 @@ const BookmarksScreen = ({ navigation }) => {
         </SafeAreaView>
     );
 
-
+    // Function to render the header of the page
     function header() {
         return (
             <View style={{

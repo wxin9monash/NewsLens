@@ -1,10 +1,13 @@
+// Import necessary libraries from react and react-native
 import React from "react";
 import { SafeAreaView, View, Dimensions, StatusBar, Text, TouchableOpacity, FlatList, StyleSheet, Image } from "react-native";
-import { Colors, Fonts, Sizes } from "../../constants/styles";
-import { MaterialIcons } from '@expo/vector-icons';
+import { Colors, Fonts, Sizes } from "../../constants/styles"; // Import predefined styles
+import { MaterialIcons } from '@expo/vector-icons'; // Import icons library
 
+// Retrieve the screen width
 const { width } = Dimensions.get('window');
 
+// Initialize a list of categories to be displayed
 const categoriesList = [
     {
         id: '1',
@@ -57,10 +60,14 @@ const categoriesList = [
         category: 'OTHER',
     },
 ];
-const CategoryScreen = ({ navigation }) => {
 
+// The CategoryScreen component
+// This component receives the 'navigation' prop, which is used to navigate between different screens
+const CategoryScreen = ({ navigation }) => {
+    // Initialize a search type variable
     const searchType = ''
 
+    // The render of the CategoryScreen component
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
             <StatusBar translucent={false} backgroundColor={Colors.blackColor} />
@@ -71,11 +78,13 @@ const CategoryScreen = ({ navigation }) => {
         </SafeAreaView>
     )
 
+    // Function to render the categories
     function categories() {
+        // Component to render each individual item in the FlatList
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => navigation.push('AllTopNews', {category: item.category})}
+                onPress={() => navigation.push('AllTopNews', { category: item.category })}
                 style={styles.categoriesWrapStyle}
             >
                 <Image
@@ -87,8 +96,9 @@ const CategoryScreen = ({ navigation }) => {
                     {item.category}
                 </Text>
             </TouchableOpacity>
-            
+
         )
+        // Return a FlatList of categories
         return (
             <FlatList
                 data={categoriesList}
@@ -100,7 +110,8 @@ const CategoryScreen = ({ navigation }) => {
             />
         )
     }
-
+    
+    // Function to render the header
     function header() {
         return (
             <View style={styles.headerWrapStyle}>
@@ -111,7 +122,7 @@ const CategoryScreen = ({ navigation }) => {
                     name="search"
                     color={Colors.whiteColor}
                     size={30}
-                    onPress={() => navigation.push('Search', {searchType})}
+                    onPress={() => navigation.push('Search', { searchType })}
                 />
             </View>
         )

@@ -1,11 +1,14 @@
+// Import necessary libraries
 import React, { useState } from "react";
 import { SafeAreaView, View, StatusBar, TextInput, Image, ScrollView, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
 import { BottomSheet } from '@rneui/themed';
 
+// Define the EditProfileScreen Component
 const EditProfileScreen = ({ navigation }) => {
 
+    // Initialize state using the useState hook
     const [state, setState] = useState({
         name: 'Krishna Rai',
         password: '12345678',
@@ -14,8 +17,10 @@ const EditProfileScreen = ({ navigation }) => {
         showBottomSheet: false,
     })
 
+    // Function to update the state
     const updateState = (data) => setState((state) => ({ ...state, ...data }))
 
+    // Destructure the state for easier access
     const {
         name,
         password,
@@ -24,6 +29,7 @@ const EditProfileScreen = ({ navigation }) => {
         showBottomSheet,
     } = state;
 
+    // Render function of the component
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
             <StatusBar translucent={false} backgroundColor={Colors.blackColor} />
@@ -44,6 +50,12 @@ const EditProfileScreen = ({ navigation }) => {
         </SafeAreaView>
     )
 
+     // Remaining functions are helper functions that define individual UI pieces
+    // Each of these functions are essentially mini components
+    // They are responsible for rendering specific sections of the profile edit page
+    // For instance, saveButton() returns a TouchableOpacity element that acts as the "Save" button
+    // emailInfo() returns a View containing the UI for the email input, and so on
+    
     function changeProfileOptionsSheet() {
         return (
             <BottomSheet
