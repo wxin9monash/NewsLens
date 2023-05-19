@@ -4,7 +4,7 @@
         "Bias": "Left",
         "Quality": "Mixed",
         "Link": "https://www.theguardian.com/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/The_Guardian_Australia.jpg"
     },
     {
@@ -12,7 +12,7 @@
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://www.bbc.com/news/",
-        "Credibility": "70",
+        "Credibility": "90",
         "Image": "../../assets/images/media_image/BBC.png"
     },
     {
@@ -20,7 +20,7 @@
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://www.bbc.com/news/",
-        "Credibility": "70",
+        "Credibility": "90",
         "Image": "../../assets/images/media_image/BBC.png"
     },
     {
@@ -36,7 +36,7 @@
         "Bias": "Left",
         "Quality": "Mixed",
         "Link": "https://newmatilda.com/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/The_Guardian_Australia.jpg"
     },
     {
@@ -44,7 +44,7 @@
         "Bias": "Leans Left",
         "Quality": "High",
         "Link": "https://www.thesaturdaypaper.com.au/",
-        "Credibility": "70",
+        "Credibility": "90",
         "Image": "../../assets/images/media_image/The_Guardian_Australia.jpg"
     },
     {
@@ -52,7 +52,7 @@
         "Bias": "Leans Left",
         "Quality": "Mixed",
         "Link": "https://store.independenceaustralia.com/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/Independent Australia.jpg"
     },
     {
@@ -60,7 +60,7 @@
         "Bias": "Left",
         "Quality": "Mixed",
         "Link": "https://redflag.org.au/",
-        "Credibility": "60"
+        "Credibility": "70"
     },
     {
         "Media": "Junkee",
@@ -81,7 +81,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.theaustralian.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/The_Australian.png"
     },
     {
@@ -89,7 +89,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.skynews.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/Sky News Australia.png"
     },
     {
@@ -97,7 +97,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.skynews.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/Sky News Australia.png"
     },
     {
@@ -105,7 +105,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.dailytelegraph.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/The Daily Telegraph.jpg"
     },
     {
@@ -113,7 +113,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.dailytelegraph.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/The Daily Telegraph.jpg"
     },
     {
@@ -121,7 +121,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.dailytelegraph.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/The Daily Telegraph.jpg"
     },
     {
@@ -129,7 +129,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.heraldsun.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/The Herald Sun.png"
     },
     {
@@ -142,33 +142,33 @@
     {
         "Media": "Daily Mail",
         "Bias": "Right",
-        "Quality": "Poor ",
+        "Quality": "Mixed ",
         "Link": "https://www.dailymail.co.uk/auhome/index.html",
-        "Credibility": "50",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/Daily Mail Australia.jpg"
     },
     {
         "Media": "Daily Mail Australia",
         "Bias": "Right",
-        "Quality": "Poor ",
+        "Quality": "Mixed ",
         "Link": "https://www.dailymail.co.uk/auhome/index.html",
-        "Credibility": "50",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/Daily Mail Australia.jpg"
     },
     {
         "Media": "The Daily Mail",
         "Bias": "Right",
-        "Quality": "Poor ",
+        "Quality": "Mixed ",
         "Link": "https://www.dailymail.co.uk/auhome/index.html",
-        "Credibility": "50",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/Daily Mail Australia.jpg"
     },
     {
         "Media": "The Daily Mail Australia",
         "Bias": "Right",
-        "Quality": "Poor ",
+        "Quality": "Mixed ",
         "Link": "https://www.dailymail.co.uk/auhome/index.html",
-        "Credibility": "50",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/Daily Mail Australia.jpg"
     },
     {
@@ -193,10 +193,10 @@
         "Credibility": "50"
     },
     {
-        "Media": "70 Minutes",
+        "Media": "90 Minutes",
         "Bias": "Leans Right",
         "Quality": "Poor ",
-        "Link": "https://9now.nine.com.au/70-minutes",
+        "Link": "https://9now.nine.com.au/90-minutes",
         "Credibility": "50"
     },
     {
@@ -211,7 +211,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.afr.com/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/Financial Review.jpg"
     },
     {
@@ -219,7 +219,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.afr.com/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/Financial Review.jpg"
     },
     {
@@ -227,7 +227,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.afr.com/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/Financial Review.jpg"
     },
     {
@@ -235,7 +235,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://7news.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/7_News.png"
     },
     {
@@ -243,7 +243,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://7news.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/7_News.png"
     },
     {
@@ -251,7 +251,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.9news.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/9_News.png"
     },
     {
@@ -259,7 +259,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.9news.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/9_News.png"
     },
     {
@@ -267,7 +267,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.news.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/news.com.au.jpg"
     },
     {
@@ -275,7 +275,7 @@
         "Bias": "Leans Right",
         "Quality": "Mixed",
         "Link": "https://www.news.com.au/",
-        "Credibility": "60",
+        "Credibility": "70",
         "Image": "../../assets/images/media_image/news.com.au.jpg"
     },
     {
@@ -283,21 +283,21 @@
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://michaelwest.com.au/",
-        "Credibility": "70"
+        "Credibility": "90"
     },
     {
         "Media": "Pearls and Irritations",
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://johnmenadue.com/",
-        "Credibility": "70"
+        "Credibility": "90"
     },
     {
         "Media": "SBS",
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://www.sbs.com.au/news",
-        "Credibility": "70",
+        "Credibility": "90",
         "Image": "../../assets/images/media_image/SBS_News.png"
     },
     {
@@ -305,7 +305,7 @@
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://www.abc.net.au/news",
-        "Credibility": "70",
+        "Credibility": "90",
         "Image": "../../assets/images/media_image/ABC_News.jpg"
     },
     {
@@ -313,7 +313,7 @@
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://www.abc.net.au/news",
-        "Credibility": "70",
+        "Credibility": "90",
         "Image": "../../assets/images/media_image/ABC_News.jpg"
     },
     {
@@ -321,7 +321,7 @@
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://www.smh.com.au/",
-        "Credibility": "70",
+        "Credibility": "90",
         "Image": "../../assets/images/media_image/Sydney Morning Herald.png"
     },
     {
@@ -329,7 +329,7 @@
         "Bias": "Center",
         "Quality": "High",
         "Link": "https://www.theage.com.au/",
-        "Credibility": "70"
+        "Credibility": "90"
     },
     {
         "Media": "Inside Story",
@@ -357,35 +357,35 @@
         "Bias": "Leans Left",
         "Quality": "High",
         "Link": "https://theconversation.com/au",
-        "Credibility": "70"
+        "Credibility": "90"
     },
     {
         "Media": "Crikey",
         "Bias": "Leans Left",
         "Quality": "High",
         "Link": "https://www.crikey.com.au/",
-        "Credibility": "70"
+        "Credibility": "90"
     },
     {
         "Media": "The Monthly",
         "Bias": "Leans Left",
         "Quality": "High",
         "Link": "https://www.themonthly.com.au/",
-        "Credibility": "70"
+        "Credibility": "90"
     },
     {
         "Media": "Eureka Street",
         "Bias": "Leans Left",
         "Quality": "Mixed",
         "Link": "https://www.eurekastreet.com.au/",
-        "Credibility": "60"
+        "Credibility": "70"
     },
     {
         "Media": "BuzzFeed News oz",
         "Bias": "Leans Left",
         "Quality": "Mixed",
         "Link": "https://www.buzzfeed.com/au/news",
-        "Credibility": "60"
+        "Credibility": "70"
     },
     {
         "Media": "The Feed.",
