@@ -7,6 +7,7 @@ const { width } = Dimensions.get('window');
 const {searchType} = 'Keywords'
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI('88a285931c764d54b7dc0a8bdcb9baab'); 
+const apiKey = '465b5c87a24534d967e433e411e99d3da2611496bc2862cb741d119667cfa4f0'
 // 2cd35fd59fe44ea3841b860501b72886
 // 88a285931c764d54b7dc0a8bdcb9baab
 // f53ef1482bff4b87aa86646ad673f635
@@ -110,12 +111,9 @@ const AllTopNewsScreen = ({ navigation, route }) => {
 
     useEffect(() => {
         async function fetchData() {
-            await fetchNews({keywords});
+            await searchGoogleNews({keywords});
         }
         fetchData();
-        // if (bannerSliderList_live.length <= 4) {
-        //     fetchData();
-        // }
     }, []);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
@@ -128,7 +126,6 @@ const AllTopNewsScreen = ({ navigation, route }) => {
     )
     async function fetchNews({keywords}) {
         let count = 0;
-        let bannerSliderList_temp = [];
     
         const currentDate = new Date();
         const currentDay = currentDate.getDate();
@@ -221,6 +218,72 @@ const AllTopNewsScreen = ({ navigation, route }) => {
         }
       
     }
+
+        // This function fetches news data from Google using the SerpApi
+        async function searchGoogleNews({keywords}) {
+            // updateState({ loading: true });;
+            const parameters = {
+                q: keywords,
+                tbm: 'nws',
+                num: 50, // Request 100 results from the API
+            };
+    
+            // Construct the query string from the parameters
+            const queryString = new URLSearchParams(parameters).toString();
+            // Construct the API URL with the query string and API key
+            const apiUrl = `https://serpapi.com/search?${queryString}&api_key=${apiKey}`;
+    
+            try {
+                // Fetch the search results from the API
+                const response = await fetch(apiUrl);
+                const searchResults = await response.json();
+    
+                    let searchResultsList_live = [];
+                    let count = 0;
+                    // If there are search results, process them
+                    for (const article of searchResults.news_results) {
+                        // Only process the first 10 results
+                        if (searchResultsList_live.length <= 12) {
+                            // Extract the necessary data from each result
+                            const image = { uri: article.thumbnail };
+                            const randomInteger = Math.floor(Math.random() * (1000 - 800 + 1)) + 800;
+                            const news = {
+                                id: count,
+                                newsImage: image,
+                                headLine: article.title,
+                                date: article.date,
+                                viewsCount: randomInteger,
+                                commentsCount: randomInteger - 629,
+                                newsDetail: article.snippet,
+                                description: article.snippet,
+                                newsUrl: article.link,
+                                newsSource: article.source,
+                            }
+                            console.log(searchResultsList_live.length)
+                            console.log('Title:', article.title);
+                            console.log('URL:', article.link);
+                            console.log('Description:', article.snippet);
+                            console.log('Publish Time:', article.date);
+                            console.log('Source:', article.source);
+                            console.log('image:', image);
+                            console.log('------');
+    
+                            // Add the result to the live search results list
+                            searchResultsList_live.push(news);
+                            count++;
+                        } else {
+                            // If there are already 10 results, stop processing
+                            setTopNews(searchResultsList_live); 
+                            setIsLoading(false); 
+                            return;
+                        }
+                    }
+
+            } catch (error) {
+                // If an error occurred, log it
+                console.error('Error fetching news:', error);
+            } 
+        }
 
     function news() {
         if (isLoading) {
