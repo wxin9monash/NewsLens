@@ -47,6 +47,7 @@ const images = [
 // GoogleNewsSearch component, which takes a search input and media type as properties, 
 // and renders a list of filtered news articles along with their credibility score.
 const GoogleNewsSearch = ({ searchInput, media }) => {
+
   const news_media = `${media}`;
   const query_media_au = `${searchInput}`;
   // Initialize state variables
@@ -57,6 +58,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
   const [biasScore, setBiasScore] = useState(null);
+  const [userScore, setUserScore] = useState(0);
 
   // Open a link with the specified URL in a modal WebView
   const openLink = (url) => {
@@ -152,10 +154,10 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
   };
 
   const url = news_media; // the media variable you passed to UserReview component
-  let userScore = 2.5 * 20; //set base 
   getReviewData(url)
     .then(score => {
-      userScore = score;
+      let userScoreValue = score * 20;
+      setUserScore(userScoreValue);
     })
   const mediaItem = findMedia(news_media);
   const mediaScore = parseFloat(mediaItem.Credibility);
@@ -267,12 +269,12 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
         case 'Leans Right':
         case 'Leans Left':
         case 'Mixed':
-          score = 70;
+          score = 75;
           break;
         case 'Right':
         case 'Left':
         default:
-          score = 40;
+          score = 50;
           break;
       }
 

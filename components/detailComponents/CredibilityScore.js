@@ -52,7 +52,7 @@ const CredibilityScore = ({ mediaScore, biasScore, sourceScore, userScore }) => 
       </View>
       
       {/* Display the credibility score */}
-      <Text style={styles.score}>{credibilityScore.toFixed(2)}/100</Text>
+      <Text style={styles.score}>{credibilityScore.toFixed(0)}/100</Text>
       
       {/* Modal */}
       <Modal isVisible={modalVisible} onBackdropPress={() => setModalVisible(false)}>
@@ -61,13 +61,13 @@ const CredibilityScore = ({ mediaScore, biasScore, sourceScore, userScore }) => 
           <Text style={styles.modalTitle}>How We Calculate the Score</Text>
           
           {/* Display individual scores */}
-          <Text style={styles.modalText}>Media Score: {mediaScore * 0.7}</Text>
-          <Text style={styles.modalText}>Bias Score: {biasScore * 0.15}</Text>
-          <Text style={styles.modalText}>Source Score: {sourceScore * 0.1}</Text>
-          <Text style={styles.modalText}>User Review Score: {userScore * 0.05}</Text>
+          <Text style={styles.modalText}>Media Score: {parseInt(mediaScore * 0.7)}</Text>
+          <Text style={styles.modalText}>Bias Score: {parseInt(biasScore * 0.15)}</Text>
+          <Text style={styles.modalText}>Source Score: {parseInt(sourceScore * 0.1)}</Text>
+          <Text style={styles.modalText}>User Review Score: {parseInt(userScore * 0.05)}</Text>
           
           {/* Display total score */}
-          <Text style={styles.modalScore}>Total Score: {credibilityScore.toFixed(2)}</Text>
+          <Text style={styles.modalScore}>Total Score: {credibilityScore.toFixed(0)}</Text>
         </View>
       </Modal>
     </View>
