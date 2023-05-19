@@ -70,6 +70,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
   // 465b5c87a24534d967e433e411e99d3da2611496bc2862cb741d119667cfa4f0
   // 5f7947962e85a25fa6552bb9ef58f9931e325ac8abe248c4985d1c642c407ee1
   // f602700c8c886e2a13866218196530820d2e4a82de4716739ecd293a7ae3bab2
+  // 4fe388ce6d5dcbb9ed056b40b6b553e5d884c6e14139308a3e35b05f3fbd122a
 
   // Load media bias data from a JSON file
   const mediaBiasData = require('../../assets/json/media_bias.json');
