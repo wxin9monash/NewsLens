@@ -1,7 +1,7 @@
 // components/GoogleNewsSearch.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, Portal } from 'react-native-paper';
 import { Sizes, Fonts } from '../../constants/styles';
 import { WebView } from 'react-native-webview';
 import { Modal } from 'react-native';
@@ -252,7 +252,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
         }
       });
 
-      return tie ? 'Mixed' : maxKey;
+      return tie ? 'Overall Media Bias: '+'Mixed' : 'Overall Media Bias: '+ maxKey;
     };
 
     const getBiasScore = () => {
