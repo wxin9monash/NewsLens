@@ -331,7 +331,7 @@ const AllTopNewsScreen = ({ navigation, route }) => {
                     </View>
                     <View style={{
                         marginLeft: Sizes.fixPadding,
-                        maxWidth: width - 160,
+                        maxWidth: width - 100,
                     }}>
                         <Text
                             numberOfLines={2}
@@ -341,9 +341,15 @@ const AllTopNewsScreen = ({ navigation, route }) => {
                         </Text>
                         <Text
                             numberOfLines={2}
-                            style={{ ...Fonts.grayColor10SemiBold }}
+                            style={{ ...Fonts.grayColor11SemiBold }}
                         >
                             {item.newsDetail}
+                        </Text>
+                        <Text
+                            numberOfLines={1}
+                            style={{ ...Fonts.whiteColor12SemiBold }}
+                        >
+                            {item.date}
                         </Text>
                     </View>
                 </View>

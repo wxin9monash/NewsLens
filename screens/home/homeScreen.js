@@ -1,6 +1,6 @@
 // Importing required dependencies and assets
 import React, { useState, useRef, useContext, useEffect } from "react";
-import { SafeAreaView, Dimensions, ScrollView, View, TouchableOpacity, StatusBar, Image, Text, ImageBackground, StyleSheet, Animated, ActivityIndicator } from "react-native";
+import { SafeAreaView, Dimensions, ScrollView, View, TouchableOpacity, StatusBar, Text, ImageBackground, StyleSheet, Animated, ActivityIndicator } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons, SimpleLineIcons} from '@expo/vector-icons';
 import Carousel, { Pagination } from 'react-native-snap-carousel-v4';
