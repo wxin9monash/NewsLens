@@ -627,7 +627,7 @@ const styles = StyleSheet.create({
     },
     tabText: {
         fontSize: 14,
-        color: 'grey',
+        color: 'lightgrey',
         fontFamily: 'OpenSans_SemiBold',
     },
     activeTabText: {
