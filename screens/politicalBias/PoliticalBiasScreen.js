@@ -84,11 +84,17 @@ const PoliticalBiasScreen = () => {
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backColor }}>
             <StatusBar translucent={false} backgroundColor={Colors.blackColor} />
             <View style={{ flex: 1, }}>
-                <View style={styles.headerWrapStyle}>
-                    <Text style={{ ...Fonts.whiteColor20Bold }}>
-                        Focus
-                    </Text>
-                </View>
+            <View style={styles.headerWrapStyle}>
+                <Text style={{ ...Fonts.whiteColor20Bold }}>
+                    Focus
+                </Text>
+                <MaterialIcons
+                    name="search"
+                    color={Colors.whiteColor}
+                    size={30}
+                    onPress={() => navigation.push('Search', { searchType })}
+                />
+            </View>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.container}>
                         <View style={styles.headerWrapStyle}>
@@ -98,11 +104,11 @@ const PoliticalBiasScreen = () => {
                         </View>
                         <View style={styles.sectionContainer}>
                             <TouchableOpacity style={[styles.section, expandedSection === 'left' && styles.expanded]} onPress={() => toggleSection('left')}>
-                                <Icon name="arrow-left" type="font-awesome-5" color="blue" size={40} />
+                                <Icon name="arrow-left" type="font-awesome-5" color="royalblue" size={40} />
                                 {expandedSection === 'left' &&
                                     <ScrollView>
                                         <Text style={styles.sectionText}>
-                                            <Text style={styles.sectionTitle}>What is<Text style={{ color: 'blue' }}>"Left"</Text></Text>{"\n"}
+                                            <Text style={styles.sectionTitle}>What is<Text style={{ color: 'royalblue' }}>"Left"</Text></Text>{"\n"}
                                             {"\n"}&gt; The "left" is usually associated first with key words such as social justice and peace, and is more liberal in its political approach and views.{"\n"}
                                             {"\n"}&gt; It emerged during the Enlightenment and was further developed during the Industrial Revolution.{"\n"}
                                             {"\n"}&gt; Characterized by an emphasis on equality, fraternity, progress and reform.{"\n"}
@@ -184,6 +190,13 @@ const PoliticalBiasScreen = () => {
 };
 
 const styles = StyleSheet.create({
+    headerWrapStyle: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: Sizes.fixPadding * 2.0,
+        paddingVertical: Sizes.fixPadding + 5.0,
+    },
     container: {
         flex: 1,
         backgroundColor: Colors.backColor,

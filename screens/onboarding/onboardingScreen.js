@@ -13,13 +13,13 @@ const { width } = Dimensions.get('window');
 const onboardingScreenList = [
     {
         id: '1',
-        onboardingImage: require("../../assets/images/content.png"),
+        onboardingImage: require("../../assets/images/welcome.png"),
         title: 'Investigate Current News',
         description: `Find what you need, when you need it - our news software search function covers links, headlines, and keywords, so you never miss a beat.`,
     },
     {
         id: '2',
-        onboardingImage: require("../../assets/images/category_01.png"),
+        onboardingImage: require("../../assets/images/content.png"),
         title: 'Dive into Specific Themes',
         description: `From global headlines to your favorite hobbies, our news software keeps you in the know with a category for every interest.`,
     },

@@ -61,10 +61,10 @@ const CredibilityScore = ({ mediaScore, biasScore, sourceScore, userScore }) => 
           <Text style={styles.modalTitle}>How We Calculate the Score</Text>
           
           {/* Display individual scores */}
-          <Text style={styles.modalText}>Media Score: {parseInt(mediaScore * 0.7)}</Text>
-          <Text style={styles.modalText}>Bias Score: {parseInt(biasScore * 0.15)}</Text>
-          <Text style={styles.modalText}>Source Score: {parseInt(sourceScore * 0.1)}</Text>
-          <Text style={styles.modalText}>User Review Score: {parseInt(userScore * 0.05)}</Text>
+          <Text style={styles.modalText}>1.Media Score {'\n'}(Based on Meida Credibility): {parseInt(mediaScore * 0.7)}</Text>
+          <Text style={styles.modalText}>2.Bias Score {'\n'}(Based on Overall Political Bias): {parseInt(biasScore * 0.15)}</Text>
+          <Text style={styles.modalText}>3.Source Score{'\n'}(Based on Numbe of medias report the news): {parseInt(sourceScore * 0.1)}</Text>
+          <Text style={styles.modalText}>4.User Review Score{'\n'}(Based on User review below):  {parseInt(userScore * 0.05)}</Text>
           
           {/* Display total score */}
           <Text style={styles.modalScore}>Total Score: {credibilityScore.toFixed(0)}</Text>

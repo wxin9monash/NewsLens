@@ -66,7 +66,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
     setModalVisible(true);
   };
    // API key for SERP API
-  const apiKey = 'e9e1915a46577b2706bbe40649ccb1c86a761cf5626f089cc9cb72ae7620174a';
+  const apiKey = '4fe388ce6d5dcbb9ed056b40b6b553e5d884c6e14139308a3e35b05f3fbd122a';
   // 46a5a4727b4fc5a940e3abf2f792fd255683dee662ce31df157fc16ba4aa6291 
   // e9e1915a46577b2706bbe40649ccb1c86a761cf5626f089cc9cb72ae7620174a //25%
   // 465b5c87a24534d967e433e411e99d3da2611496bc2862cb741d119667cfa4f0
@@ -222,7 +222,7 @@ const GoogleNewsSearch = ({ searchInput, media }) => {
       case 'Leans Right':
         return '#89CFF0'; // Purple color
       case 'Right':
-        return '#0000FF'; // Cyan color
+        return 'royalblue'; // Cyan color
       default:
         return '#c4c4c4'; // Gray color
     }

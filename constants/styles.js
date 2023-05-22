@@ -198,6 +198,12 @@ export const Fonts = {
         fontFamily: 'OpenSans_Bold'
     },
 
+    whiteColor18Bold: {
+        color: '#FFFFFF',
+        fontSize: 18,
+        fontFamily: 'OpenSans_Bold'
+    },
+
     whiteColor20Bold: {
         color: '#FFFFFF',
         fontSize: 20,

@@ -1,8 +1,8 @@
 // Importing required dependencies and assets
 import React, { useState, useRef, useContext, useEffect } from "react";
-import { SafeAreaView, Dimensions, ScrollView, View, TouchableOpacity, StatusBar, Text, ImageBackground, StyleSheet, Animated, ActivityIndicator } from "react-native";
+import { SafeAreaView, Dimensions, ScrollView, View, TouchableOpacity, StatusBar, Text,Image, ImageBackground, StyleSheet, Animated, ActivityIndicator } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
-import { MaterialIcons, SimpleLineIcons} from '@expo/vector-icons';
+import { MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import Carousel, { Pagination } from 'react-native-snap-carousel-v4';
 import { Button } from 'react-native-paper';
 import { BookmarkContext } from "../BookmarkContext";
@@ -34,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
         const startDate = currentYear + "-" + (currentMonth) + "-" + (currentDay);
-    
+
         fetchTopNews(startDate)
             .then(({ bannerList, latestNewsList }) => {
                 updateState({
@@ -78,7 +78,17 @@ const HomeScreen = ({ navigation }) => {
         </SafeAreaView>
     )
 
-    async function fetchTopNews(startDate, keywords = 'Australia', language = 'en', source = 'au', sortBy = 'relevancy') {
+
+
+    async function fetchTopNews(startDate, keywords = 'Australia AND Victoria AND Melbourne AND Sydney', language = 'en', source = 'au', sortBy = 'relevancy', domains = 'bbc.co.uk') {
+
+        const removeHtmlTags = (str) => {
+            if ((str === null) || (str === ''))
+                return false;
+            else
+                str = str.toString();
+            return str.replace(/<[^>]*>/g, '');
+        }
 
         function convertTimeToAustralia(dateString) {
 
@@ -118,6 +128,7 @@ const HomeScreen = ({ navigation }) => {
                 from: startDate,
                 language: language,
                 source: source,
+                // domains:domains,
             });
 
             const articles = response.articles;
@@ -139,12 +150,13 @@ const HomeScreen = ({ navigation }) => {
                         viewsCount: randomInteger,
                         commentsCount: randomInteger - 729,
                         newsDetail: article.content,
-                        description: article.description,
+                        description: removeHtmlTags(article.description),
                         newsUrl: article.url,
                         newsSource: article.source.name,
                     }
 
                     if (news.description && news.newsImage != null) {
+                        console.log(news)
                         bannerList.push(news)
                         count++
                     }
@@ -241,7 +253,7 @@ const HomeScreen = ({ navigation }) => {
                                         <Text
                                             numberOfLines={3}
                                             style={{
-                                                ...Fonts.whiteColor14Bold,
+                                                ...Fonts.whiteColor16Bold,
                                                 maxWidth: width,
                                                 margin: Sizes.fixPadding
                                             }}
@@ -276,9 +288,9 @@ const HomeScreen = ({ navigation }) => {
 
                                     <Text
                                         numberOfLines={4}
-                                        style={{ marginTop: Sizes.fixPadding, marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor12Medium, alignSelf: 'center' }}
+                                        style={{ marginTop: Sizes.fixPadding, marginHorizontal: 2*Sizes.fixPadding - 8, ...Fonts.whiteColor12Medium }}
                                     >
-                                        {item.description}
+                                        {item.description.slice(0,150)+"..."}
                                     </Text>
                                 </View>
                             </TouchableOpacity>
@@ -291,7 +303,7 @@ const HomeScreen = ({ navigation }) => {
 
     // Function to update the state of the banners list 
     function updateBannerList({ id }) {
-                // This function is used to update the bookmark status of a news item in the banner list. 
+        // This function is used to update the bookmark status of a news item in the banner list. 
         // It toggles the inBookmark property of the news item.
         const newList = bannerList.map((item) => {
             if (item.id === id) {
@@ -305,82 +317,92 @@ const HomeScreen = ({ navigation }) => {
 
     // Function to display a slider with banner news items
     function bannerSlider() {
-        // Displaying a list of banner news items in a Carousel. 
-        // Each item has a title, image, and a description. 
-        // A bookmark icon is also displayed which can be toggled.
-        // Clicking on a banner news item navigates to a detailed view of the news.
 
         const renderItem = ({ item }) => (
-
-
-            <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => navigation.push('NewsDetail', { item })}
-            >
-                <ImageBackground
-                    source={item.newsImage}
-                    style={{
-                        height: 170.0,
-                        marginHorizontal: Sizes.fixPadding * 2.0,
-                    }}
-                    borderRadius={Sizes.fixPadding - 5.0}
+            <View style={{ flex: 1 }}>
+                <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => navigation.push('NewsDetail', { item })}
                 >
-
-                    <View style={styles.bannerSliderInfoWrapStyle}>
-                        <MaterialIcons
-                            name={item.inBookmark ? "bookmark" : "bookmark-outline"}
-                            color={Colors.whiteColor}
-                            size={22}
-                            style={{ alignSelf: 'flex-end' }}
-                            onPress={() => {
-                                addBookmark(item);
-                                updateBannerList({ id: item.id });
+                    <ImageBackground
+                        source={item.newsImage}
+                        style={{
+                            height: 170.0,
+                            marginHorizontal: Sizes.fixPadding * 2.0,
+                        }}
+                        borderRadius={Sizes.fixPadding - 5.0}
+                    >
+                        <View
+                            style={{
+                                flex: 1,
+                                backgroundColor: 'rgba(0,0,0,0.5)',
                             }}
-                        />
-                        <View style={{ marginTop: 0, marginRight: Sizes.fixPadding * 5.0, }}>
-                            <Text
-                                numberOfLines={2}
-                                style={{ ...Fonts.whiteColor16Bold }}
-                            >
-                                {item.headLine}
-                            </Text>
-                            <View style={styles.bannerNewsViewsCommentsDateInfoWrapStyle}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <MaterialIcons
-                                        name="access-time"
-                                        color={Colors.whiteColor}
-                                        size={13}
-                                    />
-                                    <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor13Medium }}>
-                                        {item.date}
+                        >
+    
+                            <View style={styles.bannerSliderInfoWrapStyle}>
+                                <MaterialIcons
+                                    name={item.inBookmark ? "bookmark" : "bookmark-outline"}
+                                    color={Colors.whiteColor}
+                                    size={22}
+                                    style={{ alignSelf: 'flex-end' }}
+                                    onPress={() => {
+                                        addBookmark(item);
+                                        updateBannerList({ id: item.id });
+                                    }}
+                                />
+                                <View style={{ marginTop: -15, marginRight: Sizes.fixPadding * 1.0 }}>
+                                    <Text
+                                        numberOfLines={4}
+                                        style={{ ...Fonts.whiteColor18Bold }}
+                                    >
+                                        {item.headLine}
                                     </Text>
                                 </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <SimpleLineIcons
-                                        name="eye"
-                                        size={13}
-                                        color={Colors.whiteColor}
-                                    />
-                                    <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor13Medium }}>
-                                        {item.viewsCount}
-                                    </Text>
-                                </View>
+                                <View style={styles.bannerNewsViewsCommentsDateInfoWrapStyle}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <MaterialIcons
+                                                name="access-time"
+                                                color={Colors.whiteColor}
+                                                size={13}
+                                            />
+                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor13Medium }}>
+                                                {item.date+'                '}
+                                            </Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <SimpleLineIcons
+                                                name="eye"
+                                                size={13}
+                                                color={Colors.whiteColor}
+                                            />
+                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor13Medium }}>
+                                                {item.viewsCount}
+                                            </Text>
+                                        </View>
+                                    </View>
                             </View>
-                            <Text style={{ ...Fonts.whiteColor12Medium }}>
-                                {item.description.slice(0, 210)}
-                            </Text>
                         </View>
-                    </View>
-                </ImageBackground>
-            </TouchableOpacity>
+                    </ImageBackground>
+                </TouchableOpacity>
+    
+                <View style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    width: '100%',
+                    alignItems: 'center',
+                }}>
+                    {pagination()}
+                </View>
+            </View>
         )
+    
         return (
             <View>
                 <View style={styles.topNewsTitleWrapStyle}>
                     <Text style={{ ...Fonts.whiteColor16Bold }}>
                         Top News
                     </Text>
-
+    
                 </View>
                 <View style={{ marginVertical: Sizes.fixPadding, }}>
                     <Carousel
@@ -394,14 +416,13 @@ const HomeScreen = ({ navigation }) => {
                         loop={true}
                         autoplayInterval={4000}
                     />
-                    {pagination()}
                 </View>
             </View>
         )
     }
 
     function pagination() {
-         // This function is used to render pagination for the Carousel.
+        // This function is used to render pagination for the Carousel.
 
         return (
             <Pagination
@@ -414,7 +435,7 @@ const HomeScreen = ({ navigation }) => {
         );
     }
 
- // Function to display a header with tabs for searching news items
+    // Function to display a header with tabs for searching news items
     function header() {
         // This function is used to render a header with search tabs.
         // The tabs are "Title", "Category", and "Date".
@@ -463,9 +484,13 @@ const HomeScreen = ({ navigation }) => {
                         <Text style={[styles.tabText, searchType === 'Link' ? styles.activeTabText : {}]}>Link</Text>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.tabDescription}>Searching by {searchType} will provide results based on the selected option.</Text>
+                <Image 
+            source={require('../../assets/images/logo.png')} // replace './path-to-your-image.png' with your image file path
+            style={{ width: 150, height: 60, borderRadius: 10 }} // replace 100 with your desired width and height
+            resizeMode="contain"
+        />
                 <Button style={styles.searchButton} mode="contained" onPress={() => navigation.push('Search', { searchType })} contentStyle={{ backgroundColor: '#4f5b66' }} icon={({ size, color }) => <MaterialIcons name="search" size={size} color={color} />}>
-                    Search News by {searchType}
+                    Search News by {searchType} to Explore Political Bias
                 </Button>
 
             </View>
@@ -483,7 +508,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     searchSectionStyle: {
-        marginHorizontal: Sizes.fixPadding * 3.0,
+        marginHorizontal: Sizes.fixPadding*2,
         marginVertical: Sizes.fixPadding,
         flexDirection: 'column',
         alignItems: 'center',
@@ -517,9 +542,13 @@ const styles = StyleSheet.create({
     },
     bannerNewsViewsCommentsDateInfoWrapStyle: {
         marginVertical: Sizes.fixPadding - 5.0,
+        marginBottom: Sizes.fixPadding,
+        marginLeft:Sizes.fixPadding,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        position: 'absolute',
+        bottom: 15,
     },
     topNewsTitleWrapStyle: {
         marginBottom: Sizes.fixPadding + 5.0,
@@ -546,7 +575,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#65737e',
         elevation: 4.0,
         marginTop: -30.0,
-        marginHorizontal: Sizes.fixPadding * 1.5,
+        marginHorizontal: Sizes.fixPadding * 1.0,
         paddingVertical: Sizes.fixPadding - 5.0,
         paddingHorizontal: Sizes.fixPadding,
         borderRadius: Sizes.fixPadding - 5.0,
@@ -617,6 +646,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 20,
         color: '#65737e',
+        marginTop: Sizes.fixPadding
     },
     tabIndicator: {
         position: 'absolute',
