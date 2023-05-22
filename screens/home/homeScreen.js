@@ -1,6 +1,6 @@
 // Importing required dependencies and assets
 import React, { useState, useRef, useContext, useEffect } from "react";
-import { SafeAreaView, Dimensions, ScrollView, View, TouchableOpacity, StatusBar, Text,Image, ImageBackground, StyleSheet, Animated, ActivityIndicator } from "react-native";
+import { SafeAreaView, Dimensions, ScrollView, View, TouchableOpacity, StatusBar, Text, Image, ImageBackground, StyleSheet, Animated, ActivityIndicator } from "react-native";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import Carousel, { Pagination } from 'react-native-snap-carousel-v4';
@@ -8,13 +8,14 @@ import { Button } from 'react-native-paper';
 import { BookmarkContext } from "../BookmarkContext";
 const { width } = Dimensions.get('window');
 const screenWidth = Dimensions.get('window').width;
-const tabWidth = (screenWidth - (Sizes.fixPadding * 6.0)) / 3;
-const latest = 'australia'
-
+// const tabWidth = (screenWidth - (Sizes.fixPadding * 6.0)) / 3;
+const latest = 'australia';
+const adjustedTabWidth = (screenWidth - (Sizes.fixPadding * 7.5) -76) / 3;
 
 const HomeScreen = ({ navigation }) => {
     const { addBookmark } = useContext(BookmarkContext);
     const [loading, setLoading] = useState(false);
+    
 
     const [state, setState] = useState({
 
@@ -288,9 +289,9 @@ const HomeScreen = ({ navigation }) => {
 
                                     <Text
                                         numberOfLines={4}
-                                        style={{ marginTop: Sizes.fixPadding, marginHorizontal: 2*Sizes.fixPadding - 8, ...Fonts.whiteColor12Medium }}
+                                        style={{ marginTop: Sizes.fixPadding, marginHorizontal: 2 * Sizes.fixPadding - 8, ...Fonts.whiteColor12Medium }}
                                     >
-                                        {item.description.slice(0,150)+"..."}
+                                        {item.description.slice(0, 150) + "..."}
                                     </Text>
                                 </View>
                             </TouchableOpacity>
@@ -338,7 +339,7 @@ const HomeScreen = ({ navigation }) => {
                                 backgroundColor: 'rgba(0,0,0,0.5)',
                             }}
                         >
-    
+
                             <View style={styles.bannerSliderInfoWrapStyle}>
                                 <MaterialIcons
                                     name={item.inBookmark ? "bookmark" : "bookmark-outline"}
@@ -353,38 +354,38 @@ const HomeScreen = ({ navigation }) => {
                                 <View style={{ marginTop: -15, marginRight: Sizes.fixPadding * 1.0 }}>
                                     <Text
                                         numberOfLines={4}
-                                        style={{ ...Fonts.whiteColor18Bold }}
+                                        style={{ ...Fonts.whiteColor20Bold }}
                                     >
                                         {item.headLine}
                                     </Text>
                                 </View>
                                 <View style={styles.bannerNewsViewsCommentsDateInfoWrapStyle}>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <MaterialIcons
-                                                name="access-time"
-                                                color={Colors.whiteColor}
-                                                size={13}
-                                            />
-                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor13Medium }}>
-                                                {item.date+'                '}
-                                            </Text>
-                                        </View>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <SimpleLineIcons
-                                                name="eye"
-                                                size={13}
-                                                color={Colors.whiteColor}
-                                            />
-                                            <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor13Medium }}>
-                                                {item.viewsCount}
-                                            </Text>
-                                        </View>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                        <MaterialIcons
+                                            name="access-time"
+                                            color={Colors.whiteColor}
+                                            size={13}
+                                        />
+                                        <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor13Medium }}>
+                                            {item.date + '                '}
+                                        </Text>
                                     </View>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                        <SimpleLineIcons
+                                            name="eye"
+                                            size={13}
+                                            color={Colors.whiteColor}
+                                        />
+                                        <Text style={{ marginLeft: Sizes.fixPadding - 8.0, ...Fonts.whiteColor13Medium }}>
+                                            {item.viewsCount}
+                                        </Text>
+                                    </View>
+                                </View>
                             </View>
                         </View>
                     </ImageBackground>
                 </TouchableOpacity>
-    
+
                 <View style={{
                     position: 'absolute',
                     bottom: 0,
@@ -395,14 +396,14 @@ const HomeScreen = ({ navigation }) => {
                 </View>
             </View>
         )
-    
+
         return (
             <View>
                 <View style={styles.topNewsTitleWrapStyle}>
                     <Text style={{ ...Fonts.whiteColor16Bold }}>
                         Top News
                     </Text>
-    
+
                 </View>
                 <View style={{ marginVertical: Sizes.fixPadding, }}>
                     <Carousel
@@ -444,7 +445,6 @@ const HomeScreen = ({ navigation }) => {
         const [searchType, setSearchType] = useState('Title');
         const animatedValue = useRef(new Animated.Value(1)).current;
         const screenWidth = Dimensions.get('window').width;
-        const tabWidth = (screenWidth - (Sizes.fixPadding * 6.0)) / 3;
 
         const handleTabPress = (type, index) => {
             setSearchType(type);
@@ -459,12 +459,12 @@ const HomeScreen = ({ navigation }) => {
             }).start();
         };
 
-        const tabIndicatorStyle = {
+        const adjustedTabIndicatorStyle = {
             transform: [
                 {
                     translateX: animatedValue.interpolate({
                         inputRange: [0, 1, 2],
-                        outputRange: [0, tabWidth, tabWidth * 2],
+                        outputRange: [0, adjustedTabWidth, adjustedTabWidth * 2],
                     }),
                 },
             ],
@@ -472,29 +472,33 @@ const HomeScreen = ({ navigation }) => {
 
         return (
             <View style={styles.searchSectionStyle}>
-                <View style={styles.tabs}>
-                    <Animated.View style={[styles.tabIndicator, tabIndicatorStyle]} />
-                    <TouchableOpacity onPress={() => handleTabPress('Keywords', 0)} style={styles.tab}>
-                        <Text style={[styles.tabText, searchType === 'Keywords' ? styles.activeTabText : {}]}>Keywords</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleTabPress('Title', 1)} style={styles.tab}>
-                        <Text style={[styles.tabText, searchType === 'Title' ? styles.activeTabText : {}]}>Title</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleTabPress('Link', 2)} style={styles.tab}>
-                        <Text style={[styles.tabText, searchType === 'Link' ? styles.activeTabText : {}]}>Link</Text>
-                    </TouchableOpacity>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> 
+                    <View style={{ alignItems: 'center', marginRight:Sizes.fixPadding,}}>
+                        <Image
+                            source={require('../../assets/images/logo.png')}
+                            style={{ width: 100, height: 40, borderRadius: 10 }}
+                            resizeMode="contain"
+                        />
+                    </View>
+                    <View style={{flex: 1}}>
+                        <View style={styles.tabs}>
+                            <Animated.View style={[styles.tabIndicator, adjustedTabIndicatorStyle]} />
+                            <TouchableOpacity onPress={() => handleTabPress('Keywords', 0)} style={styles.tab}>
+                                <Text style={[styles.tabText, searchType === 'Keywords' ? styles.activeTabText : {}]}>Keywords</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleTabPress('Title', 1)} style={styles.tab}>
+                                <Text style={[styles.tabText, searchType === 'Title' ? styles.activeTabText : {}]}>Title</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleTabPress('Link', 2)} style={styles.tab}>
+                                <Text style={[styles.tabText, searchType === 'Link' ? styles.activeTabText : {}]}>Link</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
-                <Image 
-            source={require('../../assets/images/logo.png')} // replace './path-to-your-image.png' with your image file path
-            style={{ width: 150, height: 60, borderRadius: 10 }} // replace 100 with your desired width and height
-            resizeMode="contain"
-        />
                 <Button style={styles.searchButton} mode="contained" onPress={() => navigation.push('Search', { searchType })} contentStyle={{ backgroundColor: '#4f5b66' }} icon={({ size, color }) => <MaterialIcons name="search" size={size} color={color} />}>
-                    Search News by {searchType} to Explore Political Bias
+                    Search by {searchType} to Explore Political Bias
                 </Button>
-
             </View>
-
         )
     }
 }
@@ -508,11 +512,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     searchSectionStyle: {
-        marginHorizontal: Sizes.fixPadding*2,
+        marginHorizontal: Sizes.fixPadding * 2,
         marginVertical: Sizes.fixPadding,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-between'
+    },
+    sliderPaginationWrapStyle: {
+        position: 'absolute',
+        bottom: -25.0,
+        left: 0.0,
+        right: 0.0,
     },
     sliderActiveDotStyle: {
         width: 12,
@@ -527,12 +537,6 @@ const styles = StyleSheet.create({
         borderRadius: 7.5,
         backgroundColor: Colors.blackColor
     },
-    sliderPaginationWrapStyle: {
-        position: 'absolute',
-        bottom: -25.0,
-        left: 0.0,
-        right: 0.0,
-    },
     bannerSliderInfoWrapStyle: {
         height: 170.0,
         paddingHorizontal: Sizes.fixPadding,
@@ -543,7 +547,7 @@ const styles = StyleSheet.create({
     bannerNewsViewsCommentsDateInfoWrapStyle: {
         marginVertical: Sizes.fixPadding - 5.0,
         marginBottom: Sizes.fixPadding,
-        marginLeft:Sizes.fixPadding,
+        marginLeft: Sizes.fixPadding,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -605,16 +609,16 @@ const styles = StyleSheet.create({
     tabs: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 10,
-        borderRadius: 13,
-        // borderWidth: 1,
-        // borderColor: 'black',
+        marginBottom: Sizes.fixPadding,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'grey',
         backgroundColor: '#4f5b66',
         overflow: 'hidden',
     },
     tab: {
         flex: 1,
-        padding: 10,
+        padding: 8,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -622,12 +626,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#65737e',
     },
     tabText: {
-        fontSize: 16,
+        fontSize: 14,
         color: 'grey',
-        fontFamily: 'OpenSans_Medium',
+        fontFamily: 'OpenSans_SemiBold',
     },
     activeTabText: {
         color: 'white',
+        fontFamily: 'OpenSans_Bold',
     },
     input: {
         marginBottom: 10,
@@ -646,12 +651,12 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 20,
         color: '#65737e',
-        marginTop: Sizes.fixPadding
+        // marginTop: Sizes.fixPadding
     },
     tabIndicator: {
         position: 'absolute',
         height: 3,
-        width: tabWidth,
+        width: adjustedTabWidth,
         backgroundColor: '#c0c5ce',
     },
 })
