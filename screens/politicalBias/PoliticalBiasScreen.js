@@ -33,12 +33,13 @@ if (
 }
 
 // The main component of the screen
-const PoliticalBiasScreen = () => {
+const PoliticalBiasScreen = ({navigation}) => {
      // Initialize states for expanded section, current question, answers, and result
     const [expandedSection, setExpandedSection] = useState('left');
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [answers, setAnswers] = useState(Array(questions.length).fill(null));
     const [result, setResult] = useState(null);
+    const searchType = 'Keyword'
 
     // Function to handle the expanding and collapsing of the section
     const toggleSection = (section) => {
