@@ -81,7 +81,7 @@ const HomeScreen = ({ navigation }) => {
 
 
 
-    async function fetchTopNews(startDate, keywords = 'Australia AND Victoria AND Melbourne AND Sydney', language = 'en', source = 'au', sortBy = 'relevancy', domains = 'bbc.co.uk') {
+    async function fetchTopNews(startDate, keyword = 'Australia AND Victoria AND Melbourne AND Sydney', language = 'en', source = 'au', sortBy = 'relevancy', domains = 'bbc.co.uk') {
 
         const removeHtmlTags = (str) => {
             if ((str === null) || (str === ''))
@@ -124,7 +124,7 @@ const HomeScreen = ({ navigation }) => {
             // 65d1f052cb624a518a8e5c48aeb8e75d
             // 2cd35fd59fe44ea3841b860501b72886
             const response = await newsapi.v2.everything({
-                q: keywords,
+                q: keyword,
                 sortBy: sortBy,
                 from: startDate,
                 language: language,
@@ -473,7 +473,7 @@ const HomeScreen = ({ navigation }) => {
         return (
             <View style={styles.searchSectionStyle}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> 
-                    <View style={{ alignItems: 'center', marginRight:Sizes.fixPadding,}}>
+                    <View style={{ alignItems: 'center', marginRight:4,}}>
                         <Image
                             source={require('../../assets/images/logo.png')}
                             style={{ width: 100, height: 40, borderRadius: 10 }}
@@ -483,8 +483,8 @@ const HomeScreen = ({ navigation }) => {
                     <View style={{flex: 1}}>
                         <View style={styles.tabs}>
                             <Animated.View style={[styles.tabIndicator, adjustedTabIndicatorStyle]} />
-                            <TouchableOpacity onPress={() => handleTabPress('Keywords', 0)} style={styles.tab}>
-                                <Text style={[styles.tabText, searchType === 'Keywords' ? styles.activeTabText : {}]}>Keywords</Text>
+                            <TouchableOpacity onPress={() => handleTabPress('Keyword', 0)} style={styles.tab}>
+                                <Text style={[styles.tabText, searchType === 'Keyword' ? styles.activeTabText : {}]}>Keyword</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => handleTabPress('Title', 1)} style={styles.tab}>
                                 <Text style={[styles.tabText, searchType === 'Title' ? styles.activeTabText : {}]}>Title</Text>
