@@ -11,7 +11,9 @@ const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI('2cd35fd59fe44ea3841b860501b72886');
 // 88a285931c764d54b7dc0a8bdcb9baab
 // f53ef1482bff4b87aa86646ad673f635
-const apiKey = 'f602700c8c886e2a13866218196530820d2e4a82de4716739ecd293a7ae3bab2';
+const apiKey = 'a65efec25fd783b94409438e8c5036d633bb24b5f6b98f74dd66734072563183';
+// f602700c8c886e2a13866218196530820d2e4a82de4716739ecd293a7ae3bab2
+// a65efec25fd783b94409438e8c5036d633bb24b5f6b98f74dd66734072563183
 let count = 1;
 let searchResultsList_live = [];
 let recentSearchesList = [];
