@@ -34,7 +34,6 @@
       </ul>
     </li>
     <li><a href="#license">License</a></li>
-    <li><a href="#credits">Credits</a></li>
   </ol>
 </details>
 
@@ -42,8 +41,8 @@
 ## About The Project
 
 <p>Explore news with political bias.</p>
-<p>Check news in different themes</p>
-<p>Test your own political bias</p>
+<p>Check news in different themes.</p>
+<p>Test your own political bias.</p>
 <p>Add your favourite news to your bookmarks.</p>
 
 ### Screenshots
