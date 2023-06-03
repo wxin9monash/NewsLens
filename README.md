@@ -71,7 +71,7 @@
 * npm
 
   ```sh
-  npm install -g yarn
+  npm install
   ```
 
 ### Installation
@@ -83,10 +83,10 @@
    ```sh
    git clone https://github.com/wxin9monash/NewsLens.git
    ```
-3. Install required packages
+3. Install Node.js
 
    ```sh
-   npm install
+   Download and install latest Node.js package from https://nodejs.org/en/download
    ```
    
 4. Start the application
