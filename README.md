@@ -4,13 +4,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="assets/images/logo.png" alt="Logo" width="150" height="150">
+    <img src="assets/images/logo.png" alt="Logo" width="150">
   </a>
 
-<h3 align="center">Early Bird Times</h3>
+<h3 align="center">NewsLens</h3>
 
   <p align="center">
-    React Native News App for start2impact University
+    React Native News App for Monash University Industrial Based Program
     <br />
     <br />
   </p>
@@ -41,8 +41,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<p>Explore news with political bias</p>
-<p>You can also change country, and add your favourite news to your bookmarks.</p>
+<p>Explore news with political bias.</p>
+<p>Check news in different themes</p>
+<p>Test your own political bias</p>
+<p>Add your favourite news to your bookmarks.</p>
 
 ### Screenshots
 <p float="left">
@@ -80,23 +82,18 @@
 2. Clone the repo
 
    ```sh
-   git clone https://github.com/ThGnommy/react-native-news-app.git
+   git clone [https://github.com/ThGnommy/react-native-news-app.git](https://github.com/wxin9monash/NewsLens.git)
    ```
-3. Install YARN packages
+3. Install required packages
 
    ```sh
-   yarn
-   ```
-4. Create a .env file and insert
-
-   ```js
-   NEWS_APIKEY=YOUR_API
+   npm install
    ```
    
-5. Start the application
+4. Start the application
 
    ```js
-   expo start
+   npx expo start
    ```
 
 <!-- LICENSE -->
@@ -104,7 +101,3 @@
 
 Distributed under the [MIT](https://choosealicense.com/licenses/mit/) License.
 
-<!-- CREDITS -->
-## Credits
-
-<a href="https://www.freepik.com/free-vector/silhouettes-birds-different-pack-bird-silhouettes_23256498.htm#query=bird&position=5&from_view=keyword">Image by NACreative</a> on Freepik
