@@ -10,7 +10,7 @@
 <h3 align="center">NewsLens</h3>
 
   <p align="center">
-    React Native News App for Monash University Industrial Based Program
+    React Native News App for Monash University Industrial Based Programme
     <br />
     <br />
   </p>
