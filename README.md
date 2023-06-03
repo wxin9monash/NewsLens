@@ -48,11 +48,11 @@
 
 ### Screenshots
 <p float="left">
-  <img src="assets/images/screenshots/home1.jpg" alt="Logo" width="250" >
-  <img src="assets/images/screenshots/home2.jpg" alt="Logo" width="250" >
-  <img src="assets/images/screenshots/home3.jpg" alt="Logo" width="250" >
-  <img src="assets/images/screenshots/home4.jpg" alt="Logo" width="250" >
-  <img src="assets/images/screenshots/home5.jpg" alt="Logo" width="250" >
+  <img src="assets/images/screenshoots/home1.jpg" alt="Logo" width="250" >
+  <img src="assets/images/screenshoots/home2.jpg" alt="Logo" width="250" >
+  <img src="assets/images/screenshoots/home3.jpg" alt="Logo" width="250" >
+  <img src="assets/images/screenshoots/home4.jpg" alt="Logo" width="250" >
+  <img src="assets/images/screenshoots/home5.jpg" alt="Logo" width="250" >
 </p>
 
 ### Built With
@@ -82,7 +82,7 @@
 2. Clone the repo
 
    ```sh
-   git clone [https://github.com/ThGnommy/react-native-news-app.git](https://github.com/wxin9monash/NewsLens.git)
+   git clone https://github.com/wxin9monash/NewsLens.git
    ```
 3. Install required packages
 
